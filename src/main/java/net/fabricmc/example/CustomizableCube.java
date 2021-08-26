@@ -12,7 +12,9 @@ import net.minecraft.core.Direction;
 
 public class CustomizableCube extends Cube {
 
+    private final Direction[] hidden;
     private final Polygon[] polygons;
+    private int polygonCount = 0;
     public final float minX;
     public final float minY;
     public final float minZ;
@@ -21,8 +23,9 @@ public class CustomizableCube extends Cube {
     public final float maxZ;
     
     public CustomizableCube(int u, int v, float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extraX, float extraY,
-            float extraZ, boolean mirror, float textureWidth, float textureHeight) {
+            float extraZ, boolean mirror, float textureWidth, float textureHeight, Direction[] hide) {
         super(0, 0, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, false, 0f, 0f); // unused
+        this.hidden = hide;
         this.minX = x;
         this.minY = y;
         this.minZ = z;
@@ -59,19 +62,34 @@ public class CustomizableCube extends Cube {
         float q = v + sizeZ;
         float r = v + sizeZ + sizeY;
         
-        this.polygons[2] = new Polygon(new Vertex[]{vertex6, vertex5, vertex, vertex2}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.DOWN);
-        this.polygons[3] = new Polygon(new Vertex[]{vertex3, vertex4, vertex8, vertex7}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.UP);
-        this.polygons[1] = new Polygon(new Vertex[]{vertex, vertex5, vertex8, vertex4}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.WEST);
-        this.polygons[4] = new Polygon(new Vertex[]{vertex2, vertex, vertex4, vertex3}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.NORTH);
-        this.polygons[0] = new Polygon(new Vertex[]{vertex6, vertex2, vertex3, vertex7}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.EAST);
-        this.polygons[5] = new Polygon(new Vertex[]{vertex5, vertex6, vertex7, vertex8}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.SOUTH);
+        if(visibleFace(Direction.DOWN))
+            this.polygons[polygonCount++] = new Polygon(new Vertex[]{vertex6, vertex5, vertex, vertex2}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.DOWN);
+        if(visibleFace(Direction.UP))
+            this.polygons[polygonCount++] = new Polygon(new Vertex[]{vertex3, vertex4, vertex8, vertex7}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.UP);
+        if(visibleFace(Direction.WEST))
+            this.polygons[polygonCount++] = new Polygon(new Vertex[]{vertex, vertex5, vertex8, vertex4}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.WEST);
+        if(visibleFace(Direction.NORTH))
+            this.polygons[polygonCount++] = new Polygon(new Vertex[]{vertex2, vertex, vertex4, vertex3}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.NORTH);
+        if(visibleFace(Direction.EAST))
+            this.polygons[polygonCount++] = new Polygon(new Vertex[]{vertex6, vertex2, vertex3, vertex7}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.EAST);
+        if(visibleFace(Direction.SOUTH))
+            this.polygons[polygonCount++] = new Polygon(new Vertex[]{vertex5, vertex6, vertex7, vertex8}, l, q, n, r, textureWidth, textureHeight, mirror, Direction.SOUTH);
+    }
+    
+    private boolean visibleFace(Direction face) {
+        for(Direction dir : hidden) {
+            if(dir == face)return false;
+        }
+        return true;
     }
 
     @Override
     public void compile(Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
-        for (Polygon polygon : this.polygons) {
+        Polygon polygon;
+        for (int id = 0; id < polygonCount; id++) {
+            polygon = polygons[id];
             Vector3f vector3f = polygon.normal.copy();
             vector3f.transform(matrix3f);
             float l = vector3f.x();

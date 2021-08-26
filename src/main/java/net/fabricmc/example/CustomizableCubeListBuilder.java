@@ -33,10 +33,10 @@ public class CustomizableCubeListBuilder {
         return cubes;
     }
 
-    public CustomizableCubeListBuilder addBox(float x, float y, float z, float pixelSize, Direction[] array) {
+    public CustomizableCubeListBuilder addBox(float x, float y, float z, float pixelSize, Direction[] hide) {
         int textureSize = 64;
         this.cubes.add(new CustomizableCube(xTexOffs, yTexOffs, x, y, z, pixelSize, pixelSize, pixelSize, 0, 0, 0,
-                this.mirror, textureSize, textureSize));
+                this.mirror, textureSize, textureSize, hide));
         return this;
     }
 
