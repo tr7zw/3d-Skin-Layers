@@ -80,7 +80,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		ModelPart rightArm = layers[3];
 		ModelPart jacket = layers[4];
 		// Left leg
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG)) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible) {
 			matrixStack.pushPose();
 			this.getParentModel().leftLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
@@ -88,7 +88,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// Right leg
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG)) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG) && this.getParentModel().rightLeg.visible) {
 			matrixStack.pushPose();
 			this.getParentModel().rightLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
@@ -96,7 +96,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// Left Arm
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE)) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().leftArm.visible) {
 			matrixStack.pushPose();
 			this.getParentModel().leftArm.translateAndRotate(matrixStack);
 			leftArm.x = thinArms ? 0.6f: 1f;
@@ -105,7 +105,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// Right Arm
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE)) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().rightArm.visible) {
 			matrixStack.pushPose();
 			this.getParentModel().rightArm.translateAndRotate(matrixStack);
 			rightArm.x = thinArms ? -0.6f: -1f;
@@ -114,7 +114,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// jacket
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET)) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET) && this.getParentModel().body.visible) {
 			matrixStack.pushPose();
 			jacket.copyFrom(this.getParentModel().jacket);
 			jacket.y -= 1f;
