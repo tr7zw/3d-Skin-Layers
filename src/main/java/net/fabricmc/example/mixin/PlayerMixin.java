@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.spongepowered.asm.mixin.Mixin;
 
 import net.fabricmc.example.accessor.PlayerSettings;
-import net.minecraft.client.model.geom.ModelPart;
+import net.fabricmc.example.render.CustomizableModelPart;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,27 +22,27 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
 		super(entityType, world);
 	}
 
-	private ModelPart headLayer;
-	private ModelPart[] skinLayer;
+	private CustomizableModelPart headLayer;
+	private CustomizableModelPart[] skinLayer;
 	
 
 	@Override
-	public ModelPart[] getSkinLayers() {
+	public CustomizableModelPart[] getSkinLayers() {
 		return skinLayer;
 	}
 	
 	@Override
-	public void setupSkinLayers(ModelPart[] box) {
+	public void setupSkinLayers(CustomizableModelPart[] box) {
 		this.skinLayer = box;
 	}
 	
 	@Override
-	public ModelPart getHeadLayers() {
+	public CustomizableModelPart getHeadLayers() {
 		return headLayer;
 	}
 	
 	@Override
-	public void setupHeadLayers(ModelPart box) {
+	public void setupHeadLayers(CustomizableModelPart box) {
 		this.headLayer = box;
 	}
 

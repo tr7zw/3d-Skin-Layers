@@ -8,7 +8,6 @@ import net.fabricmc.example.SkinUtil;
 import net.fabricmc.example.accessor.PlayerSettings;
 import net.fabricmc.example.render.SolidPixelWrapper;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -70,7 +69,7 @@ public class HeadLayerFeatureRenderer
 		matrixStack.pushPose();
 		this.getParentModel().head.translateAndRotate(matrixStack);
 		matrixStack.scale(1.18f, 1.18f, 1.18f); // 1.18
-		((ModelPart)settings.getHeadLayers()).render(matrixStack, vertices, light, overlay);
+		settings.getHeadLayers().render(matrixStack, vertices, light, overlay);
 		matrixStack.popPose();
 
 	}

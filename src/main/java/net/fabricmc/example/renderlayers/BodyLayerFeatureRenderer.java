@@ -7,9 +7,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.example.SkinUtil;
 import net.fabricmc.example.accessor.PlayerEntityModelAccessor;
 import net.fabricmc.example.accessor.PlayerSettings;
+import net.fabricmc.example.render.CustomizableModelPart;
 import net.fabricmc.example.render.SolidPixelWrapper;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -46,7 +46,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		VertexConsumer vertexConsumer = multiBufferSource
 				.getBuffer(RenderType.entityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
 		int m = LivingEntityRenderer.getOverlayCoords((LivingEntity) player, (float) 0.0f);
-		renderLayers(player, (ModelPart[]) settings.getSkinLayers(), poseStack, vertexConsumer, i, m);
+		renderLayers(player, (CustomizableModelPart[]) settings.getSkinLayers(), poseStack, vertexConsumer, i, m);
 	}
 	
 	private boolean setupModel(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings) {
@@ -54,7 +54,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			return false; // default skin
 		}
 		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
-		ModelPart[] layers = new ModelPart[5];
+		CustomizableModelPart[] layers = new CustomizableModelPart[5];
 		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 48, true, -1f);
 		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 32, true, -1f);
 		if(thinArms) {
@@ -70,15 +70,15 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		return true;
 	}
 
-	public void renderLayers(AbstractClientPlayer abstractClientPlayer, ModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
+	public void renderLayers(AbstractClientPlayer abstractClientPlayer, CustomizableModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		if(layers == null)return;
 		float pixelScaling = 1.16f; //1.125f
 		float armHeightScaling = 1.1f;
-		ModelPart leftLeg = layers[0];
-		ModelPart rightLeg = layers[1];
-		ModelPart leftArm = layers[2];
-		ModelPart rightArm = layers[3];
-		ModelPart jacket = layers[4];
+		CustomizableModelPart leftLeg = layers[0];
+		CustomizableModelPart rightLeg = layers[1];
+		CustomizableModelPart leftArm = layers[2];
+		CustomizableModelPart rightArm = layers[3];
+		CustomizableModelPart jacket = layers[4];
 		// Left leg
 		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible) {
 			matrixStack.pushPose();

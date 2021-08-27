@@ -1,15 +1,15 @@
 package net.fabricmc.example.accessor;
 
-import net.minecraft.client.model.geom.ModelPart;
+import net.fabricmc.example.render.CustomizableModelPart;
 
 public interface PlayerSettings {
 
-	public ModelPart getHeadLayers();
+	public CustomizableModelPart getHeadLayers();
 	
-	public void setupHeadLayers(ModelPart box);
+	public void setupHeadLayers(CustomizableModelPart box);
 	
-	public ModelPart[] getSkinLayers();
+	public CustomizableModelPart[] getSkinLayers();
 	
-	public void setupSkinLayers(ModelPart[] box);
+	public void setupSkinLayers(CustomizableModelPart[] box);
 
 }

@@ -9,14 +9,13 @@ import java.util.Set;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
 
 public class SolidPixelWrapper {
 
-    public static ModelPart wrapBoxOptimized(NativeImage natImage, PlayerModel<AbstractClientPlayer> model, int width,
+    public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage, PlayerModel<AbstractClientPlayer> model, int width,
             int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
         List<Cube> cubes = new ArrayList<>();
         float pixelSize = 1f;
@@ -65,7 +64,7 @@ public class SolidPixelWrapper {
             }
         }
 
-        return new ModelPart(cubes, new HashMap<>());
+        return new CustomizableModelPart(cubes, new HashMap<>());
     }
 
     private static int[][] offsets = new int[][] { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
