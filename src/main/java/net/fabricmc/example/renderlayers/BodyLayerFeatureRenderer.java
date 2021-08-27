@@ -4,11 +4,13 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.fabricmc.example.Settings;
 import net.fabricmc.example.SkinUtil;
 import net.fabricmc.example.accessor.PlayerEntityModelAccessor;
 import net.fabricmc.example.accessor.PlayerSettings;
 import net.fabricmc.example.render.CustomizableModelPart;
 import net.fabricmc.example.render.SolidPixelWrapper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -36,6 +38,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
         if (!player.isSkinLoaded() || player.isInvisible()) {
             return;
         }
+        if(Minecraft.getInstance().player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
 
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering

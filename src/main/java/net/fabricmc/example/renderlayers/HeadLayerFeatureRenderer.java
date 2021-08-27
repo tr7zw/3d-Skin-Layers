@@ -4,9 +4,11 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.fabricmc.example.Settings;
 import net.fabricmc.example.SkinUtil;
 import net.fabricmc.example.accessor.PlayerSettings;
 import net.fabricmc.example.render.SolidPixelWrapper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -35,6 +37,8 @@ public class HeadLayerFeatureRenderer
 		if (!player.isSkinLoaded() || player.isInvisible()) {
 			return;
 		}
+		if(Minecraft.getInstance().player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
+		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
 		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
 			return;

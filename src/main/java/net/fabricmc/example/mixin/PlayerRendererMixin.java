@@ -5,8 +5,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.fabricmc.example.Settings;
 import net.fabricmc.example.renderlayers.BodyLayerFeatureRenderer;
 import net.fabricmc.example.renderlayers.HeadLayerFeatureRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -28,6 +30,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
+        if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > Settings.viewDistanceSqr)return;
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
         playerModel.hat.visible = false;
         playerModel.jacket.visible = false;
