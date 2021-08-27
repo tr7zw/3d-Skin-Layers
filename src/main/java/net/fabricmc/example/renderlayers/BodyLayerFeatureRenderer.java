@@ -58,11 +58,11 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 48, true, -1f);
 		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 32, true, -1f);
 		if(thinArms) {
-			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 48, 48, true, -2.6f);
-			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 40, 32, true, -2.6f);
+			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 48, 48, true, -2.1f);
+			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 40, 32, true, -2.1f);
 		} else {
-			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 48, 48, true, -2.6f);
-			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 40, 32, true, -2.6f);
+			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 48, 48, true, -2.1f);
+			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 40, 32, true, -2.1f);
 		}
 		layers[4] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 8, 12, 4, 16, 32, true, 0);
 		settings.setupSkinLayers(layers);
@@ -73,6 +73,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	public void renderLayers(AbstractClientPlayer abstractClientPlayer, ModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		if(layers == null)return;
 		float pixelScaling = 1.16f; //1.125f
+		float armHeightScaling = 1.1f;
 		ModelPart leftLeg = layers[0];
 		ModelPart rightLeg = layers[1];
 		ModelPart leftArm = layers[2];
@@ -99,7 +100,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.pushPose();
 			this.getParentModel().leftArm.translateAndRotate(matrixStack);
 			leftArm.x = thinArms ? 0.6f: 1f;
-			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, armHeightScaling, pixelScaling);
 			leftArm.render(matrixStack, vertices, light, overlay);
 			matrixStack.popPose();
 		}
@@ -108,7 +109,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.pushPose();
 			this.getParentModel().rightArm.translateAndRotate(matrixStack);
 			rightArm.x = thinArms ? -0.6f: -1f;
-			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, armHeightScaling, pixelScaling);
 			rightArm.render(matrixStack, vertices, light, overlay);
 			matrixStack.popPose();
 		}
