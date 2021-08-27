@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.example.accessor;
 
 import net.minecraft.client.model.geom.ModelPart;
 

@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.example.render;
 
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.VertexConsumer;

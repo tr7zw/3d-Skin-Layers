@@ -1,9 +1,12 @@
-package net.fabricmc.example;
+package net.fabricmc.example.renderlayers;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.fabricmc.example.SkinUtil;
+import net.fabricmc.example.accessor.PlayerSettings;
+import net.fabricmc.example.render.SolidPixelWrapper;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
