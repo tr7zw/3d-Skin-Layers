@@ -21,7 +21,7 @@ public class SolidPixelWrapper {
         List<Cube> cubes = new ArrayList<>();
         float pixelSize = 1f;
         float staticXOffset = -width / 2f;
-        float staticYOffset = topPivot ? +rotationOffset : -height + 0.6f;// -7.4f;
+        float staticYOffset = topPivot ? +rotationOffset : -height + rotationOffset;
         float staticZOffset = -depth / 2f;
         // Front/back
         for (int u = 0; u < width; u++) {

@@ -55,14 +55,14 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		}
 		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
 		ModelPart[] layers = new ModelPart[5];
-		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 48, true, 0);
-		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 32, true, 0);
+		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 48, true, -1f);
+		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 32, true, -1f);
 		if(thinArms) {
-			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 48, 48, true, -2);
-			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 40, 32, true, -2);
+			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 48, 48, true, -2.6f);
+			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 40, 32, true, -2.6f);
 		} else {
-			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 48, 48, true, -2);
-			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 40, 32, true, -2);
+			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 48, 48, true, -2.6f);
+			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 40, 32, true, -2.6f);
 		}
 		layers[4] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 8, 12, 4, 16, 32, true, 0);
 		settings.setupSkinLayers(layers);
@@ -81,50 +81,34 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		// Left leg
 		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG)) {
 			matrixStack.pushPose();
-			leftLeg.copyFrom(this.getParentModel().leftLeg);
-			leftLeg.y -= 2.625f;
+			this.getParentModel().leftLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
-			if(abstractClientPlayer.isCrouching()) {
-				matrixStack.translate(0, 0, -0.03f);
-			}
 			leftLeg.render(matrixStack, vertices, light, overlay);
 			matrixStack.popPose();
 		}
 		// Right leg
 		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG)) {
 			matrixStack.pushPose();
-			rightLeg.copyFrom(this.getParentModel().rightLeg);
-			rightLeg.y -= 2.625f;
+			this.getParentModel().rightLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
-			if(abstractClientPlayer.isCrouching()) {
-				matrixStack.translate(0, 0, -0.03f);
-			}
 			rightLeg.render(matrixStack, vertices, light, overlay);
 			matrixStack.popPose();
 		}
 		// Left Arm
 		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE)) {
 			matrixStack.pushPose();
-			leftArm.copyFrom(this.getParentModel().leftArm);
-			leftArm.y -= 0.825f;
-			leftArm.x -= 0.02f;
+			this.getParentModel().leftArm.translateAndRotate(matrixStack);
+			leftArm.x = thinArms ? 0.6f: 1f;
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
-			if(abstractClientPlayer.isCrouching()) {
-				matrixStack.translate(0, 0, 0.01f);
-			}
 			leftArm.render(matrixStack, vertices, light, overlay);
 			matrixStack.popPose();
 		}
 		// Right Arm
 		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE)) {
 			matrixStack.pushPose();
-			rightArm.copyFrom(this.getParentModel().rightArm);
-			rightArm.y -= 0.825f;
-			rightArm.x += 0.02f;
+			this.getParentModel().rightArm.translateAndRotate(matrixStack);
+			rightArm.x = thinArms ? -0.6f: -1f;
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
-			if(abstractClientPlayer.isCrouching()) {
-				matrixStack.translate(0, 0, 0.01f);
-			}
 			rightArm.render(matrixStack, vertices, light, overlay);
 			matrixStack.popPose();
 		}

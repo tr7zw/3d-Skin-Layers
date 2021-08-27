@@ -40,7 +40,6 @@ public class HeadLayerFeatureRenderer
 		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
 			return;
 		}
-		// Check firstperson?
 		
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
@@ -60,7 +59,7 @@ public class HeadLayerFeatureRenderer
 			return false; // default skin
 		}
 		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
-		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 8, 8, 8, 32, 0, false, 0));
+		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 8, 8, 8, 32, 0, false, 0.6f));
 		skin.untrack();
 		return true;
 	}
