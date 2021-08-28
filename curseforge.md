@@ -24,4 +24,4 @@ Since this mod is purely visual and fully clientside, so it doesn't have to be i
 - Iris
 - Optifine
 
-Support via [![Discord](https://tr7zw.dev/curse/Discord.png)](https://discord.gg/2wKH8yeThf) or [Github](https://github.com/tr7zw/3d-skin-layers)!
+Support via [![Discord](https://tr7zw.dev/curse/Discord.png)](https://discord.gg/2wKH8yeThf) or [Github](https://github.com/tr7zw/3d-skin-layers)! The comments are not there to report bugs/crashes/get help.
