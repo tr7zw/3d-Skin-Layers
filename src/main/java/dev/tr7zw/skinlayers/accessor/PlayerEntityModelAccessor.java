@@ -1,4 +1,4 @@
-package net.fabricmc.example.accessor;
+package dev.tr7zw.skinlayers.accessor;
 
 /**
  * Used to expose the thinArms setting of the player model

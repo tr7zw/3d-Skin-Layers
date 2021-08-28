@@ -1,13 +1,13 @@
-package net.fabricmc.example.mixin;
+package dev.tr7zw.skinlayers.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.fabricmc.example.Settings;
-import net.fabricmc.example.renderlayers.BodyLayerFeatureRenderer;
-import net.fabricmc.example.renderlayers.HeadLayerFeatureRenderer;
+import dev.tr7zw.skinlayers.Settings;
+import dev.tr7zw.skinlayers.renderlayers.BodyLayerFeatureRenderer;
+import dev.tr7zw.skinlayers.renderlayers.HeadLayerFeatureRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;

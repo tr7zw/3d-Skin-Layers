@@ -1,13 +1,13 @@
-package net.fabricmc.example.renderlayers;
+package dev.tr7zw.skinlayers.renderlayers;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.fabricmc.example.Settings;
-import net.fabricmc.example.SkinUtil;
-import net.fabricmc.example.accessor.PlayerSettings;
-import net.fabricmc.example.render.SolidPixelWrapper;
+import dev.tr7zw.skinlayers.Settings;
+import dev.tr7zw.skinlayers.SkinUtil;
+import dev.tr7zw.skinlayers.accessor.PlayerSettings;
+import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;

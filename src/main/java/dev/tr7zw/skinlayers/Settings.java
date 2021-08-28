@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package dev.tr7zw.skinlayers;
 
 public class Settings {
 

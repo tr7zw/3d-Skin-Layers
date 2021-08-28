@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "skinlayers",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "3d Skin Layers",
+  "description": "Renders the player skin layer in 3d",
   "authors": [
-    "Me!"
+    "tr7zw"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/tr7zw",
+    "sources": "https://github.com/tr7zw/3d-skin-layers"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/3dskinlayers/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "dev.tr7zw.skinlayers.SkinLayersMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "3dskinlayers.mixins.json"
   ],
 
   "depends": {

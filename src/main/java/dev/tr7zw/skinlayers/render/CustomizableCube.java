@@ -1,4 +1,4 @@
-package net.fabricmc.example.render;
+package dev.tr7zw.skinlayers.render;
 
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.VertexConsumer;

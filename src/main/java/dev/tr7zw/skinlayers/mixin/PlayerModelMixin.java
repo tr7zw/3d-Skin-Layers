@@ -1,9 +1,9 @@
-package net.fabricmc.example.mixin;
+package dev.tr7zw.skinlayers.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import net.fabricmc.example.accessor.PlayerEntityModelAccessor;
+import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;

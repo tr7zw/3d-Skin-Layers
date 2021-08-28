@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package dev.tr7zw.skinlayers;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.NativeImage;

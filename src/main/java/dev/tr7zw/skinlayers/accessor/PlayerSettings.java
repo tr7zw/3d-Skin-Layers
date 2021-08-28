@@ -1,6 +1,6 @@
-package net.fabricmc.example.accessor;
+package dev.tr7zw.skinlayers.accessor;
 
-import net.fabricmc.example.render.CustomizableModelPart;
+import dev.tr7zw.skinlayers.render.CustomizableModelPart;
 
 public interface PlayerSettings {
 

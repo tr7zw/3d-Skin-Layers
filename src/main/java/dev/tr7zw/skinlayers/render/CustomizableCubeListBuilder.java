@@ -1,4 +1,4 @@
-package net.fabricmc.example.render;
+package dev.tr7zw.skinlayers.render;
 
 import java.util.List;
 
