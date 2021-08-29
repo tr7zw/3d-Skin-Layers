@@ -53,10 +53,11 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-        float pixelScaling = 1.16f;
+        float pixelScaling = 1.1f;
         float armHeightScaling = 1.1f;
         if(settings.getSkinLayers() != null) {
             CustomizableModelPart part = null;
+            boolean thinArms = ((PlayerEntityModelAccessor)getModel()).hasThinArms();
             if(sleeve == this.model.leftSleeve) {
                 part = settings.getSkinLayers()[2];
             }else {
@@ -66,6 +67,9 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
             poseStack.pushPose();
             poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
             part.y -= 0.6;
+            if(!thinArms) {
+                part.x -= 0.4;
+            }
             part.render(poseStack,
                 multiBufferSource
                         .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),
