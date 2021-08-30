@@ -16,9 +16,9 @@
   "license": "MIT",
   "icon": "assets/3dskinlayers/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "dev.tr7zw.skinlayers.SkinLayersMod"
     ]
   },
