@@ -1,5 +1,8 @@
 package dev.tr7zw.skinlayers.renderlayers;
 
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -20,8 +23,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class HeadLayerFeatureRenderer
 		extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
@@ -31,6 +35,8 @@ public class HeadLayerFeatureRenderer
         super(renderLayerParent);
     }
 
+	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.PLAYER_HEAD, Items.ZOMBIE_HEAD, Items.CREEPER_HEAD, Items.DRAGON_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
+	
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
 			float l) {
@@ -40,7 +46,7 @@ public class HeadLayerFeatureRenderer
 		if(Minecraft.getInstance().player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
 		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
-		if (itemStack != null && ((itemStack.getItem() instanceof BlockItem))) {
+		if (itemStack != null && hideHeadLayers.contains(itemStack.getItem())) {
 			return;
 		}
 		
