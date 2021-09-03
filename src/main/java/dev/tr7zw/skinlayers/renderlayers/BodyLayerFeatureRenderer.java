@@ -82,12 +82,15 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		CustomizableModelPart leftArm = layers[2];
 		CustomizableModelPart rightArm = layers[3];
 		CustomizableModelPart jacket = layers[4];
+		// Overlay refuses to work correctly, this is a workaround for now
+	    boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
+	    float color = red ? 0.5f : 1f;
 		// Left leg
 		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible) {
 			matrixStack.pushPose();
 			this.getParentModel().leftLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
-			leftLeg.render(matrixStack, vertices, light, overlay);
+			leftLeg.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// Right leg
@@ -95,7 +98,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.pushPose();
 			this.getParentModel().rightLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
-			rightLeg.render(matrixStack, vertices, light, overlay);
+			rightLeg.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// Left Arm
@@ -104,7 +107,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			this.getParentModel().leftArm.translateAndRotate(matrixStack);
 			leftArm.x = thinArms ? 0.6f: 1f;
 			matrixStack.scale(pixelScaling, armHeightScaling, pixelScaling);
-			leftArm.render(matrixStack, vertices, light, overlay);
+			leftArm.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// Right Arm
@@ -113,7 +116,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			this.getParentModel().rightArm.translateAndRotate(matrixStack);
 			rightArm.x = thinArms ? -0.6f: -1f;
 			matrixStack.scale(pixelScaling, armHeightScaling, pixelScaling);
-			rightArm.render(matrixStack, vertices, light, overlay);
+			rightArm.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// jacket
@@ -125,7 +128,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			if(abstractClientPlayer.isCrouching()) {
 				matrixStack.translate(0, 0, -0.025f);
 			}
-			jacket.render(matrixStack, vertices, light, overlay);
+			jacket.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		

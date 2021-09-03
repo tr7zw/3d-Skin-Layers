@@ -79,7 +79,10 @@ public class HeadLayerFeatureRenderer
 		matrixStack.pushPose();
 		this.getParentModel().head.translateAndRotate(matrixStack);
 		matrixStack.scale(1.18f, 1.18f, 1.18f); // 1.18
-		settings.getHeadLayers().render(matrixStack, vertices, light, overlay);
+		// Overlay refuses to work correctly, this is a workaround for now
+		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
+		float color = red ? 0.5f : 1f;
+		settings.getHeadLayers().render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 		matrixStack.popPose();
 
 	}
