@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.skinlayers.Settings;
+import dev.tr7zw.skinlayers.SkinLayersMod;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
@@ -37,13 +38,15 @@ public class HeadLayerFeatureRenderer
 
 	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.PLAYER_HEAD, Items.ZOMBIE_HEAD, Items.CREEPER_HEAD, Items.DRAGON_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
 	
+	private static final Minecraft mc = Minecraft.getInstance();
+	
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
 			float l) {
-		if (!player.isSkinLoaded() || player.isInvisible()) {
+		if (!player.isSkinLoaded() || player.isInvisible() || !SkinLayersMod.config.enableHat) {
 			return;
 		}
-		if(Minecraft.getInstance().player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
+		if(mc.player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
 		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
 		if (itemStack != null && hideHeadLayers.contains(itemStack.getItem())) {
@@ -76,9 +79,10 @@ public class HeadLayerFeatureRenderer
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		if(settings.getHeadLayers() == null)return;
 		if(!this.getParentModel().head.visible || !abstractClientPlayer.isModelPartShown(PlayerModelPart.HAT))return;
+		float voxelSize = SkinLayersMod.config.headVoxelSize;
 		matrixStack.pushPose();
 		this.getParentModel().head.translateAndRotate(matrixStack);
-		matrixStack.scale(1.18f, 1.18f, 1.18f); // 1.18
+		matrixStack.scale(voxelSize, voxelSize, voxelSize);
 		// Overlay refuses to work correctly, this is a workaround for now
 		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 		float color = red ? 0.5f : 1f;

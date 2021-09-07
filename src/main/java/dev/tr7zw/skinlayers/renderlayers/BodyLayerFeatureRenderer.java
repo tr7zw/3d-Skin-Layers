@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.skinlayers.Settings;
+import dev.tr7zw.skinlayers.SkinLayersMod;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
@@ -32,13 +33,15 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
 	private final boolean thinArms;
 
+	private static final Minecraft mc = Minecraft.getInstance();
+	
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
             float l) {
         if (!player.isSkinLoaded() || player.isInvisible()) {
             return;
         }
-        if(Minecraft.getInstance().player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
+        if(mc.player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
 
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
@@ -75,8 +78,8 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
 	public void renderLayers(AbstractClientPlayer abstractClientPlayer, CustomizableModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		if(layers == null)return;
-		float pixelScaling = 1.16f; //1.125f
-		float armHeightScaling = 1.1f;
+		float pixelScaling = SkinLayersMod.config.baseVoxelSize;
+		float heightScaling = SkinLayersMod.config.bodyVoxelHeightSize;
 		CustomizableModelPart leftLeg = layers[0];
 		CustomizableModelPart rightLeg = layers[1];
 		CustomizableModelPart leftArm = layers[2];
@@ -86,45 +89,45 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	    boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 	    float color = red ? 0.5f : 1f;
 		// Left leg
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible && SkinLayersMod.config.enableLeftPants) {
 			matrixStack.pushPose();
 			this.getParentModel().leftLeg.translateAndRotate(matrixStack);
-			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
 			leftLeg.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// Right leg
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG) && this.getParentModel().rightLeg.visible) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG) && this.getParentModel().rightLeg.visible && SkinLayersMod.config.enableRightPants) {
 			matrixStack.pushPose();
 			this.getParentModel().rightLeg.translateAndRotate(matrixStack);
-			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
 			rightLeg.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// Left Arm
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().leftArm.visible) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().leftArm.visible && SkinLayersMod.config.enableLeftSleeve) {
 			matrixStack.pushPose();
 			this.getParentModel().leftArm.translateAndRotate(matrixStack);
 			leftArm.x = thinArms ? 0.6f: 1f;
-			matrixStack.scale(pixelScaling, armHeightScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
 			leftArm.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// Right Arm
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().rightArm.visible) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE) && this.getParentModel().rightArm.visible && SkinLayersMod.config.enableRightSleeve) {
 			matrixStack.pushPose();
 			this.getParentModel().rightArm.translateAndRotate(matrixStack);
 			rightArm.x = thinArms ? -0.6f: -1f;
-			matrixStack.scale(pixelScaling, armHeightScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
 			rightArm.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
 		// jacket
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET) && this.getParentModel().body.visible) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET) && this.getParentModel().body.visible && SkinLayersMod.config.enableJacket) {
 			matrixStack.pushPose();
 			jacket.copyFrom(this.getParentModel().jacket);
 			jacket.y -= 1f;
-			matrixStack.scale(pixelScaling, pixelScaling, pixelScaling);
+			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
 			if(abstractClientPlayer.isCrouching()) {
 				matrixStack.translate(0, 0, -0.025f);
 			}
