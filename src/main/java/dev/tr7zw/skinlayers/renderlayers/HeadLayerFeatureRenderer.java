@@ -7,7 +7,6 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import dev.tr7zw.skinlayers.Settings;
 import dev.tr7zw.skinlayers.SkinLayersMod;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
@@ -46,7 +45,7 @@ public class HeadLayerFeatureRenderer
 		if (!player.isSkinLoaded() || player.isInvisible() || !SkinLayersMod.config.enableHat) {
 			return;
 		}
-		if(mc.player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
+		if(mc.player.distanceToSqr(player) > SkinLayersMod.config.renderDistanceLOD*SkinLayersMod.config.renderDistanceLOD)return;
 		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
 		if (itemStack != null && hideHeadLayers.contains(itemStack.getItem())) {

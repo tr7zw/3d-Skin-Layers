@@ -13,4 +13,6 @@ public class Config {
     public float bodyVoxelHeightSize = 1.1f;
     public float headVoxelSize = 1.18f;
     
+    public int renderDistanceLOD = 14;
+    
 }

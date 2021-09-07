@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import dev.tr7zw.skinlayers.Settings;
 import dev.tr7zw.skinlayers.SkinLayersMod;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
@@ -41,7 +40,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
         if (!player.isSkinLoaded() || player.isInvisible()) {
             return;
         }
-        if(mc.player.distanceToSqr(player) > Settings.viewDistanceSqr)return;
+        if(mc.player.distanceToSqr(player) > SkinLayersMod.config.renderDistanceLOD*SkinLayersMod.config.renderDistanceLOD)return;
 
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering

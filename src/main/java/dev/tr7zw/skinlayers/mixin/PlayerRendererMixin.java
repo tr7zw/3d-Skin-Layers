@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import dev.tr7zw.skinlayers.Settings;
 import dev.tr7zw.skinlayers.SkinLayersMod;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
@@ -40,7 +39,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > Settings.viewDistanceSqr)return;
+        if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > SkinLayersMod.config.renderDistanceLOD*SkinLayersMod.config.renderDistanceLOD)return;
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
         playerModel.hat.visible = !SkinLayersMod.config.enableHat;
         playerModel.jacket.visible = !SkinLayersMod.config.enableJacket;
