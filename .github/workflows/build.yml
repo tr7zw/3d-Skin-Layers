@@ -36,4 +36,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: build/libs/
+          path: |
+            3dSkinLayers-Fabric/build/libs/
+            3dSkinLayers-Forge/build/libs/

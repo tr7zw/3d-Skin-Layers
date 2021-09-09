@@ -7,7 +7,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import dev.tr7zw.skinlayers.SkinLayersMod;
+import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
@@ -42,10 +42,10 @@ public class HeadLayerFeatureRenderer
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
 			float l) {
-		if (!player.isSkinLoaded() || player.isInvisible() || !SkinLayersMod.config.enableHat) {
+		if (!player.isSkinLoaded() || player.isInvisible() || !SkinLayersModBase.config.enableHat) {
 			return;
 		}
-		if(mc.player.distanceToSqr(player) > SkinLayersMod.config.renderDistanceLOD*SkinLayersMod.config.renderDistanceLOD)return;
+		if(mc.player.distanceToSqr(player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
 		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
 		if (itemStack != null && hideHeadLayers.contains(itemStack.getItem())) {
@@ -78,7 +78,7 @@ public class HeadLayerFeatureRenderer
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		if(settings.getHeadLayers() == null)return;
 		if(!this.getParentModel().head.visible || !abstractClientPlayer.isModelPartShown(PlayerModelPart.HAT))return;
-		float voxelSize = SkinLayersMod.config.headVoxelSize;
+		float voxelSize = SkinLayersModBase.config.headVoxelSize;
 		matrixStack.pushPose();
 		this.getParentModel().head.translateAndRotate(matrixStack);
 		matrixStack.scale(voxelSize, voxelSize, voxelSize);

@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import dev.tr7zw.skinlayers.SkinLayersMod;
+import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.render.CustomizableModelPart;
@@ -39,14 +39,14 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > SkinLayersMod.config.renderDistanceLOD*SkinLayersMod.config.renderDistanceLOD)return;
+        if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
-        playerModel.hat.visible = !SkinLayersMod.config.enableHat;
-        playerModel.jacket.visible = !SkinLayersMod.config.enableJacket;
-        playerModel.leftSleeve.visible = !SkinLayersMod.config.enableLeftSleeve;
-        playerModel.rightSleeve.visible = !SkinLayersMod.config.enableRightSleeve;
-        playerModel.leftPants.visible = !SkinLayersMod.config.enableLeftPants;
-        playerModel.rightPants.visible = !SkinLayersMod.config.enableRightPants;
+        playerModel.hat.visible = !SkinLayersModBase.config.enableHat;
+        playerModel.jacket.visible = !SkinLayersModBase.config.enableJacket;
+        playerModel.leftSleeve.visible = !SkinLayersModBase.config.enableLeftSleeve;
+        playerModel.rightSleeve.visible = !SkinLayersModBase.config.enableRightSleeve;
+        playerModel.leftPants.visible = !SkinLayersModBase.config.enableLeftPants;
+        playerModel.rightPants.visible = !SkinLayersModBase.config.enableRightPants;
     }
     
     @Inject(method = "renderHand", at = @At("RETURN"))

@@ -8,14 +8,11 @@ import java.nio.file.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import net.fabricmc.api.ClientModInitializer;
-
-public class SkinLayersMod implements ClientModInitializer {
+public abstract class SkinLayersModBase {
 	
     public static Config config = null;
     
-    @Override
-	public void onInitializeClient() {
+	public void onInitialize() {
         File settingsFile = new File("config", "skinlayers.json");
         if(settingsFile.exists()) {
             try {

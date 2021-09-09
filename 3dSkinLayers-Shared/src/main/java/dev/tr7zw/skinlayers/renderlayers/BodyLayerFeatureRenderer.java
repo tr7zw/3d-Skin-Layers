@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import dev.tr7zw.skinlayers.SkinLayersMod;
+import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
@@ -40,7 +40,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
         if (!player.isSkinLoaded() || player.isInvisible()) {
             return;
         }
-        if(mc.player.distanceToSqr(player) > SkinLayersMod.config.renderDistanceLOD*SkinLayersMod.config.renderDistanceLOD)return;
+        if(mc.player.distanceToSqr(player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
 
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
@@ -77,8 +77,8 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
 	public void renderLayers(AbstractClientPlayer abstractClientPlayer, CustomizableModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		if(layers == null)return;
-		float pixelScaling = SkinLayersMod.config.baseVoxelSize;
-		float heightScaling = SkinLayersMod.config.bodyVoxelHeightSize;
+		float pixelScaling = SkinLayersModBase.config.baseVoxelSize;
+		float heightScaling = SkinLayersModBase.config.bodyVoxelHeightSize;
 		CustomizableModelPart leftLeg = layers[0];
 		CustomizableModelPart rightLeg = layers[1];
 		CustomizableModelPart leftArm = layers[2];
@@ -88,7 +88,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	    boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 	    float color = red ? 0.5f : 1f;
 		// Left leg
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible && SkinLayersMod.config.enableLeftPants) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG) && this.getParentModel().leftLeg.visible && SkinLayersModBase.config.enableLeftPants) {
 			matrixStack.pushPose();
 			this.getParentModel().leftLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
@@ -96,7 +96,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// Right leg
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG) && this.getParentModel().rightLeg.visible && SkinLayersMod.config.enableRightPants) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG) && this.getParentModel().rightLeg.visible && SkinLayersModBase.config.enableRightPants) {
 			matrixStack.pushPose();
 			this.getParentModel().rightLeg.translateAndRotate(matrixStack);
 			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
@@ -104,7 +104,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// Left Arm
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().leftArm.visible && SkinLayersMod.config.enableLeftSleeve) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.LEFT_SLEEVE) && this.getParentModel().leftArm.visible && SkinLayersModBase.config.enableLeftSleeve) {
 			matrixStack.pushPose();
 			this.getParentModel().leftArm.translateAndRotate(matrixStack);
 			leftArm.x = thinArms ? 0.6f: 1f;
@@ -113,7 +113,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// Right Arm
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE) && this.getParentModel().rightArm.visible && SkinLayersMod.config.enableRightSleeve) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE) && this.getParentModel().rightArm.visible && SkinLayersModBase.config.enableRightSleeve) {
 			matrixStack.pushPose();
 			this.getParentModel().rightArm.translateAndRotate(matrixStack);
 			rightArm.x = thinArms ? -0.6f: -1f;
@@ -122,7 +122,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.popPose();
 		}
 		// jacket
-		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET) && this.getParentModel().body.visible && SkinLayersMod.config.enableJacket) {
+		if(abstractClientPlayer.isModelPartShown(PlayerModelPart.JACKET) && this.getParentModel().body.visible && SkinLayersModBase.config.enableJacket) {
 			matrixStack.pushPose();
 			jacket.copyFrom(this.getParentModel().jacket);
 			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
