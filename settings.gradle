@@ -11,4 +11,4 @@ pluginManagement {
 
 include '3dSkinLayers-Shared'
 include '3dSkinLayers-Fabric'
-include '3dSkinLayers-Forge'
+//include '3dSkinLayers-Forge'

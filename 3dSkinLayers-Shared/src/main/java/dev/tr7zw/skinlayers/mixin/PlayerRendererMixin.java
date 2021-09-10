@@ -19,7 +19,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -27,15 +27,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
-    public PlayerRendererMixin(Context context, PlayerModel<AbstractClientPlayer> entityModel, float f) {
-        super(context, entityModel, f);
+    public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher,
+            PlayerModel<AbstractClientPlayer> entityModel, float f) {
+        super(entityRenderDispatcher, entityModel, f);
     }
-
-    @Inject(method = "<init>*", at = @At("RETURN"))
-    public void onCreate(CallbackInfo info) {
-        this.addLayer(new HeadLayerFeatureRenderer(this));
-        this.addLayer(new BodyLayerFeatureRenderer(this));
-    }
+    
+    private boolean loaded = false;
     
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
@@ -47,6 +44,11 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         playerModel.rightSleeve.visible = !SkinLayersModBase.config.enableRightSleeve;
         playerModel.leftPants.visible = !SkinLayersModBase.config.enableLeftPants;
         playerModel.rightPants.visible = !SkinLayersModBase.config.enableRightPants;
+        if(!loaded) {
+            loaded = true;
+            this.addLayer(new HeadLayerFeatureRenderer(this));
+            this.addLayer(new BodyLayerFeatureRenderer(this)); 
+        }
     }
     
     @Inject(method = "renderHand", at = @At("RETURN"))

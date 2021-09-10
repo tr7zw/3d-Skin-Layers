@@ -12,7 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(PlayerModel.class)
 public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel<T> implements PlayerEntityModelAccessor {
 
-    public PlayerModelMixin(ModelPart modelPart) {
+    public PlayerModelMixin(float modelPart) {
         super(modelPart);
     }
 

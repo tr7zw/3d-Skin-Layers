@@ -17,7 +17,7 @@ public class SolidPixelWrapper {
 
     public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage, PlayerModel<AbstractClientPlayer> model, int width,
             int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
-        List<Cube> cubes = new ArrayList<>();
+        List<CustomizableCube> cubes = new ArrayList<>();
         float pixelSize = 1f;
         float staticXOffset = -width / 2f;
         float staticYOffset = topPivot ? +rotationOffset : -height + rotationOffset;
@@ -79,7 +79,7 @@ public class SolidPixelWrapper {
     private static Direction[] hiddenDirUD = new Direction[] { Direction.EAST, Direction.WEST, Direction.NORTH,
             Direction.SOUTH };
 
-    private static void addPixel(NativeImage natImage, List<Cube> cubes, float pixelSize, boolean onBorder, int u,
+    private static void addPixel(NativeImage natImage, List<CustomizableCube> cubes, float pixelSize, boolean onBorder, int u,
             int v, float x, float y, float z, Direction dir) {
         if (natImage.getLuminanceOrAlpha(u, v) != 0) {
             Set<Direction> hide = new HashSet<>();

@@ -39,6 +39,7 @@ public class HeadLayerFeatureRenderer
 	
 	private static final Minecraft mc = Minecraft.getInstance();
 	
+	@Override
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
 			float l) {

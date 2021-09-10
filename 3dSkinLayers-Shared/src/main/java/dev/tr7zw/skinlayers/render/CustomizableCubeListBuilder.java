@@ -4,12 +4,11 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.core.Direction;
 
 public class CustomizableCubeListBuilder {
 
-    private final List<Cube> cubes = Lists.newArrayList();
+    private final List<CustomizableCube> cubes = Lists.newArrayList();
     private int xTexOffs;
     private int yTexOffs;
     private boolean mirror;
@@ -29,7 +28,7 @@ public class CustomizableCubeListBuilder {
         return this;
     }
 
-    public List<Cube> getCubes() {
+    public List<CustomizableCube> getCubes() {
         return cubes;
     }
 

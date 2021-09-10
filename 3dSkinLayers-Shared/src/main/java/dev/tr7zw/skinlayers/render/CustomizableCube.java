@@ -83,8 +83,7 @@ public class CustomizableCube extends Cube {
         return true;
     }
 
-    @Override
-    public void compile(Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void render(Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
         Polygon polygon;

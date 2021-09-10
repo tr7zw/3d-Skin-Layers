@@ -9,8 +9,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.ModelPart.Cube;
-import net.minecraft.client.model.geom.PartPose;
 
 /**
  * Cut down copy of the Vanilla ModelPart to bypass Optifine/Sodium screwing
@@ -26,21 +24,12 @@ public class CustomizableModelPart {
     public float yRot;
     public float zRot;
     public boolean visible = true;
-    private final List<Cube> cubes;
+    private final List<CustomizableCube> cubes;
     private final Map<String, ModelPart> children;
 
-    public CustomizableModelPart(List<Cube> list, Map<String, ModelPart> map) {
+    public CustomizableModelPart(List<CustomizableCube> list, Map<String, ModelPart> map) {
         this.cubes = list;
         this.children = map;
-    }
-
-    public void loadPose(PartPose partPose) {
-        this.x = partPose.x;
-        this.y = partPose.y;
-        this.z = partPose.z;
-        this.xRot = partPose.xRot;
-        this.yRot = partPose.yRot;
-        this.zRot = partPose.zRot;
     }
 
     public void copyFrom(ModelPart modelPart) {
@@ -101,8 +90,8 @@ public class CustomizableModelPart {
 
     private void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int i, int j, float f, float g, float h,
             float k) {
-        for (Cube cube : this.cubes)
-            cube.compile(pose, vertexConsumer, i, j, f, g, h, k);
+        for (CustomizableCube cube : this.cubes)
+            cube.render(pose, vertexConsumer, i, j, f, g, h, k);
     }
 
 }
