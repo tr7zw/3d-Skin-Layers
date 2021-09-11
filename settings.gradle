@@ -8,6 +8,10 @@ pluginManagement {
         gradlePluginPortal()
          maven { url "https://maven.architectury.dev/" }
          maven { url "https://files.minecraftforge.net/maven/" }
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+        maven {url='https://dist.creeper.host/Sponge/maven'}
+        maven {url='https://repo.spongepowered.org/maven/'}
     }
 }
 
