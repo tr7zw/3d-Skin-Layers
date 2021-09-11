@@ -6,9 +6,11 @@ pluginManagement {
             url = 'https://maven.fabricmc.net/'
         }
         gradlePluginPortal()
+         maven { url "https://maven.architectury.dev/" }
+         maven { url "https://files.minecraftforge.net/maven/" }
     }
 }
 
 include '3dSkinLayers-Shared'
 include '3dSkinLayers-Fabric'
-//include '3dSkinLayers-Forge'
+include '3dSkinLayers-Forge'

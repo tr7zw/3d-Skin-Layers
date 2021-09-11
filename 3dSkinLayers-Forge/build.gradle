@@ -6,16 +6,15 @@ buildscript {
         maven {url='https://dist.creeper.host/Sponge/maven'}
         maven {url='https://repo.spongepowered.org/maven/'}
     }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
 }
-apply plugin: 'net.minecraftforge.gradle'
+plugins {
+	id "dev.architectury.loom" version "0.9.0-SNAPSHOT"
+}
+
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
+apply plugin: "dev.architectury.loom"
 
 version = project.mod_version
 group = project.maven_group
@@ -23,67 +22,15 @@ archivesBaseName = '3dSkinLayers-forge'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
-
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-
-    mappings channel: 'official', version: project.minecraft_version
-
-    runs {
-        client {
-       		property 'mixin.env.disableRefMap', 'true'
-            workingDirectory project.file('run')
-			arg "-Dmixin.config=3dskinlayers.mixins.json"
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+	refmapName = "3dskinlayers.refmap.json"
 }
 
+loom {
+    useFabricMixin = true
+    refmapName = "3dskinlayers.refmap.json"
+    mixinConfig "3dskinlayers.mixins.json"
+}
 
 repositories {
     jcenter()
@@ -103,7 +50,9 @@ configurations {
 project.evaluationDependsOn(':3dSkinLayers-Shared')
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-36.2.4"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+    forge "net.minecraftforge:forge:${project.minecraft_version}-36.2.4"
 
     implementation 'org.spongepowered:mixin:0.8.3'
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
@@ -130,14 +79,4 @@ jar {
     from {
         configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
     }
-}
-
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
-
-mixin {
-    add sourceSets.main, "3dskinlayers.refmap.json"
 }
