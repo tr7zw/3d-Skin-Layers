@@ -19,6 +19,6 @@ Renders the player skin layer in 3d
 [[dependencies.skinlayers3d]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,)"
+    versionRange="[1.15.2,)"
     ordering="NONE"
     side="CLIENT"
