@@ -9,12 +9,6 @@ authors="tr7zw"
 description='''
 Renders the player skin layer in 3d
 '''
-[[dependencies.skinlayers3d]] #optional
-    modId="forge"
-    mandatory=true
-    versionRange="[35,)"
-    ordering="NONE"
-    side="CLIENT"
 # Here's another dependency
 [[dependencies.skinlayers3d]]
     modId="minecraft"
