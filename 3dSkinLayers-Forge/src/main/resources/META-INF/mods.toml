@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[31,)"
 license="MIT"
 [[mods]]
 modId="skinlayers3d"
