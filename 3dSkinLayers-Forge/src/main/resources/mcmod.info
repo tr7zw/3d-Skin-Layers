@@ -1,0 +1,16 @@
+[
+{
+  "modid": "skinlayers3d",
+  "name": "3dSkinLayers",
+  "description": "Renders the player skin layer in 3d",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["tr7zw"],
+  "credits": "",
+  "logoFile": "3dskinlayers/icon.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

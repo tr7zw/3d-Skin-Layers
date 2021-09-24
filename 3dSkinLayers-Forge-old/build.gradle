@@ -1,0 +1,65 @@
+plugins {
+	id "dev.architectury.loom" version "0.9.0-SNAPSHOT"
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+apply plugin: "dev.architectury.loom"
+
+version = project.mod_version
+group = project.maven_group
+archivesBaseName = '3dSkinLayers-forge'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+minecraft {
+	refmapName = "3dskinlayers.refmap.json"
+}
+
+loom {
+    useFabricMixin = true
+    refmapName = "3dskinlayers.refmap.json"
+    mixinConfig "3dskinlayers.mixins.json"
+}
+
+repositories {
+    jcenter()
+    maven {
+        url "https://repo.codemc.io/repository/maven-public/"
+    }
+}
+
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
+}
+
+project.evaluationDependsOn(':3dSkinLayers-Shared')
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	//mappings loom.officialMojangMappings()
+    forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+    sourceSets.main.java.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.java.srcDirs)
+	sourceSets.main.resources.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.resources.srcDirs)
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "3dSkinLayers",
+            "Specification-Vendor": "tr7zw",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"tr7zw",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "3dskinlayers.mixins.json",
+            "ContainedDeps": ""
+        ])
+    }
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

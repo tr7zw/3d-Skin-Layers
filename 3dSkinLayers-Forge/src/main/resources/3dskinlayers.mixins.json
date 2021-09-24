@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "verbose": true,
+  "package": "dev.tr7zw.skinlayers.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mixin.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "PlayerModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

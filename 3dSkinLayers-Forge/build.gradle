@@ -1,65 +1,95 @@
-plugins {
-	id "dev.architectury.loom" version "0.9.0-SNAPSHOT"
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            name = 'sponge'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+    }
 }
 
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: "dev.architectury.loom"
+apply plugin: 'net.minecraftforge.gradle.tweaker-client'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'java'
 
+archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
-archivesBaseName = '3dSkinLayers-forge'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+sourceCompatibility = targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 minecraft {
-	refmapName = "3dskinlayers.refmap.json"
-}
-
-loom {
-    useFabricMixin = true
-    refmapName = "3dskinlayers.refmap.json"
-    mixinConfig "3dskinlayers.mixins.json"
+    version = "1.8.9"
+    tweakClass = "dev.tr7zw.skinlayers.Tweaker"
+    runDir = "run"
+    mappings = "stable_22"
+    clientJvmArgs = ["-XX:-DisableExplicitGC"]
+    makeObfSourceJar = true
 }
 
 repositories {
-    jcenter()
+    maven {
+        name "spongepowered"
+        url "https://repo.spongepowered.org/maven/"
+    }
+    maven { url 'https://jitpack.io' } //fabric asm
     maven {
         url "https://repo.codemc.io/repository/maven-public/"
     }
+	maven { url "https://maven.legacyfabric.net"}
 }
 
 configurations {
-    // configuration that holds jars to include in the jar
-    extraLibs
+    embed
+    compile.extendsFrom(embed)
 }
 
-project.evaluationDependsOn(':3dSkinLayers-Shared')
-
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-    forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    embed('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
+        exclude module: 'launchwrapper'
+    }
+}
 
-    sourceSets.main.java.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.java.srcDirs)
-	sourceSets.main.resources.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.resources.srcDirs)
+mixin {
+    defaultObfuscationEnv = "searge"
+}
+
+processResources {
+    inputs.files "src/main/resources"
+    outputs.dir "build/classes/main"
+    copy {
+        from("src/main/resources")
+        into("build/classes/main")
+    }
 }
 
 jar {
-    manifest {
-        attributes([
-            "Specification-Title": "3dSkinLayers",
-            "Specification-Vendor": "tr7zw",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"tr7zw",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "3dskinlayers.mixins.json",
-            "ContainedDeps": ""
-        ])
-    }
+    dependsOn configurations.compile
     from {
-        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.embed.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
+
+jar {
+    manifest.attributes(
+            "MixinConfigs": '3dskinlayers.mixins.json',
+            "TweakClass": 'dev.tr7zw.skinlayers.Tweaker',
+            "TweakOrder": 0,
+            "Manifest-Version": 1.0
+    )
+
+    configurations.embed.each { dep ->
+        from(project.zipTree(dep)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
     }
 }
