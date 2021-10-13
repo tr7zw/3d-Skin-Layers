@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.render.CustomizableModelPart;
@@ -56,29 +57,31 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         float pixelScaling = 1.1f;
         float armHeightScaling = 1.1f;
-        if(settings.getSkinLayers() != null) {
-            CustomizableModelPart part = null;
-            boolean thinArms = ((PlayerEntityModelAccessor)getModel()).hasThinArms();
-            if(sleeve == this.model.leftSleeve) {
-                part = settings.getSkinLayers()[2];
-            }else {
-                part = settings.getSkinLayers()[3];
-            }
-            part.copyFrom(arm);
-            poseStack.pushPose();
-            poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
-            part.y -= 0.6;
-            if(!thinArms) {
-                part.x -= 0.4;
-            }
-            part.render(poseStack,
-                multiBufferSource
-                        .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),
-                i, OverlayTexture.NO_OVERLAY);
-            part.setPos(0, 0, 0);
-            part.setRotation(0, 0, 0);
-            poseStack.popPose();
+        boolean thinArms = ((PlayerEntityModelAccessor)getModel()).hasThinArms();
+        if(settings.getSkinLayers() == null && !SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
+            return;
         }
+        CustomizableModelPart part = null;
+        if(sleeve == this.model.leftSleeve) {
+            part = settings.getSkinLayers()[2];
+        }else {
+            part = settings.getSkinLayers()[3];
+        }
+        part.copyFrom(arm);
+        poseStack.pushPose();
+        poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
+        part.y -= 0.6;
+        if(!thinArms) {
+            part.x -= 0.4;
+        }
+        part.render(poseStack,
+            multiBufferSource
+                    .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),
+            i, OverlayTexture.NO_OVERLAY);
+        part.setPos(0, 0, 0);
+        part.setRotation(0, 0, 0);
+        poseStack.popPose();
+
     }
     
 }

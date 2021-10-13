@@ -1,6 +1,5 @@
 package dev.tr7zw.skinlayers.renderlayers;
 
-import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -9,7 +8,6 @@ import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.render.CustomizableModelPart;
-import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -44,7 +42,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
-		if(settings.getSkinLayers() == null && !setupModel(player, settings)) {
+		if(settings.getSkinLayers() == null && !SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
 			return; // no head layer setup and wasn't able to setup
 		}
 		
@@ -52,27 +50,6 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 				.getBuffer(RenderType.entityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
 		int m = LivingEntityRenderer.getOverlayCoords((LivingEntity) player, (float) 0.0f);
 		renderLayers(player, (CustomizableModelPart[]) settings.getSkinLayers(), poseStack, vertexConsumer, i, m);
-	}
-	
-	private boolean setupModel(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings) {
-		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
-			return false; // default skin
-		}
-		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
-		CustomizableModelPart[] layers = new CustomizableModelPart[5];
-		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 48, true, 0f);
-		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 32, true, 0f);
-		if(thinArms) {
-			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 48, 48, true, -2.5f);
-			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 3, 12, 4, 40, 32, true, -2.5f);
-		} else {
-			layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 48, 48, true, -2.5f);
-			layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 40, 32, true, -2.5f);
-		}
-		layers[4] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 8, 12, 4, 16, 32, true, -0.8f);
-		settings.setupSkinLayers(layers);
-		skin.untrack();
-		return true;
 	}
 
 	public void renderLayers(AbstractClientPlayer abstractClientPlayer, CustomizableModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
