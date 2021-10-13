@@ -126,9 +126,6 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			matrixStack.pushPose();
 			jacket.copyFrom(this.getParentModel().jacket);
 			matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
-			if(abstractClientPlayer.isCrouching()) {
-				matrixStack.translate(0, 0, -0.025f);
-			}
 			jacket.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 			matrixStack.popPose();
 		}
