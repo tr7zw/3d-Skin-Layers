@@ -100,10 +100,10 @@ public class SolidPixelWrapper {
                 }
             }
             boolean removeBackside = true;
-            if(textureU == 0 && !checkNeighbor(natImage, u, v, new int[]{-1,0}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+            if(onFaceU == 0 && !checkNeighbor(natImage, u, v, new int[]{-1,0}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
                 removeBackside = false;
             }
-            if(textureV == 0 && !checkNeighbor(natImage, u, v, new int[]{0,-1}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+            if(onFaceV == 0 && !checkNeighbor(natImage, u, v, new int[]{0,-1}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
                 removeBackside = false;
             }
             if(onUMax && !checkNeighbor(natImage, u, v, new int[]{1,0}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
@@ -178,7 +178,7 @@ public class SolidPixelWrapper {
             }
         }
         if(dir == Direction.UP) { // top to sides
-            if(onFaceV == height - 1 && vOffset == 1) { // top to back
+            if(onFaceV == height - 1 && vOffset == -1) { // top to back
                 val[0] = textureU + 2 * depth + width + width - 1 - onFaceU;
                 val[1] = textureV + depth;
             }
@@ -197,6 +197,12 @@ public class SolidPixelWrapper {
             if(onFaceU == width - 1 && uOffset == 1) { // top to back
                 val[0] = textureU;
                 val[1] = textureV + depth;
+            }
+        }
+        if(dir == Direction.EAST) { // left to back
+            if(onFaceU == 0 && uOffset == -1) { // top to back
+                val[0] = textureU + depth + width + depth + width -1;
+                val[1] = v;
             }
         }
         return val;
