@@ -1,9 +1,10 @@
 package dev.tr7zw.skinlayers;
 
-import dev.tr7zw.skinlayers.SkinLayersModBase;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
 
 @Mod("skinlayers3d")
 public class EntityCullingMod extends SkinLayersModBase {
@@ -19,6 +20,9 @@ public class EntityCullingMod extends SkinLayersModBase {
             onServer = true;
             return;
         }
+        ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, () -> new ConfigGuiFactory((mc, screen) -> {
+            return createConfigScreen(screen);
+        }));
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     }
 
