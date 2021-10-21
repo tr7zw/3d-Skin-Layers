@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.mojang.blaze3d.platform.NativeImage;
 
+import dev.tr7zw.skinlayers.SkinLayersModBase;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -15,59 +16,72 @@ import net.minecraft.core.Direction;
 
 public class SolidPixelWrapper {
 
+    private record UV(int u, int v) {}
+    private record UVFlags(boolean u, boolean v) {}
+    public record Dimensions(int width, int height, int depth) {}
+    public record Position(float x, float y, float z) {}
+    
+    private static final float pixelSize = 1f;
+    
     public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage, PlayerModel<AbstractClientPlayer> model, int width,
             int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
         List<Cube> cubes = new ArrayList<>();
-        float pixelSize = 1f;
         float staticXOffset = -width / 2f;
         float staticYOffset = topPivot ? +rotationOffset : -height + rotationOffset;
         float staticZOffset = -depth / 2f;
-        // Front/back
-        for (int u = 0; u < width; u++) {
-            for (int v = 0; v < height; v++) {
-                // front
-                addPixel(natImage, cubes, pixelSize, u == width - 1, v == height - 1,
-                        textureU + depth + u, textureV + depth + v, staticXOffset + u, staticYOffset + v, staticZOffset,
-                        Direction.SOUTH, width, height, depth, u, v, textureU, textureV);
-                // back
-                addPixel(natImage, cubes, pixelSize, u == width - 1, v == height - 1,
-                        textureU + 2 * depth + width + u, textureV + depth + v, staticXOffset + width - 1 - u,
-                        staticYOffset + v, staticZOffset + depth - 1, Direction.NORTH, width, height, depth, u, v, textureU, textureV);
+        Dimensions dimensions = new Dimensions(width, height, depth);
+        UV textureUV = new UV(textureU, textureV);
+        try {
+            // Front/back
+            for (int u = 0; u < width; u++) {
+                for (int v = 0; v < height; v++) {
+                    // front
+                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == height - 1),
+                            new UV(textureU + depth + u, textureV + depth + v), new Position(staticXOffset + u, staticYOffset + v, staticZOffset),
+                            Direction.SOUTH, dimensions, new UV(u, v), textureUV);
+                    // back
+                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == height - 1),
+                            new UV(textureU + 2 * depth + width + u, textureV + depth + v), new Position(staticXOffset + width - 1 - u,
+                            staticYOffset + v, staticZOffset + depth - 1), Direction.NORTH, dimensions, new UV(u, v), textureUV);
+                }
             }
-        }
-
-        // sides
-        for (int u = 0; u < depth; u++) {
-            for (int v = 0; v < height; v++) {
-                // left
-                addPixel(natImage, cubes, pixelSize, u == depth - 1, v == height - 1,
-                        textureU - 1 + depth - u, textureV + depth + v, staticXOffset, staticYOffset + v,
-                        staticZOffset + u, Direction.EAST, width, height, depth, u, v, textureU, textureV);
-                // right
-                addPixel(natImage, cubes, pixelSize, u == depth - 1, v == height - 1,
-                        textureU + depth + width + u, textureV + depth + v, staticXOffset + width - 1f,
-                        staticYOffset + v, staticZOffset + u, Direction.WEST, width, height, depth, u, v, textureU, textureV);
-
+    
+            // sides
+            for (int u = 0; u < depth; u++) {
+                for (int v = 0; v < height; v++) {
+                    // left
+                    addPixel(natImage, cubes, new UVFlags(u == depth - 1, v == height - 1),
+                            new UV(textureU - 1 + depth - u, textureV + depth + v), new Position(staticXOffset, staticYOffset + v,
+                            staticZOffset + u), Direction.EAST, dimensions, new UV(u, v), textureUV);
+                    // right
+                    addPixel(natImage, cubes, new UVFlags(u == depth - 1, v == height - 1),
+                            new UV(textureU + depth + width + u, textureV + depth + v), new Position(staticXOffset + width - 1f,
+                            staticYOffset + v, staticZOffset + u), Direction.WEST, dimensions, new UV(u, v), textureUV);
+    
+                }
             }
-        }
-        // top/bottom
-        for (int u = 0; u < width; u++) {
-            for (int v = 0; v < depth; v++) {
-                // top
-                addPixel(natImage, cubes, pixelSize, u == width - 1, v == depth - 1,
-                        textureU + depth + u, textureV + depth - 1 - v, staticXOffset + u, staticYOffset,
-                        staticZOffset + v, Direction.UP, width, height, depth, u, v, textureU, textureV); // Sides are flipped cause ?!?
-                // bottom
-                addPixel(natImage, cubes, pixelSize, u == width - 1, v == depth - 1,
-                        textureU + depth + width + u, textureV + depth - 1 - v, staticXOffset + u,
-                        staticYOffset + height - 1f, staticZOffset + v, Direction.DOWN, width, height, depth, u, v, textureU, textureV); // Sides are flipped cause ?!?
+            // top/bottom
+            for (int u = 0; u < width; u++) {
+                for (int v = 0; v < depth; v++) {
+                    // top
+                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == depth - 1),
+                            new UV(textureU + depth + u, textureV + depth - 1 - v), new Position(staticXOffset + u, staticYOffset,
+                            staticZOffset + v), Direction.UP, dimensions, new UV(u, v), textureUV); // Sides are flipped cause ?!?
+                    // bottom
+                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == depth - 1),
+                            new UV(textureU + depth + width + u, textureV + depth - 1 - v), new Position(staticXOffset + u,
+                            staticYOffset + height - 1f, staticZOffset + v), Direction.DOWN, dimensions, new UV(u, v), textureUV); // Sides are flipped cause ?!?
+                }
             }
+        }catch(Exception ex) { // Some calculation went wrong and out of bounds/some other issue
+            SkinLayersModBase.LOGGER.error("Error while creating 3d skin model. Please report on the Github/Discord.", ex);
+            return new CustomizableModelPart(new ArrayList<Cube>(), new HashMap<>()); // empty model
         }
 
         return new CustomizableModelPart(cubes, new HashMap<>());
     }
-
-    private static int[][] offsets = new int[][] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+    
+    private static UV[] offsets = new UV[] { new UV(1, 0), new UV(-1, 0), new UV(0, 1), new UV(0, -1) };
     private static Direction[] hiddenDirN = new Direction[] { Direction.WEST, Direction.EAST, Direction.UP,
             Direction.DOWN };
     private static Direction[] hiddenDirS = new Direction[] { Direction.EAST, Direction.WEST, Direction.UP,
@@ -78,14 +92,12 @@ public class SolidPixelWrapper {
             Direction.DOWN };
     private static Direction[] hiddenDirUD = new Direction[] { Direction.EAST, Direction.WEST, Direction.NORTH,
             Direction.SOUTH };
-    //new Direction[] { Direction.WEST, Direction.EAST, Direction.SOUTH, Direction.NORTH };
     
-    private static void addPixel(NativeImage natImage, List<Cube> cubes, float pixelSize, boolean onUMax, boolean onVMax, int u,
-            int v, float x, float y, float z, Direction dir, int width, int height, int depth, int onFaceU, int onFaceV, int textureU, int textureV) {
-        if (natImage.getLuminanceOrAlpha(u, v) != 0) {
+    private static void addPixel(NativeImage natImage, List<Cube> cubes, UVFlags onMax, UV position, Position cubePosition, Direction dir, Dimensions dimensions, UV onFace, UV texturePosition) {
+        if (natImage.getLuminanceOrAlpha(position.u, position.v) != 0) {
             Set<Direction> hide = new HashSet<>();
             for (int i = 0; i < offsets.length; i++) {
-                if (checkNeighbor(natImage, u, v, offsets[i], u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+                if (checkNeighbor(natImage, position, offsets[i], dimensions, onFace, dir, texturePosition)) {
                     if (dir == Direction.NORTH)
                         hide.add(hiddenDirN[i]);
                     if (dir == Direction.SOUTH)
@@ -100,22 +112,22 @@ public class SolidPixelWrapper {
                 }
             }
             boolean removeBackside = true;
-            if(onFaceU == 0 && !checkNeighbor(natImage, u, v, new int[]{-1,0}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+            if(onFace.u == 0 && !checkNeighbor(natImage, position, new UV(-1,0), dimensions, onFace, dir, texturePosition)) {
                 removeBackside = false;
             }
-            if(onFaceV == 0 && !checkNeighbor(natImage, u, v, new int[]{0,-1}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+            if(onFace.v == 0 && !checkNeighbor(natImage, position, new UV(0,-1), dimensions, onFace, dir, texturePosition)) {
                 removeBackside = false;
             }
-            if(onUMax && !checkNeighbor(natImage, u, v, new int[]{1,0}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+            if(onMax.u && !checkNeighbor(natImage, position, new UV(1,0), dimensions, onFace, dir, texturePosition)) {
                 removeBackside = false;
             }
-            if(onVMax && !checkNeighbor(natImage, u, v, new int[]{0,1}, u, v, width, height, depth, onFaceU, onFaceV, dir, textureU, textureV)) {
+            if(onMax.v && !checkNeighbor(natImage, position, new UV(0,1), dimensions, onFace, dir, texturePosition)) {
                 removeBackside = false;
             }
             if(removeBackside)
                 hide.add(dir);
-            cubes.addAll(CustomizableCubeListBuilder.create().texOffs(u - 2, v - 1)
-                    .addBox(x, y, z, pixelSize, hide.toArray(new Direction[hide.size()])).getCubes());
+            cubes.addAll(CustomizableCubeListBuilder.create().texOffs(position.u - 2, position.v - 1)
+                    .addBox(cubePosition.x, cubePosition.y, cubePosition.z, pixelSize, hide.toArray(new Direction[hide.size()])).getCubes());
         }
     }
     
@@ -136,11 +148,9 @@ public class SolidPixelWrapper {
      * @param textureV
      * @return true when the pixel is not empty
      */
-    private static boolean checkNeighbor(NativeImage natImage, int u, int v,int[] offset, int uOffset, int vOffset, int width, int height, int depth, int onFaceU, int onFaceV, Direction dir, int textureU, int textureV) {
-        int[] pixel = getPixel(u, v, offset[0], offset[1], width, height, depth, onFaceU, onFaceV, dir, textureU, textureV);
-        int tU = pixel[0];
-        int tV = pixel[1];
-        return (tU >= 0 && tU < 64 && tV >= 0 && tV < 64 && natImage.getLuminanceOrAlpha(tU, tV) != 0);
+    private static boolean checkNeighbor(NativeImage natImage, UV basePixel, UV offset, Dimensions dimensions, UV onFace, Direction dir, UV texturePosition) {
+        UV pixel = getOffsetPosition(basePixel, offset, dimensions, onFace, dir, texturePosition);
+        return (natImage.getLuminanceOrAlpha(pixel.u, pixel.v) != 0);
     }
     
     /**
@@ -157,55 +167,46 @@ public class SolidPixelWrapper {
      * @param onFaceV
      * @return
      */
-    private static int[] getPixel(int u, int v, int uOffset, int vOffset, int width, int height, int depth, int onFaceU, int onFaceV, Direction dir, int textureU, int textureV) {
-        int[] val = new int[2];
-        // default handeling
-        val[0] = u + uOffset;
-        val[1] = v + vOffset;
+    private static UV getOffsetPosition(UV basePixel, UV offset, Dimensions dimensions, UV onFace, Direction dir, UV texturePosition) {
+        UV result = null;
         // up offset
-        if(onFaceV == 0 && vOffset == -1) { // this will go out of the current face to the top
+        if(onFace.v == 0 && offset.v == -1) { // this will go out of the current face to the top
             if(dir == Direction.EAST) { // left side to top
-                val[0] = textureU + depth;
-                val[1] = textureV + depth - onFaceU - 1;
+                result = new UV(texturePosition.u + dimensions.depth, texturePosition.v + dimensions.depth - onFace.u - 1);
             }
             if(dir == Direction.WEST) { // right side to top
-                val[0] = textureU + depth + width - 1;
-                val[1] = textureV + depth - onFaceU - 1;
+                result = new UV(texturePosition.u + dimensions.depth + dimensions.width - 1, texturePosition.v + dimensions.depth - onFace.u - 1);
             }
             if(dir == Direction.NORTH) { // back to top
-                val[0] = textureU + depth + width - 1 - onFaceU;
-                val[1] = textureV;
+                result = new UV(texturePosition.u + dimensions.depth + dimensions.width - 1 - onFace.u, texturePosition.v);
             }
         }
         if(dir == Direction.UP) { // top to sides
-            if(onFaceV == height - 1 && vOffset == -1) { // top to back
-                val[0] = textureU + 2 * depth + width + width - 1 - onFaceU;
-                val[1] = textureV + depth;
+            if(onFace.v == dimensions.height - 1 && offset.v == -1) { // top to back
+                result = new UV(texturePosition.u + 2 * dimensions.depth + dimensions.width + dimensions.width - 1 - onFace.u, texturePosition.v + dimensions.depth);
             }
-            if(onFaceU == 0 && vOffset == -1) { // top to left
-                val[0] = textureU + depth - 1 - onFaceV;
-                val[1] = textureV + depth;
+            if(onFace.u == 0 && offset.v == -1) { // top to left
+                result = new UV(texturePosition.u + dimensions.depth - 1 - onFace.v, texturePosition.v + dimensions.depth);
             }
-            if(onFaceU == width - 1 && uOffset == 1) { // top to right
-                val[0] = textureU + depth + width + onFaceV;
-                val[1] = textureV + depth;
-                //System.out.println(u + " " + v + " -> " + val[0] + " " + val[1]);
+            if(onFace.u == dimensions.width - 1 && offset.u == 1) { // top to right
+                result = new UV(texturePosition.u + dimensions.depth + dimensions.width + onFace.v, texturePosition.v + dimensions.depth);
             }
             //top to front is the default behavior
         }
         if(dir == Direction.NORTH) { // back to left side
-            if(onFaceU == width - 1 && uOffset == 1) { // top to back
-                val[0] = textureU;
-                val[1] = textureV + depth;
+            if(onFace.u == dimensions.width - 1 && offset.u == 1) { // top to back
+                result = new UV(texturePosition.u, texturePosition.v + dimensions.depth);
             }
         }
         if(dir == Direction.EAST) { // left to back
-            if(onFaceU == 0 && uOffset == -1) { // top to back
-                val[0] = textureU + depth + width + depth + width -1;
-                val[1] = v;
+            if(onFace.u == 0 && offset.u == -1) { // top to back
+                result = new UV(texturePosition.u + dimensions.depth*2 + dimensions.width*2 -1, basePixel.v);
             }
         }
-        return val;
+        if(result == null) { // Default handeling
+            result = new UV(basePixel.u + offset.u, basePixel.v + offset.v);
+        }
+        return result;
     }
 
 }

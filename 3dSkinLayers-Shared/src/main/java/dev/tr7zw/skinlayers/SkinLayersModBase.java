@@ -7,6 +7,9 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -20,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 public abstract class SkinLayersModBase {
 
     public static SkinLayersModBase instance;
+    public static final Logger LOGGER = LogManager.getLogger();
     public static Config config = null;
     private File settingsFile = new File("config", "skinlayers.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
