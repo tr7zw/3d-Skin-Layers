@@ -31,6 +31,12 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+
+}
+
+test {
+    useJUnitPlatform()
 }
 
 minecraft {
