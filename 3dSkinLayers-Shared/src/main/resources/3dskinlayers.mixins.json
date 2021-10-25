@@ -13,7 +13,8 @@
     "SkullBlockEntityRendererMixin",
     "SkullModelMixin",
     "SkullBlockEntityMixin",
-    "BlockEntityWithoutLevelRendererMixin"
+    "BlockEntityWithoutLevelRendererMixin",
+    "CustomHeadLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

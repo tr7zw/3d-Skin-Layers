@@ -32,7 +32,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SkullBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 @Mixin(BlockEntityWithoutLevelRenderer.class)
@@ -47,7 +46,6 @@ public class BlockEntityWithoutLevelRendererMixin {
         if(!SkinLayersModBase.config.enableSkullsItems)return;
         Item item = itemStack.getItem();
         if (item instanceof BlockItem) {
-            BlockEntity blockEntity8;
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof AbstractSkullBlock) {
                 GameProfile gameProfile = null;
