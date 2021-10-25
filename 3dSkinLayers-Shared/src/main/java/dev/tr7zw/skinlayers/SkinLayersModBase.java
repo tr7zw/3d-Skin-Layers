@@ -93,6 +93,8 @@ public abstract class SkinLayersModBase {
                         }));
                 options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> config.enableSkulls,
                         (b) -> config.enableSkulls = b));
+                options.add(getOnOffOption("text.skinlayers.skullsitems.enable", () -> config.enableSkullsItems,
+                        (b) -> config.enableSkullsItems = b));
                 options.add(getDoubleOption("text.skinlayers.skulls.voxelsize", 1.001f, 1.2f, 0.001f,
                         () -> (double) config.skullVoxelSize, (i) -> {
                             config.skullVoxelSize = i.floatValue();

@@ -12,7 +12,8 @@
     "PlayerModelMixin",
     "SkullBlockEntityRendererMixin",
     "SkullModelMixin",
-    "SkullBlockEntityMixin"
+    "SkullBlockEntityMixin",
+    "BlockEntityWithoutLevelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

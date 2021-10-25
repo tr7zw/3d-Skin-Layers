@@ -16,6 +16,7 @@ public class Config {
     public int renderDistanceLOD = 14;
     
     public boolean enableSkulls = true;
+    public boolean enableSkullsItems = true;
     public float skullVoxelSize = 1.1f;
     
 }

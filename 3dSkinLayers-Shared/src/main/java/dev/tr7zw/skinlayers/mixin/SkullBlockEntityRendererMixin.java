@@ -1,5 +1,8 @@
 package dev.tr7zw.skinlayers.mixin;
 
+import static dev.tr7zw.skinlayers.SkullRendererCache.lastSkull;
+import static dev.tr7zw.skinlayers.SkullRendererCache.renderNext;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,7 +15,6 @@ import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.SkullModelAccessor;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.SkullModelBase;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -24,10 +26,6 @@ import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 @Mixin(SkullBlockRenderer.class)
 public class SkullBlockEntityRendererMixin {
-
-    private static boolean renderNext = false;
-    private static SkullSettings lastSkull = null;
-    
     
     @Inject(method = "render", at = @At("HEAD"))
     public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
@@ -37,9 +35,9 @@ public class SkullBlockEntityRendererMixin {
         if(skullBlockEntity.getBlockPos().distSqr((int)player.getX(), (int)player.getY(), (int)player.getZ(), true) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
             if(lastSkull.getHeadLayers() == null) {
-                SkinUtil.setup3dLayers(skullBlockEntity, (SkullSettings) skullBlockEntity);
+                SkinUtil.setup3dLayers(skullBlockEntity.getOwnerProfile(), lastSkull);
             }
-            renderNext = lastSkull.getHeadLayers() != null;;
+            renderNext = lastSkull.getHeadLayers() != null;
         }
     }
     

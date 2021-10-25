@@ -2,6 +2,7 @@ package dev.tr7zw.skinlayers;
 
 import java.util.Map;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.NativeImage;
@@ -13,13 +14,11 @@ import dev.tr7zw.skinlayers.render.CustomizableModelPart;
 import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.SkullModelBase;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 public class SkinUtil {
 
@@ -61,12 +60,12 @@ public class SkinUtil {
         return true;
     }
     
-    public static boolean setup3dLayers(SkullBlockEntity skullBlockEntity, SkullSettings settings) {
-        if(skullBlockEntity.getOwnerProfile() == null || !skullBlockEntity.getOwnerProfile().isComplete()) {
+    public static boolean setup3dLayers(GameProfile gameprofile, SkullSettings settings) {
+        if(gameprofile == null || !gameprofile.isComplete()) {
             return false; // no skin/not loaded
         }
         Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = Minecraft.getInstance().getSkinManager()
-                .getInsecureSkinInformation(skullBlockEntity.getOwnerProfile());
+                .getInsecureSkinInformation(gameprofile);
         NativeImage skin = SkinUtil.getTexture(Minecraft.getInstance().getSkinManager()
                 .registerTexture(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN));
         settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, 8, 8, 8, 32, 0, false, 0.6f));
