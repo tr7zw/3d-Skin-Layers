@@ -10,6 +10,7 @@
     "text.skinlayers.renderdistancelod": "Level of detail distance",
     "text.skinlayers.basevoxelsize": "Voxel size",
     "text.skinlayers.headvoxelsize": "Head Voxel size",
-    "text.skinlayers.bodyvoxelheightsize": "Body Voxel height"
-
+    "text.skinlayers.bodyvoxelheightsize": "Body Voxel height",
+    "text.skinlayers.skulls.enable": "3D Skulls",
+    "text.skinlayers.skulls.voxelsize": "Skull Voxel size"
   }

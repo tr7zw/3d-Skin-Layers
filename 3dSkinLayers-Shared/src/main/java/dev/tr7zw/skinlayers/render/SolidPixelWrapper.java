@@ -11,9 +11,7 @@ import java.util.function.BiFunction;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart.Cube;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
 
 public class SolidPixelWrapper {
@@ -32,7 +30,7 @@ public class SolidPixelWrapper {
 
     private static final float pixelSize = 1f;
 
-    public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage, PlayerModel<AbstractClientPlayer> model,
+    public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage,
             int width, int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
         List<Cube> cubes = new ArrayList<>();
         float staticXOffset = -width / 2f;

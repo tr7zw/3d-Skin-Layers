@@ -9,7 +9,10 @@
   "client": [
     "PlayerRendererMixin",
     "PlayerMixin",
-    "PlayerModelMixin"
+    "PlayerModelMixin",
+    "SkullBlockEntityRendererMixin",
+    "SkullModelMixin",
+    "SkullBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
