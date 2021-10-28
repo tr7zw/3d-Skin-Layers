@@ -61,13 +61,17 @@ public class SkinUtil {
     }
     
     public static boolean setup3dLayers(GameProfile gameprofile, SkullSettings settings) {
-        if(gameprofile == null || !gameprofile.isComplete()) {
-            return false; // no skin/not loaded
+        if(gameprofile == null) {
+            return false; // no gameprofile
         }
         Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = Minecraft.getInstance().getSkinManager()
                 .getInsecureSkinInformation(gameprofile);
+        MinecraftProfileTexture texture = map.get(MinecraftProfileTexture.Type.SKIN);
+        if(texture == null) {
+            return false; // it's a gameprofile, but no skin.
+        }
         NativeImage skin = SkinUtil.getTexture(Minecraft.getInstance().getSkinManager()
-                .registerTexture(map.get(MinecraftProfileTexture.Type.SKIN), MinecraftProfileTexture.Type.SKIN));
+                .registerTexture(texture, MinecraftProfileTexture.Type.SKIN));
         settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, 8, 8, 8, 32, 0, false, 0.6f));
         skin.untrack();
         return true;
