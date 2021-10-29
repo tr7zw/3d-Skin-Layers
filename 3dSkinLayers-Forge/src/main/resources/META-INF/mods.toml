@@ -3,7 +3,7 @@ loaderVersion="[35,)"
 license="MIT"
 [[mods]]
 modId="skinlayers3d"
-version="1.2.0"
+version="1.2.1"
 displayName="3dSkinLayers"
 authors="tr7zw"
 description='''
