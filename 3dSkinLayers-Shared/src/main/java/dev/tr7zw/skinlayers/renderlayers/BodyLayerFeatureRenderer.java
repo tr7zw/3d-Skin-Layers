@@ -59,6 +59,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 			return false; // default skin
 		}
 		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
+		if(skin == null)return false; // fail save
 		CustomizableModelPart[] layers = new CustomizableModelPart[5];
 		layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 48, true, 0f);
 		layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, this.getParentModel(), 4, 12, 4, 0, 32, true, 0f);

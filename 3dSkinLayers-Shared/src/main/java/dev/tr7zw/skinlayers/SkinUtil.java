@@ -20,6 +20,7 @@ public class SkinUtil {
         NativeImage skin = new NativeImage(Format.RGBA, 64, 64, true);
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
         AbstractTexture abstractTexture = textureManager.getTexture(player.getSkinTextureLocation());
+        if(abstractTexture == null)return null; // fail save
         GlStateManager._bindTexture(abstractTexture.getId());
         skin.downloadTexture(0, false);
         return skin;
