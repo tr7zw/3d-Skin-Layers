@@ -73,6 +73,7 @@ public class HeadLayerFeatureRenderer
 			return false; // default skin
 		}
 		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
+		if(skin == null)return false; // fail save
 		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, 8, 8, 8, 32, 0, false, 0.6f));
 		skin.untrack();
 		return true;

@@ -34,6 +34,7 @@ public class SkinUtil {
         NativeImage skin = new NativeImage(Format.RGBA, 64, 64, true);
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
         AbstractTexture abstractTexture = textureManager.getTexture(resource);
+        if(abstractTexture == null)return null; // fail save
         GlStateManager._bindTexture(abstractTexture.getId());
         skin.downloadTexture(0, false);
         return skin;
@@ -44,6 +45,7 @@ public class SkinUtil {
             return false; // default skin
         }
         NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
+        if(skin == null)return false; // fail save
         CustomizableModelPart[] layers = new CustomizableModelPart[5];
         layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, 4, 12, 4, 0, 48, true, 0f);
         layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, 4, 12, 4, 0, 32, true, 0f);
