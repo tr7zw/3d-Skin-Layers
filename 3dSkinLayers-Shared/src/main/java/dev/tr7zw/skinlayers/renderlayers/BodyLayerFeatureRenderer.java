@@ -40,6 +40,9 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
         if (!player.isSkinLoaded() || player.isInvisible()) {
             return;
         }
+        if(mc.level == null) {
+            return; // in a menu or something and the model gets rendered
+        }
         if(mc.player.distanceToSqr(player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
 
 		PlayerSettings settings = (PlayerSettings) player;

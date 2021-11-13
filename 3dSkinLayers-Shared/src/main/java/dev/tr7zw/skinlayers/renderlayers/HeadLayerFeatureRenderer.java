@@ -46,6 +46,9 @@ public class HeadLayerFeatureRenderer
 		if (!player.isSkinLoaded() || player.isInvisible() || !SkinLayersModBase.config.enableHat) {
 			return;
 		}
+		if(mc.level == null) {
+		    return; // in a menu or something and the model gets rendered
+		}
 		if(mc.player.distanceToSqr(player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
 		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
