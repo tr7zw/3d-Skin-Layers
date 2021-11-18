@@ -97,9 +97,9 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	            matrixStack.pushPose();
 	            layer.vanillaGetter.get().translateAndRotate(matrixStack);
 	            if(layer.shape == Shape.ARMS) {
-	                layers[layer.layersId].x = 0.94f;
+	                layers[layer.layersId].x = 0.998f;
 	            } else if(layer.shape == Shape.ARMS_SLIM) {
-	                layers[layer.layersId].x = 0.6f;
+	                layers[layer.layersId].x = 0.499f;
 	            }
 	            if(layer.mirrored) {
 	                layers[layer.layersId].x *= -1;
