@@ -73,7 +73,7 @@ public abstract class CustomConfigScreen extends Screen {
 					}
 				}));
 		this.addRenderableWidget(
-                new Button(this.width / 2 + 120, this.height - 27, 80, 20, new TranslatableComponent("text.skinlayers.reset"), new OnPress() {
+                new Button(this.width / 2 + 110, this.height - 27, 60, 20, new TranslatableComponent("text.skinlayers.reset"), new OnPress() {
 
                     @Override
                     public void onPress(Button button) {

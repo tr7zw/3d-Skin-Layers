@@ -11,7 +11,7 @@
     "text.skinlayers.basevoxelsize": "Voxel Size",
     "text.skinlayers.headvoxelsize": "Head Voxel Size",
     "text.skinlayers.bodyvoxelheightsize": "Body Voxel Height",
-    "text.skinlayers.bodyvoxelwidthsize": "Body Voxel Width",
+    "text.skinlayers.bodyvoxelwidthsize": "Torso Voxel Width",
     "text.skinlayers.skulls.enable": "3D Skulls",
     "text.skinlayers.skullsitems.enable": "3D Skull Items",
     "text.skinlayers.skulls.voxelsize": "Skull Voxel Size",
