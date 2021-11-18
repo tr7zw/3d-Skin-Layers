@@ -59,8 +59,6 @@ public abstract class SkinLayersModBase {
 
             @Override
             public void initialize() {
-                // getOptions().addBig(getOnOffOption("text.paperdoll.enabled", () ->
-                // settings.dollEnabled, (b) -> settings.dollEnabled = b));
                 List<Option> options = new ArrayList<>();
                 options.add(getOnOffOption("text.skinlayers.enable.hat", () -> config.enableHat,
                         (b) -> config.enableHat = b));
@@ -86,11 +84,11 @@ public abstract class SkinLayersModBase {
                             config.headVoxelSize = i.floatValue();
                             refreshLayers(this.minecraft.player);
                         }));
-                options.add(getDoubleOption("text.skinlayers.bodyvoxelheightsize", 1f, 1.09f, 0.001f,
-                        () -> (double) config.bodyVoxelHeightSize, (i) -> {
-                            config.bodyVoxelHeightSize = i.floatValue();
-                            refreshLayers(this.minecraft.player);
-                        }));
+//                options.add(getDoubleOption("text.skinlayers.bodyvoxelheightsize", 1f, 1.09f, 0.001f,
+//                        () -> (double) config.bodyVoxelHeightSize, (i) -> {
+//                            config.bodyVoxelHeightSize = i.floatValue();
+//                            refreshLayers(this.minecraft.player);
+//                      }));
                 options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> config.enableSkulls,
                         (b) -> config.enableSkulls = b));
                 options.add(getOnOffOption("text.skinlayers.skullsitems.enable", () -> config.enableSkullsItems,
