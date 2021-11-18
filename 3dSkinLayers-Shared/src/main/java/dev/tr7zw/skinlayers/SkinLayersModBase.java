@@ -122,6 +122,12 @@ public abstract class SkinLayersModBase {
                 }
             }
 
+            @Override
+            public void reset() {
+                config = new Config();
+                writeConfig();
+            }
+
         };
 
         return screen;
