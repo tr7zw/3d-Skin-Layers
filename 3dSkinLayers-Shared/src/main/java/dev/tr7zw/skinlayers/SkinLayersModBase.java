@@ -84,7 +84,7 @@ public abstract class SkinLayersModBase {
                             config.headVoxelSize = i.floatValue();
                             refreshLayers(this.minecraft.player);
                         }));
-                options.add(getDoubleOption("text.skinlayers.bodyvoxelwidthsize", 1f, 1.09f, 0.001f,
+                options.add(getDoubleOption("text.skinlayers.bodyvoxelwidthsize", 1.001f, 1.4f, 0.001f,
                         () -> (double) config.bodyVoxelWidthSize, (i) -> {
                             config.bodyVoxelWidthSize = i.floatValue();
                             refreshLayers(this.minecraft.player);
