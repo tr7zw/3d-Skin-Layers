@@ -84,11 +84,11 @@ public abstract class SkinLayersModBase {
                             config.headVoxelSize = i.floatValue();
                             refreshLayers(this.minecraft.player);
                         }));
-//                options.add(getDoubleOption("text.skinlayers.bodyvoxelheightsize", 1f, 1.09f, 0.001f,
-//                        () -> (double) config.bodyVoxelHeightSize, (i) -> {
-//                            config.bodyVoxelHeightSize = i.floatValue();
-//                            refreshLayers(this.minecraft.player);
-//                      }));
+                options.add(getDoubleOption("text.skinlayers.bodyvoxelwidthsize", 1f, 1.09f, 0.001f,
+                        () -> (double) config.bodyVoxelWidthSize, (i) -> {
+                            config.bodyVoxelWidthSize = i.floatValue();
+                            refreshLayers(this.minecraft.player);
+                      }));
                 options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> config.enableSkulls,
                         (b) -> config.enableSkulls = b));
                 options.add(getOnOffOption("text.skinlayers.skullsitems.enable", () -> config.enableSkullsItems,

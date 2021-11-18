@@ -89,6 +89,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		if(layers == null)return;
 		float pixelScaling = SkinLayersModBase.config.baseVoxelSize;
 		float heightScaling = 1.035f;
+		float widthScaling = SkinLayersModBase.config.baseVoxelSize;
 		// Overlay refuses to work correctly, this is a workaround for now
 	    boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 	    float color = red ? 0.5f : 1f;
@@ -101,10 +102,13 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	            } else if(layer.shape == Shape.ARMS_SLIM) {
 	                layers[layer.layersId].x = 0.499f;
 	            }
+	            if(layer.shape == Shape.BODY) {
+	                widthScaling = SkinLayersModBase.config.bodyVoxelWidthSize;
+	            }
 	            if(layer.mirrored) {
 	                layers[layer.layersId].x *= -1;
 	            }
-	            matrixStack.scale(pixelScaling, heightScaling, pixelScaling);
+	            matrixStack.scale(widthScaling, heightScaling, pixelScaling);
 	            layers[layer.layersId].y = layer.shape.yOffsetMagicValue;
 	            
 	            layers[layer.layersId].render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
