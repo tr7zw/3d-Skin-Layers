@@ -59,6 +59,8 @@ public abstract class CustomConfigScreen extends Screen {
 
 	public abstract void initialize();
 	
+	public abstract void reset();
+	
 	public abstract void save();
 
 	protected void createFooter() {
@@ -70,6 +72,15 @@ public abstract class CustomConfigScreen extends Screen {
 						CustomConfigScreen.this.onClose();
 					}
 				}));
+		this.addRenderableWidget(
+                new Button(this.width / 2 + 110, this.height - 27, 60, 20, new TranslatableComponent("text.skinlayers.reset"), new OnPress() {
+
+                    @Override
+                    public void onPress(Button button) {
+                        reset();
+                        CustomConfigScreen.this.resize(minecraft, width, height); // refresh
+                    }
+                }));
 	}
 
 	public void render(PoseStack poseStack, int i, int j, float f) {

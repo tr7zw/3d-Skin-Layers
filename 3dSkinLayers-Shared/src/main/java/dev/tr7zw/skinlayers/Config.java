@@ -10,7 +10,8 @@ public class Config {
     public boolean enableRightPants = true;
     
     public float baseVoxelSize = 1.15f;
-    public float bodyVoxelHeightSize = 1.02f;
+    public float bodyVoxelWidthSize = 1.05f;
+    //public float bodyVoxelHeightSize = 1.02f;
     public float headVoxelSize = 1.18f;
     
     public int renderDistanceLOD = 14;

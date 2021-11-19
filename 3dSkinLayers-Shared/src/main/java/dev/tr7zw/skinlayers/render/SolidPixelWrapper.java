@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 import com.mojang.blaze3d.platform.NativeImage;
 
@@ -19,70 +17,43 @@ public class SolidPixelWrapper {
     public record UV(int u, int v) {
     }
 
-    private record UVFlags(boolean u, boolean v) {
-    }
-
     public record Dimensions(int width, int height, int depth) {
     }
 
     public record Position(float x, float y, float z) {
     }
 
+    public record VoxelPosition(int x, int y, int z) {
+    }
+
     private static final float pixelSize = 1f;
 
+    /**
+     * Side to Direction:
+     * Top   - DOWN
+     * Down  - UP
+     * Front - NORTH
+     * Back  - SOUTH
+     * Right - WEST
+     * Left  - EAST
+     **/
     public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage,
             int width, int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
         List<Cube> cubes = new ArrayList<>();
         float staticXOffset = -width / 2f;
         float staticYOffset = topPivot ? +rotationOffset : -height + rotationOffset;
         float staticZOffset = -depth / 2f;
+        Position staticOffset = new Position(staticXOffset, staticYOffset, staticZOffset);
         Dimensions dimensions = new Dimensions(width, height, depth);
         UV textureUV = new UV(textureU, textureV);
         //StaticData staticData = new StaticData(natImage, cubes, textureUV, dimensions);
         try {
-            // Front/back
-            for (int u = 0; u < width; u++) {
-                for (int v = 0; v < height; v++) {
-                    // front
-                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == height - 1),
-                            new UV(textureU + depth + u, textureV + depth + v), new Position(staticXOffset + u, staticYOffset + v, staticZOffset),
-                            Direction.SOUTH, dimensions, new UV(u, v), textureUV);
-                    // back
-                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == height - 1),
-                            new UV(textureU + 2 * depth + width + u, textureV + depth + v), new Position(staticXOffset + width - 1 - u,
-                            staticYOffset + v, staticZOffset + depth - 1), Direction.NORTH, dimensions, new UV(u, v), textureUV);
-                }
-            }
-
-            // sides
-            for (int u = 0; u < depth; u++) {
-                for (int v = 0; v < height; v++) {
-                    // left
-                    addPixel(natImage, cubes, new UVFlags(u == depth - 1, v == height - 1),
-                            new UV(textureU - 1 + depth - u, textureV + depth + v),
-                            new Position(staticXOffset, staticYOffset + v, staticZOffset + u), Direction.EAST,
-                            dimensions, new UV(u, v), textureUV);
-                    // right
-                    addPixel(natImage, cubes, new UVFlags(u == depth - 1, v == height - 1),
-                            new UV(textureU + depth + width + u, textureV + depth + v),
-                            new Position(staticXOffset + width - 1f, staticYOffset + v, staticZOffset + u),
-                            Direction.WEST, dimensions, new UV(u, v), textureUV);
-
-                }
-            }
-            // top/bottom
-            for (int u = 0; u < width; u++) {
-                for (int v = 0; v < depth; v++) {
-                    // top
-                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == depth - 1),
-                            new UV(textureU + depth + u, textureV + depth - 1 - v),
-                            new Position(staticXOffset + u, staticYOffset, staticZOffset + v), Direction.UP, dimensions,
-                            new UV(u, v), textureUV); // Sides are flipped cause ?!?
-                    // bottom
-                    addPixel(natImage, cubes, new UVFlags(u == width - 1, v == depth - 1),
-                            new UV(textureU + depth + width + u, textureV + depth - 1 - v),
-                            new Position(staticXOffset + u, staticYOffset + height - 1f, staticZOffset + v),
-                            Direction.DOWN, dimensions, new UV(u, v), textureUV); // Sides are flipped cause ?!?
+            for(Direction face : Direction.values()) {
+                UV sizeUV = getSizeUV(dimensions, face);
+                for(int u = 0; u < sizeUV.u; u++) {
+                    for(int v = 0; v < sizeUV.v; v++) {
+                        addPixel(natImage, cubes, staticOffset, face, dimensions, new UV(u, v), textureUV, sizeUV);
+                    }
                 }
             }
         } catch (Exception ex) { // Some calculation went wrong and out of bounds/some other issue
@@ -94,218 +65,118 @@ public class SolidPixelWrapper {
         return new CustomizableModelPart(cubes, new HashMap<>());
     }
 
-    private static UV[] offsets = new UV[] { new UV(1, 0), new UV(-1, 0), new UV(0, 1), new UV(0, -1) };
-    private static Direction[] hiddenDirN = new Direction[] { Direction.WEST, Direction.EAST, Direction.UP,
-            Direction.DOWN };
-    private static Direction[] hiddenDirS = new Direction[] { Direction.EAST, Direction.WEST, Direction.UP,
-            Direction.DOWN };
-    private static Direction[] hiddenDirW = new Direction[] { Direction.SOUTH, Direction.NORTH, Direction.UP,
-            Direction.DOWN };
-    private static Direction[] hiddenDirE = new Direction[] { Direction.NORTH, Direction.SOUTH, Direction.UP,
-            Direction.DOWN };
-    private static Direction[] hiddenDirUD = new Direction[] { Direction.EAST, Direction.WEST, Direction.NORTH,
-            Direction.SOUTH };
+    private static UV getSizeUV(Dimensions dimensions, Direction face) {
+        return switch(face) {
+            case DOWN , UP    -> new UV(dimensions.width, dimensions.depth );
+            case NORTH, SOUTH -> new UV(dimensions.width, dimensions.height);
+            case WEST , EAST  -> new UV(dimensions.depth, dimensions.height);
+        };
+    }
 
-    private static void addPixel(NativeImage natImage, List<Cube> cubes, UVFlags onMax, UV position,
-            Position cubePosition, Direction dir, Dimensions dimensions, UV onFace, UV texturePosition) {
-        if (natImage.getLuminanceOrAlpha(position.u, position.v) != 0) {
-            Set<Direction> hide = new HashSet<>();
-            for (int i = 0; i < offsets.length; i++) {
-                if (checkNeighbor(natImage, position, offsets[i], dimensions, onFace, dir, texturePosition)) {
-                    if (dir == Direction.NORTH)
-                        hide.add(hiddenDirN[i]);
-                    if (dir == Direction.SOUTH)
-                        hide.add(hiddenDirS[i]);
-                    if (dir == Direction.EAST)
-                        hide.add(hiddenDirE[i]);
-                    if (dir == Direction.WEST)
-                        hide.add(hiddenDirW[i]);
-                    if (dir == Direction.UP || dir == Direction.DOWN) {
-                        hide.add(hiddenDirUD[i]);
+    private static UV getOnTextureUV(UV textureUV, UV onFaceUV, Dimensions dimensions, Direction face) {
+        return switch(face) {
+            case DOWN  -> new UV(textureUV.u + dimensions.depth + onFaceUV.u                                      , textureUV.v + onFaceUV.v                   );
+            case UP    -> new UV(textureUV.u + dimensions.width + dimensions.depth + onFaceUV.u                   , textureUV.v + onFaceUV.v                   );
+            case NORTH -> new UV(textureUV.u + dimensions.depth + onFaceUV.u                                      , textureUV.v + dimensions.depth + onFaceUV.v);
+            case SOUTH -> new UV(textureUV.u + dimensions.depth + dimensions.width + dimensions.depth + onFaceUV.u, textureUV.v + dimensions.depth + onFaceUV.v);
+            case WEST  -> new UV(textureUV.u + onFaceUV.u                                                         , textureUV.v + dimensions.depth + onFaceUV.v);
+            case EAST  -> new UV(textureUV.u + dimensions.depth + dimensions.width + onFaceUV.u                   , textureUV.v + dimensions.depth + onFaceUV.v);
+        };
+    }
+
+    private static VoxelPosition UVtoXYZ(UV onFaceUV, Dimensions dimensions, Direction face) {
+        return switch(face) {
+            case DOWN  -> new VoxelPosition(onFaceUV.u, 0                    , dimensions.depth - 1 - onFaceUV.v);
+            case UP    -> new VoxelPosition(onFaceUV.u, dimensions.height - 1, dimensions.depth - 1 - onFaceUV.v);
+            case NORTH -> new VoxelPosition(onFaceUV.u + 0                   , onFaceUV.v, 0                   );
+            case SOUTH -> new VoxelPosition(dimensions.width - 1 - onFaceUV.u, onFaceUV.v, dimensions.depth - 1);
+            case WEST  -> new VoxelPosition(0                   , onFaceUV.v, dimensions.depth - 1 - onFaceUV.u);
+            case EAST  -> new VoxelPosition(dimensions.width - 1, onFaceUV.v, onFaceUV.u + 0                   );
+        };
+    }
+
+    private static UV XYZtoUV(VoxelPosition voxelPosition, Dimensions dimensions, Direction face) {
+        return switch(face) {
+            case DOWN, UP -> new UV(voxelPosition.x, dimensions.depth - 1 - voxelPosition.z);
+            case NORTH    -> new UV(voxelPosition.x + 0                   , voxelPosition.y);
+            case SOUTH    -> new UV(dimensions.width - 1 - voxelPosition.x, voxelPosition.y);
+            case WEST     -> new UV(dimensions.depth - 1 - voxelPosition.z, voxelPosition.y);
+            case EAST     -> new UV(voxelPosition.z + 0                   , voxelPosition.y);
+        };
+    }
+
+    private static void addPixel(NativeImage natImage, List<Cube> cubes,
+                Position staticOffset, Direction face, Dimensions dimensions, UV onFaceUV, UV textureUV, UV sizeUV) {
+        UV onTextureUV = getOnTextureUV(textureUV, onFaceUV, dimensions, face);
+        if(!isPresent(natImage, onTextureUV)) return;
+
+        VoxelPosition voxelPosition = UVtoXYZ(onFaceUV, dimensions, face);
+        Position position = new Position(staticOffset.x + voxelPosition.x, staticOffset.y + voxelPosition.y, staticOffset.z + voxelPosition.z);
+        boolean solidPixel = isSolid(natImage, onTextureUV);
+
+        Set<Direction> hide = new HashSet<>();
+        Set<Direction[]> corners = new HashSet<>();
+
+        boolean isOnBorder = false;
+        boolean backsideOverlaps = false;
+        for (Direction neighbourFace : Direction.values()) {
+            if(neighbourFace.getAxis() == face.getAxis()) continue;
+
+            VoxelPosition neighbourVoxelPosition = new VoxelPosition(voxelPosition.x + neighbourFace.getStepX(), voxelPosition.y + neighbourFace.getStepY(), voxelPosition.z + neighbourFace.getStepZ());
+            UV neighbourOnFaceUV = XYZtoUV(neighbourVoxelPosition, dimensions, face);
+            if(isOnFace(neighbourOnFaceUV, sizeUV)) {
+                if(isPresent(natImage, getOnTextureUV(textureUV, neighbourOnFaceUV, dimensions, face))) {
+                    if(!(solidPixel && !isSolid(natImage, getOnTextureUV(textureUV, neighbourOnFaceUV, dimensions, face)))) {
+                        hide.add(neighbourFace);
+                    }
+                } else {
+                    VoxelPosition farNeighbourVoxelPosition = new VoxelPosition(neighbourVoxelPosition.x + neighbourFace.getStepX(), neighbourVoxelPosition.y + neighbourFace.getStepY(), neighbourVoxelPosition.z + neighbourFace.getStepZ());
+                    UV farNeighbourOnFaceUV = XYZtoUV(farNeighbourVoxelPosition, dimensions, face);
+                    if(!isOnFace(farNeighbourOnFaceUV, sizeUV)) {
+                        farNeighbourOnFaceUV = XYZtoUV(farNeighbourVoxelPosition, dimensions, neighbourFace);
+                        if(isPresent(natImage, getOnTextureUV(textureUV, farNeighbourOnFaceUV, dimensions, neighbourFace))) {
+                            if(!(solidPixel && !isSolid(natImage, getOnTextureUV(textureUV, farNeighbourOnFaceUV, dimensions, neighbourFace)))) {
+                                hide.add(neighbourFace);
+                            }
+                        }
+                    }
+                }
+            } else {
+                isOnBorder = true;
+                neighbourOnFaceUV = XYZtoUV(voxelPosition, dimensions, neighbourFace);
+                if(isPresent(natImage, getOnTextureUV(textureUV, neighbourOnFaceUV, dimensions, neighbourFace))) {
+                    backsideOverlaps = true;
+                    hide.add(neighbourFace);
+                    corners.add(new Direction[]{ face.getOpposite(), neighbourFace });
+                } else {
+                    UV downNeighbourOnFaceUV = XYZtoUV(new VoxelPosition(voxelPosition.x - face.getStepX(), voxelPosition.y - face.getStepY(), voxelPosition.z - face.getStepZ()), dimensions, neighbourFace);
+                    if(isPresent(natImage, getOnTextureUV(textureUV, downNeighbourOnFaceUV, dimensions, neighbourFace))) {
+                        backsideOverlaps = true;
                     }
                 }
             }
-            boolean removeBackside = true;
-            if (onFace.u == 0
-                    && !checkNeighbor(natImage, position, new UV(-1, 0), dimensions, onFace, dir, texturePosition)) {
-                removeBackside = false;
-            }
-            if (onFace.v == 0
-                    && !checkNeighbor(natImage, position, new UV(0, -1), dimensions, onFace, dir, texturePosition)) {
-                removeBackside = false;
-            }
-            if (onMax.u && !checkNeighbor(natImage, position, new UV(1, 0), dimensions, onFace, dir, texturePosition)) {
-                removeBackside = false;
-            }
-            if (onMax.v && !checkNeighbor(natImage, position, new UV(0, 1), dimensions, onFace, dir, texturePosition)) {
-                removeBackside = false;
-            }
-            if (removeBackside)
-                hide.add(dir);
-            cubes.addAll(CustomizableCubeListBuilder.create().texOffs(position.u - 2, position.v - 1)
-                    .addBox(cubePosition.x, cubePosition.y, cubePosition.z, pixelSize,
-                            hide.toArray(new Direction[hide.size()]))
-                    .getCubes());
         }
+
+        if(!isOnBorder || backsideOverlaps) {
+            hide.add(face.getOpposite());
+        }
+
+        cubes.addAll(CustomizableCubeListBuilder.create().uv(onTextureUV.u, onTextureUV.v)
+                .addBox(position.x, position.y, position.z, pixelSize,
+                        hide.toArray(Direction[]::new), corners.toArray(Direction[][]::new))
+                .getCubes());
     }
 
-    /**
-     * @param natImage
-     * @param u
-     * @param v
-     * @param offset
-     * @param uOffset
-     * @param vOffset
-     * @param width
-     * @param height
-     * @param depth
-     * @param onFaceU
-     * @param onFaceV
-     * @param dir
-     * @param textureU
-     * @param textureV
-     * @return true when the pixel is not empty
-     */
-    private static boolean checkNeighbor(NativeImage natImage, UV basePixel, UV offset, Dimensions dimensions,
-            UV onFace, Direction dir, UV texturePosition) {
-        UV pixel = getOffsetPosition(basePixel, offset, dimensions, texturePosition, dir);
-        return (natImage.getLuminanceOrAlpha(pixel.u, pixel.v) != 0);
+    private static boolean isPresent(NativeImage natImage, UV onTextureUV) {
+        return natImage.getLuminanceOrAlpha(onTextureUV.u, onTextureUV.v) != 0;
+    }
+    
+    private static boolean isSolid(NativeImage natImage, UV onTextureUV) {
+        return natImage.getLuminanceOrAlpha(onTextureUV.u, onTextureUV.v) == -1;
     }
 
-    private enum Change {
-        NONE, TOP, BOTTOM, LEFT, RIGHT;
-    }
-
-    private static Map<Direction, Map<Change, BiFunction<UV, Dimensions, UV>>> connections = new HashMap<>() {
-
-        private static final long serialVersionUID = 1L;
-
-        {
-            {
-                Map<Change, BiFunction<UV, Dimensions, UV>> top = new HashMap<>();
-                top.put(Change.TOP,
-                        (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() + dims.width() - uv.u() - 1,
-                                dims.depth()));
-                top.put(Change.BOTTOM, (uv, dims) -> null);
-                top.put(Change.LEFT, (uv, dims) -> new UV(uv.v(), dims.depth()));
-                top.put(Change.RIGHT,
-                        (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() - uv.v() - 1, dims.depth()));
-                put(Direction.UP, top);
-            }
-            {
-                Map<Change, BiFunction<UV, Dimensions, UV>> down = new HashMap<>();
-                down.put(Change.TOP, (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() + uv.u(),
-                        dims.depth() + dims.height() - 1));
-                down.put(Change.BOTTOM, (uv, dims) -> new UV(dims.depth() + uv.u(), dims.depth() + dims.height() - 1));
-                down.put(Change.LEFT, (uv, dims) -> new UV(uv.v(), dims.depth() + dims.height() - 1));
-                down.put(Change.RIGHT, (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() - uv.v() - 1,
-                        dims.depth() + dims.height() - 1));
-                put(Direction.DOWN, down);
-            }
-            {
-                Map<Change, BiFunction<UV, Dimensions, UV>> east = new HashMap<>();
-                east.put(Change.TOP, (uv, dims) -> new UV(dims.depth(),uv.u()));
-                east.put(Change.BOTTOM, (uv, dims) -> new UV(dims.depth() + dims.width(), uv.u()));
-                east.put(Change.LEFT, (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() + dims.width() - 1, dims.depth() + uv.v()));
-                east.put(Change.RIGHT, (uv, dims) -> null);
-                put(Direction.EAST, east);
-            }
-            {
-                Map<Change, BiFunction<UV, Dimensions, UV>> south = new HashMap<>();
-                south.put(Change.TOP, (uv, dims) -> null);
-                south.put(Change.BOTTOM, (uv, dims) -> new UV(dims.depth() + dims.width() + uv.u(), dims.depth()-1));
-                south.put(Change.LEFT, (uv, dims) -> null);
-                south.put(Change.RIGHT, (uv, dims) -> null);
-                put(Direction.SOUTH, south);
-            }
-            {
-                Map<Change, BiFunction<UV, Dimensions, UV>> west = new HashMap<>();
-                west.put(Change.TOP, (uv, dims) -> new UV(dims.depth() + dims.width() - 1, dims.depth() - uv.u() - 1));
-                west.put(Change.BOTTOM, (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() - 1, dims.depth() - uv.u() - 1));
-                west.put(Change.LEFT, (uv, dims) -> null);
-                west.put(Change.RIGHT, (uv, dims) -> null);
-                put(Direction.WEST, west);
-            }
-            {
-                Map<Change, BiFunction<UV, Dimensions, UV>> north = new HashMap<>();
-                north.put(Change.TOP, (uv, dims) -> new UV(dims.depth() + dims.width() - uv.u() - 1, 0));
-                north.put(Change.BOTTOM, (uv, dims) -> new UV(dims.depth() + dims.width() + dims.depth() - uv.u() - 1, 0));
-                north.put(Change.LEFT, (uv, dims) -> null);
-                north.put(Change.RIGHT, (uv, dims) -> new UV(0, dims.depth() + uv.v()));
-                put(Direction.NORTH, north);
-            }
-        }
-    };
-
-    public static UV getOffsetPosition(UV pos, UV offset, Dimensions dims, UV texturePos, Direction dir) {
-        UV cube = new UV(pos.u() - texturePos.u(), pos.v() - texturePos.v()); // Position relative to the cube origin
-        UV onFace = getFacePos(cube, dims, dir); // Position relative on the face
-        Change change = Change.NONE; // Default at no border
-        if (onFace.v() == 0 && offset.v() == -1) { // at the top of the face and want to go out of the top
-            change = Change.TOP;
-        }
-        if (onFace.v() == getMaxV(dims, dir) && offset.v() == 1) { // at the bottom of the face and want to go out down
-            change = Change.BOTTOM;
-        }
-        if (onFace.u() == 0 && offset.u() == -1) { // at the left of the face and want to go out left
-            change = Change.LEFT;
-        }
-        if (onFace.u() == getMaxU(dims, dir) && offset.u() == 1) { // at the right of the face and want to go out right
-            change = Change.RIGHT;
-        }
-        if (change == Change.NONE) { // staying inside the same face
-            return new UV(pos.u() + offset.u(), pos.v() + offset.v());
-        }
-        // we are leaving the face, calculate the new position
-        UV cubePos = connections.get(dir).get(change).apply(onFace, dims);
-        if (cubePos == null) { // use default behavior
-            return new UV(pos.u() + offset.u(), pos.v() + offset.v());
-        }
-        return new UV(texturePos.u() + cubePos.u(), texturePos.v() + cubePos.v());
-    }
-
-    private static int getMaxU(Dimensions dims, Direction dir) {
-        if (dir == Direction.UP || dir == Direction.DOWN || dir == Direction.SOUTH || dir == Direction.NORTH)
-            return dims.width() - 1;
-        return dims.depth() - 1;
-    }
-
-    private static int getMaxV(Dimensions dims, Direction dir) {
-        if (dir == Direction.UP || dir == Direction.DOWN)
-            return dims.depth() - 1;
-        return dims.height() - 1;
-    }
-
-    private static UV getFacePos(UV cube, Dimensions dims, Direction dir) {
-        int onFaceU = -1;
-        int onFaceV = -1;
-        switch (dir) {
-        case UP:
-            onFaceU = cube.u() - dims.depth();
-            onFaceV = cube.v();
-            break;
-        case DOWN:
-            onFaceU = cube.u() - dims.depth() - dims.width();
-            onFaceV = cube.v();
-            break;
-        case EAST:
-            onFaceU = cube.u();
-            onFaceV = cube.v() - dims.depth();
-            break;
-        case SOUTH:
-            onFaceU = cube.u() - dims.depth();
-            onFaceV = cube.v() - dims.depth();
-            break;
-        case WEST:
-            onFaceU = cube.u() - dims.depth() - dims.width();
-            onFaceV = cube.v() - dims.depth();
-            break;
-        case NORTH:
-            onFaceU = cube.u() - dims.depth() - dims.width() - dims.depth();
-            onFaceV = cube.v() - dims.depth();
-            break;
-        }
-        return new UV(onFaceU, onFaceV);
+    private static boolean isOnFace(UV onFaceUV, UV sizeUV) {
+        return onFaceUV.u >= 0 && onFaceUV.u < sizeUV.u && onFaceUV.v >= 0 && onFaceUV.v < sizeUV.v;
     }
 
 }
