@@ -112,6 +112,7 @@ public class SolidPixelWrapper {
 
         VoxelPosition voxelPosition = UVtoXYZ(onFaceUV, dimensions, face);
         Position position = new Position(staticOffset.x + voxelPosition.x, staticOffset.y + voxelPosition.y, staticOffset.z + voxelPosition.z);
+        boolean solidPixel = isSolid(natImage, onTextureUV);
 
         Set<Direction> hide = new HashSet<>();
         Set<Direction[]> corners = new HashSet<>();
@@ -125,14 +126,18 @@ public class SolidPixelWrapper {
             UV neighbourOnFaceUV = XYZtoUV(neighbourVoxelPosition, dimensions, face);
             if(isOnFace(neighbourOnFaceUV, sizeUV)) {
                 if(isPresent(natImage, getOnTextureUV(textureUV, neighbourOnFaceUV, dimensions, face))) {
-                    hide.add(neighbourFace);
+                    if(!(solidPixel && !isSolid(natImage, getOnTextureUV(textureUV, neighbourOnFaceUV, dimensions, face)))) {
+                        hide.add(neighbourFace);
+                    }
                 } else {
                     VoxelPosition farNeighbourVoxelPosition = new VoxelPosition(neighbourVoxelPosition.x + neighbourFace.getStepX(), neighbourVoxelPosition.y + neighbourFace.getStepY(), neighbourVoxelPosition.z + neighbourFace.getStepZ());
                     UV farNeighbourOnFaceUV = XYZtoUV(farNeighbourVoxelPosition, dimensions, face);
                     if(!isOnFace(farNeighbourOnFaceUV, sizeUV)) {
                         farNeighbourOnFaceUV = XYZtoUV(farNeighbourVoxelPosition, dimensions, neighbourFace);
                         if(isPresent(natImage, getOnTextureUV(textureUV, farNeighbourOnFaceUV, dimensions, neighbourFace))) {
-                            hide.add(neighbourFace);
+                            if(!(solidPixel && !isSolid(natImage, getOnTextureUV(textureUV, farNeighbourOnFaceUV, dimensions, neighbourFace)))) {
+                                hide.add(neighbourFace);
+                            }
                         }
                     }
                 }
@@ -164,6 +169,10 @@ public class SolidPixelWrapper {
 
     private static boolean isPresent(NativeImage natImage, UV onTextureUV) {
         return natImage.getLuminanceOrAlpha(onTextureUV.u, onTextureUV.v) != 0;
+    }
+    
+    private static boolean isSolid(NativeImage natImage, UV onTextureUV) {
+        return natImage.getLuminanceOrAlpha(onTextureUV.u, onTextureUV.v) == -1;
     }
 
     private static boolean isOnFace(UV onFaceUV, UV sizeUV) {
