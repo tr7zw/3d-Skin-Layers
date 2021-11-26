@@ -3,7 +3,6 @@ package dev.tr7zw.skinlayers.render;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.mojang.blaze3d.platform.NativeImage;
@@ -39,7 +38,7 @@ public class SolidPixelWrapper {
      **/
     public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage,
             int width, int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
-        List<Cube> cubes = new ArrayList<>();
+        CustomizableCubeListBuilder cubes = CustomizableCubeListBuilder.create();
         float staticXOffset = -width / 2f;
         float staticYOffset = topPivot ? +rotationOffset : -height + rotationOffset;
         float staticZOffset = -depth / 2f;
@@ -61,8 +60,10 @@ public class SolidPixelWrapper {
                     ex);
             return new CustomizableModelPart(new ArrayList<Cube>(), new HashMap<>()); // empty model
         }
+        
+        cubes.uv(textureU, textureV).addVanillaBox(staticXOffset, staticYOffset, staticZOffset, width, height, depth, pixelSize);
 
-        return new CustomizableModelPart(cubes, new HashMap<>());
+        return new CustomizableModelPart(cubes.getCubes(), new HashMap<>());
     }
 
     private static UV getSizeUV(Dimensions dimensions, Direction face) {
@@ -105,7 +106,7 @@ public class SolidPixelWrapper {
         };
     }
 
-    private static void addPixel(NativeImage natImage, List<Cube> cubes,
+    private static void addPixel(NativeImage natImage, CustomizableCubeListBuilder cubes,
                 Position staticOffset, Direction face, Dimensions dimensions, UV onFaceUV, UV textureUV, UV sizeUV) {
         UV onTextureUV = getOnTextureUV(textureUV, onFaceUV, dimensions, face);
         if(!isPresent(natImage, onTextureUV)) return;
@@ -160,11 +161,11 @@ public class SolidPixelWrapper {
         if(!isOnBorder || backsideOverlaps) {
             hide.add(face.getOpposite());
         }
+        hide.add(face); // the front face gets handled in one big cube
 
-        cubes.addAll(CustomizableCubeListBuilder.create().uv(onTextureUV.u, onTextureUV.v)
+        cubes.uv(onTextureUV.u, onTextureUV.v)
                 .addBox(position.x, position.y, position.z, pixelSize,
-                        hide.toArray(Direction[]::new), corners.toArray(Direction[][]::new))
-                .getCubes());
+                        hide.toArray(Direction[]::new), corners.toArray(Direction[][]::new));
     }
 
     private static boolean isPresent(NativeImage natImage, UV onTextureUV) {

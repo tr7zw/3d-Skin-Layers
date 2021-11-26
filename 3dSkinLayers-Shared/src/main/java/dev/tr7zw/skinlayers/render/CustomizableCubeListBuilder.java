@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.model.geom.ModelPart.Cube;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.core.Direction;
 
 public class CustomizableCubeListBuilder {
@@ -37,6 +38,14 @@ public class CustomizableCubeListBuilder {
         int textureSize = 64;
         this.cubes.add(new CustomizableCube(this.u, this.v, x, y, z, pixelSize, pixelSize, pixelSize, 0, 0, 0,
                 this.mirror, textureSize, textureSize, hide, corners));
+        return this;
+    }
+    
+    public CustomizableCubeListBuilder addVanillaBox(float x, float y, float z, float width, float height, float depth, float pixelSize) {
+        int textureSize = 64;
+        CubeListBuilder cubeList = CubeListBuilder.create();
+        cubeList.texOffs(u, v).addBox(x, y, z, width, height, depth);
+        this.cubes.add(cubeList.getCubes().get(0).bake(textureSize, textureSize));
         return this;
     }
 
