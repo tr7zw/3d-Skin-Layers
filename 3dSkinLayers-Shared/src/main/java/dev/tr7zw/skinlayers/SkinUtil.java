@@ -58,7 +58,7 @@ public class SkinUtil {
         }
         layers[4] = SolidPixelWrapper.wrapBoxOptimized(skin, 8, 12, 4, 16, 32, true, -0.8f);
         settings.setupSkinLayers(layers);
-        skin.untrack();
+        skin.close();
         return true;
     }
     
@@ -75,7 +75,7 @@ public class SkinUtil {
         NativeImage skin = SkinUtil.getTexture(Minecraft.getInstance().getSkinManager()
                 .registerTexture(texture, MinecraftProfileTexture.Type.SKIN));
         settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, 8, 8, 8, 32, 0, false, 0.6f));
-        skin.untrack();
+        skin.close();
         return true;
     }
     
