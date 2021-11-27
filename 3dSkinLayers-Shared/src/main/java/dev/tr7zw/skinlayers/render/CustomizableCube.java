@@ -7,6 +7,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 
+import dev.tr7zw.skinlayers.SkinLayersModBase;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.core.Direction;
 
@@ -16,8 +17,8 @@ import java.util.Map;
 public class CustomizableCube extends Cube {
 
     private final Direction[] hidden;
-    private final Polygon[] polygons;
-    private int polygonCount = 0;
+    protected final Polygon[] polygons;
+    protected int polygonCount = 0;
     public final float minX;
     public final float minY;
     public final float minZ;
@@ -152,7 +153,7 @@ public class CustomizableCube extends Cube {
         }
     }
 
-    private static class Polygon {
+    protected static class Polygon {
         public final Vertex[] vertices;
 
         public final Vector3f normal;
@@ -180,7 +181,7 @@ public class CustomizableCube extends Cube {
         }
     }
 
-    private static class Vertex {
+    protected static class Vertex {
         public final Vector3f pos;
         public final float u;
         public final float v;

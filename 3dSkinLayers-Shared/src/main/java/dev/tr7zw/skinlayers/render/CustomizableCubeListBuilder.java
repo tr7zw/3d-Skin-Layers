@@ -10,7 +10,8 @@ import net.minecraft.core.Direction;
 
 public class CustomizableCubeListBuilder {
 
-    private final List<Cube> cubes = Lists.newArrayList();
+    private final List<CustomizableCube> cubes = Lists.newArrayList();
+    private final List<Cube> vanillaCubes = Lists.newArrayList();
     private int u;
     private int v;
     private boolean mirror;
@@ -30,8 +31,12 @@ public class CustomizableCubeListBuilder {
         return this;
     }
 
-    public List<Cube> getCubes() {
+    public List<CustomizableCube> getCubes() {
         return cubes;
+    }
+    
+    public List<Cube> getVanillaCubes() {
+        return vanillaCubes;
     }
 
     public CustomizableCubeListBuilder addBox(float x, float y, float z, float pixelSize, Direction[] hide, Direction[][] corners) {
@@ -45,7 +50,7 @@ public class CustomizableCubeListBuilder {
         int textureSize = 64;
         CubeListBuilder cubeList = CubeListBuilder.create();
         cubeList.texOffs(u, v).addBox(x, y, z, width, height, depth);
-        this.cubes.add(cubeList.getCubes().get(0).bake(textureSize, textureSize));
+        this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureSize, textureSize));
         return this;
     }
 

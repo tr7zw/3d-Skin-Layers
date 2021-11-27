@@ -36,7 +36,7 @@ public class SolidPixelWrapper {
      * Right - WEST
      * Left  - EAST
      **/
-    public static CustomizableModelPart wrapBoxOptimized(NativeImage natImage,
+    public static CustomizableModelPart wrapBox(NativeImage natImage,
             int width, int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
         CustomizableCubeListBuilder cubes = CustomizableCubeListBuilder.create();
         float staticXOffset = -width / 2f;
@@ -58,12 +58,14 @@ public class SolidPixelWrapper {
         } catch (Exception ex) { // Some calculation went wrong and out of bounds/some other issue
             SkinLayersModBase.LOGGER.error("Error while creating 3d skin model. Please report on the Github/Discord.",
                     ex);
-            return new CustomizableModelPart(new ArrayList<Cube>(), new HashMap<>()); // empty model
+            return new CustomizableModelPart(new ArrayList<Cube>(), new ArrayList<>(), new HashMap<>()); // empty model
         }
         
-        cubes.uv(textureU, textureV).addVanillaBox(staticXOffset, staticYOffset, staticZOffset, width, height, depth, pixelSize);
+        if(SkinLayersModBase.config.fastRender) {
+            cubes.uv(textureU, textureV).addVanillaBox(staticXOffset, staticYOffset, staticZOffset, width, height, depth, pixelSize);
+        }
 
-        return new CustomizableModelPart(cubes.getCubes(), new HashMap<>());
+        return new CustomizableModelPart(cubes.getVanillaCubes(), cubes.getCubes(), new HashMap<>());
     }
 
     private static UV getSizeUV(Dimensions dimensions, Direction face) {
@@ -161,7 +163,9 @@ public class SolidPixelWrapper {
         if(!isOnBorder || backsideOverlaps) {
             hide.add(face.getOpposite());
         }
-        hide.add(face); // the front face gets handled in one big cube
+        if(SkinLayersModBase.config.fastRender) {
+            hide.add(face); // the front face gets handled in one big cube
+        }
 
         cubes.uv(onTextureUV.u, onTextureUV.v)
                 .addBox(position.x, position.y, position.z, pixelSize,
