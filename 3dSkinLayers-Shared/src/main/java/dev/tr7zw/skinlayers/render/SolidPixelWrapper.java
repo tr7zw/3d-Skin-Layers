@@ -61,7 +61,8 @@ public class SolidPixelWrapper {
             return new CustomizableModelPart(new ArrayList<Cube>(), new ArrayList<>(), new HashMap<>()); // empty model
         }
         
-        if(SkinLayersModBase.config.fastRender) {
+        // if cubes is empty, there are no pixels. Don't add an empty box.
+        if(SkinLayersModBase.config.fastRender && !cubes.getCubes().isEmpty()) { 
             cubes.uv(textureU, textureV).addVanillaBox(staticXOffset, staticYOffset, staticZOffset, width, height, depth, pixelSize);
         }
 
