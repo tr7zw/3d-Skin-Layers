@@ -3,14 +3,13 @@ package dev.tr7zw.skinlayers.renderlayers;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
-import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
+import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
-import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -33,11 +32,14 @@ public class HeadLayerFeatureRenderer
 	public HeadLayerFeatureRenderer(
             RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
         super(renderLayerParent);
+        thinArms = ((PlayerEntityModelAccessor)getParentModel()).hasThinArms();
     }
 
 	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.PLAYER_HEAD, Items.ZOMBIE_HEAD, Items.CREEPER_HEAD, Items.DRAGON_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
 	
 	private static final Minecraft mc = Minecraft.getInstance();
+	
+	private final boolean thinArms;
 	
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
@@ -57,7 +59,7 @@ public class HeadLayerFeatureRenderer
 		
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
-		if(settings.getHeadLayers() == null && !setupModel(player, settings)) {
+		if(settings.getHeadLayers() == null && !SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
 			return; // no head layer setup and wasn't able to setup
 		}
 
@@ -65,18 +67,6 @@ public class HeadLayerFeatureRenderer
 				.getBuffer(RenderType.entityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
 		int m = LivingEntityRenderer.getOverlayCoords((LivingEntity) player, (float) 0.0f);
 		renderCustomHelmet(settings, player, poseStack, vertexConsumer, i, m);
-	}
-
-	private boolean setupModel(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings) {
-		
-		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
-			return false; // default skin
-		}
-		NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
-		if(skin == null)return false; // fail save
-		settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, 8, 8, 8, 32, 0, false, 0.6f));
-		skin.untrack();
-		return true;
 	}
 
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {

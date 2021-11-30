@@ -97,6 +97,8 @@ public abstract class SkinLayersModBase {
                         () -> (double) config.skullVoxelSize, (i) -> {
                             config.skullVoxelSize = i.floatValue();
                         }));
+                options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> config.fastRender,
+                        (b) -> config.fastRender = b));
                 getOptions().addSmall(options.toArray(new Option[0]));
 
             }

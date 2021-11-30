@@ -26,11 +26,11 @@ public class SkinUtil {
         return !DefaultPlayerSkin.getDefaultSkin((player).getUUID()).equals((player).getSkinTextureLocation());
     }
 
-    public static NativeImage getSkinTexture(AbstractClientPlayer player) {
+    private static NativeImage getSkinTexture(AbstractClientPlayer player) {
         return getTexture(player.getSkinTextureLocation());
     }
     
-    public static NativeImage getTexture(ResourceLocation resource) {
+    private static NativeImage getTexture(ResourceLocation resource) {
         NativeImage skin = new NativeImage(Format.RGBA, 64, 64, true);
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
         AbstractTexture abstractTexture = textureManager.getTexture(resource);
@@ -47,18 +47,19 @@ public class SkinUtil {
         NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
         if(skin == null)return false; // fail save
         CustomizableModelPart[] layers = new CustomizableModelPart[5];
-        layers[0] = SolidPixelWrapper.wrapBoxOptimized(skin, 4, 12, 4, 0, 48, true, 0f);
-        layers[1] = SolidPixelWrapper.wrapBoxOptimized(skin, 4, 12, 4, 0, 32, true, 0f);
+        layers[0] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 48, true, 0f);
+        layers[1] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 32, true, 0f);
         if(thinArms) {
-            layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, 3, 12, 4, 48, 48, true, -2.5f);
-            layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, 3, 12, 4, 40, 32, true, -2.5f);
+            layers[2] = SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 48, 48, true, -2.5f);
+            layers[3] = SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 40, 32, true, -2.5f);
         } else {
-            layers[2] = SolidPixelWrapper.wrapBoxOptimized(skin, 4, 12, 4, 48, 48, true, -2.5f);
-            layers[3] = SolidPixelWrapper.wrapBoxOptimized(skin, 4, 12, 4, 40, 32, true, -2.5f);
+            layers[2] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 48, 48, true, -2.5f);
+            layers[3] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 40, 32, true, -2.5f);
         }
-        layers[4] = SolidPixelWrapper.wrapBoxOptimized(skin, 8, 12, 4, 16, 32, true, -0.8f);
+        layers[4] = SolidPixelWrapper.wrapBox(skin, 8, 12, 4, 16, 32, true, -0.8f);
         settings.setupSkinLayers(layers);
-        skin.untrack();
+        settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
+        skin.close();
         return true;
     }
     
@@ -74,8 +75,8 @@ public class SkinUtil {
         }
         NativeImage skin = SkinUtil.getTexture(Minecraft.getInstance().getSkinManager()
                 .registerTexture(texture, MinecraftProfileTexture.Type.SKIN));
-        settings.setupHeadLayers(SolidPixelWrapper.wrapBoxOptimized(skin, 8, 8, 8, 32, 0, false, 0.6f));
-        skin.untrack();
+        settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
+        skin.close();
         return true;
     }
     

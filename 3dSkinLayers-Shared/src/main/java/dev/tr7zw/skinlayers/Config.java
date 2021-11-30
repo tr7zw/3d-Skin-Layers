@@ -20,4 +20,6 @@ public class Config {
     public boolean enableSkullsItems = true;
     public float skullVoxelSize = 1.1f;
     
+    public boolean fastRender = true;
+    
 }
