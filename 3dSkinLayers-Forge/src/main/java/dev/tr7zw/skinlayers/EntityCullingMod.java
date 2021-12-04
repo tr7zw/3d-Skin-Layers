@@ -1,10 +1,10 @@
 package dev.tr7zw.skinlayers;
 
+import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
 
 @Mod("skinlayers3d")
 public class EntityCullingMod extends SkinLayersModBase {
