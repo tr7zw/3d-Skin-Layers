@@ -7,7 +7,14 @@
   "mixins": [
   ],
   "client": [
-    "PlayerModelMixin"
+    "PlayerRendererMixin",
+    "PlayerMixin",
+    "PlayerModelMixin",
+    "SkullBlockEntityRendererMixin",
+    "SkullModelMixin",
+    "SkullBlockEntityMixin",
+    "BlockEntityWithoutLevelRendererMixin",
+    "CustomHeadLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

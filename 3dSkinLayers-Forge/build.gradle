@@ -17,7 +17,7 @@ apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
-archivesBaseName = project.archives_base_name
+archivesBaseName = "3dSkinLayers-forge" + "-mc" + project.minecraft_version
 version = project.mod_version
 group = project.maven_group
 

@@ -1,0 +1,20 @@
+{
+    "text.skinlayers.title": "3D Skin Layer Settings",
+
+    "text.skinlayers.enable.hat": "3D Hat",
+    "text.skinlayers.enable.jacket": "3D Jacket",
+    "text.skinlayers.enable.leftsleeve": "3D Left Sleeve",
+    "text.skinlayers.enable.rightsleeve": "3D Right Sleeve",
+    "text.skinlayers.enable.leftpants": "3D Left Pants",
+    "text.skinlayers.enable.rightpants": "3D Right Pants",
+    "text.skinlayers.renderdistancelod": "Level Of Detail Distance",
+    "text.skinlayers.basevoxelsize": "Voxel Size",
+    "text.skinlayers.headvoxelsize": "Head Voxel Size",
+    "text.skinlayers.bodyvoxelheightsize": "Body Voxel Height",
+    "text.skinlayers.bodyvoxelwidthsize": "Torso Voxel Width",
+    "text.skinlayers.skulls.enable": "3D Skulls",
+    "text.skinlayers.skullsitems.enable": "3D Skull Items",
+    "text.skinlayers.skulls.voxelsize": "Skull Voxel Size",
+    "text.skinlayers.reset": "Default",
+    "text.skinlayers.fastrender.enable": "Fast Render"
+  }
