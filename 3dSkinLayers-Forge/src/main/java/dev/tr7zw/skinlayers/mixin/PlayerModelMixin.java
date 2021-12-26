@@ -19,7 +19,6 @@ public class PlayerModelMixin implements PlayerEntityModelAccessor {
         System.out.println("render player");
     }
 
-    @Shadow
     private boolean smallArms;
 
     @Override

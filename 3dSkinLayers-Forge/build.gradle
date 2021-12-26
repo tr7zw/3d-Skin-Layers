@@ -57,7 +57,7 @@ dependencies {
 }
 
 mixin {
-    defaultObfuscationEnv = "searge"
+    //defaultObfuscationEnv = "notch"
 }
 
 processResources {
@@ -91,5 +91,11 @@ jar {
         from(project.zipTree(dep)) {
             exclude 'META-INF', 'META-INF/**'
         }
+    }
+}
+
+tasks.whenTaskAdded {task ->
+    if(task.name.contains("reobfJar")) {
+        task.enabled = false
     }
 }
