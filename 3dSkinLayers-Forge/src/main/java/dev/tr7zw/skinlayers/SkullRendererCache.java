@@ -4,7 +4,7 @@ import java.util.WeakHashMap;
 
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.render.CustomizableModelPart;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class SkullRendererCache {
 

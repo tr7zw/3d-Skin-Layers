@@ -54,6 +54,9 @@ dependencies {
     embed('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
         exclude module: 'launchwrapper'
     }
+    // https://mvnrepository.com/artifact/org.lwjgl/lwjgl-stb
+    embed('org.lwjgl:lwjgl-stb:3.1.0')
+    
 }
 
 mixin {

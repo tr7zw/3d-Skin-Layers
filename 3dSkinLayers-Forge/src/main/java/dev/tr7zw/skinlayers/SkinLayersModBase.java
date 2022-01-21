@@ -4,21 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.XRandR.Screen;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
-import net.minecraft.client.Option;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class SkinLayersModBase {
 
@@ -55,7 +50,7 @@ public abstract class SkinLayersModBase {
     }
 
     public Screen createConfigScreen(Screen parent) {
-        CustomConfigScreen screen = new CustomConfigScreen(parent, "text.skinlayers.title") {
+        /*CustomConfigScreen screen = new CustomConfigScreen(parent, "text.skinlayers.title") {
 
             @Override
             public void initialize() {
@@ -132,10 +127,11 @@ public abstract class SkinLayersModBase {
 
         };
 
-        return screen;
+        return screen;*/
+        return null;
     }
 
-    public void refreshLayers(Player player) {
+    public void refreshLayers(EntityPlayer player) {
         if (player == null || !(player instanceof PlayerSettings))
             return;
         PlayerSettings settings = (PlayerSettings) player;
