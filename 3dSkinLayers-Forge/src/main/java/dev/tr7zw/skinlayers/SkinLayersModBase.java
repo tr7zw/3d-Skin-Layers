@@ -7,7 +7,6 @@ import java.nio.file.Files;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.XRandR.Screen;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,8 +48,8 @@ public abstract class SkinLayersModBase {
         }
     }
 
-    public Screen createConfigScreen(Screen parent) {
-        /*CustomConfigScreen screen = new CustomConfigScreen(parent, "text.skinlayers.title") {
+    /*public Screen createConfigScreen(Screen parent) {
+        CustomConfigScreen screen = new CustomConfigScreen(parent, "text.skinlayers.title") {
 
             @Override
             public void initialize() {
@@ -127,9 +126,9 @@ public abstract class SkinLayersModBase {
 
         };
 
-        return screen;*/
+        return screen;
         return null;
-    }
+    }*/
 
     public void refreshLayers(EntityPlayer player) {
         if (player == null || !(player instanceof PlayerSettings))

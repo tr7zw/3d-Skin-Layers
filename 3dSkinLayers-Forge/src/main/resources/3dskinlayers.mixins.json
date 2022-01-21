@@ -3,12 +3,13 @@
   "verbose": true,
   "package": "dev.tr7zw.skinlayers.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "mixin.refmap.json",
+  "refmap": "3dskinlayers.refmap.json",
   "mixins": [
   ],
   "client": [
     "PlayerMixin",
-    "PlayerModelMixin"
+    "PlayerModelMixin",
+    "PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
