@@ -3,7 +3,6 @@ buildscript {
         // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
-        maven {url='https://dist.creeper.host/Sponge/maven'}
         maven {url='https://repo.spongepowered.org/maven/'}
     }
     dependencies {
@@ -111,6 +110,10 @@ dependencies {
 
     sourceSets.main.java.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.java.srcDirs)
 	sourceSets.main.resources.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.resources.srcDirs)
+}
+
+processResources {
+	from "${project.rootDir}/LICENSE"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
