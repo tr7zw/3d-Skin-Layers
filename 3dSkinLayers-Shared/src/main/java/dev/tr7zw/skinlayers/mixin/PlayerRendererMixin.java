@@ -72,7 +72,11 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
         part.y -= 0.6;
         if(!thinArms) {
-            part.x -= 0.4;
+            if(sleeve == this.model.leftSleeve) {
+                part.x += 0.4;
+            } else {
+                part.x -= 0.4;
+            }
         }
         part.render(poseStack,
             multiBufferSource
