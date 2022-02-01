@@ -38,12 +38,12 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
         if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
-        playerModel.hat.visible = !SkinLayersModBase.config.enableHat;
-        playerModel.jacket.visible = !SkinLayersModBase.config.enableJacket;
-        playerModel.leftSleeve.visible = !SkinLayersModBase.config.enableLeftSleeve;
-        playerModel.rightSleeve.visible = !SkinLayersModBase.config.enableRightSleeve;
-        playerModel.leftPants.visible = !SkinLayersModBase.config.enableLeftPants;
-        playerModel.rightPants.visible = !SkinLayersModBase.config.enableRightPants;
+        playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
+        playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
+        playerModel.leftSleeve.visible = playerModel.leftSleeve.visible && !SkinLayersModBase.config.enableLeftSleeve;
+        playerModel.rightSleeve.visible = playerModel.rightSleeve.visible && !SkinLayersModBase.config.enableRightSleeve;
+        playerModel.leftPants.visible = playerModel.leftPants.visible && !SkinLayersModBase.config.enableLeftPants;
+        playerModel.rightPants.visible = playerModel.rightPants.visible && !SkinLayersModBase.config.enableRightPants;
         if(!loaded) {
             loaded = true;
             this.addLayer(new HeadLayerFeatureRenderer(this));
