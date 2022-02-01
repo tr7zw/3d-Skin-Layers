@@ -45,6 +45,11 @@ dependencies {
 	sourceSets.main.resources.srcDirs += (project(':3dSkinLayers-Shared').sourceSets.main.resources.srcDirs)
 }
 
+processResources {
+	from "${project.rootDir}/LICENSE"
+}
+
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([
