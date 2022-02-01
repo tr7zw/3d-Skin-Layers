@@ -110,6 +110,7 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+    from "${project.rootDir}/LICENSE"
 }
 
 // move resources so they can be accessed at runtime
