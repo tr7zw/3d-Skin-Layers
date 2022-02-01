@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.AbstractSkullBlock;
 @Mixin(CustomHeadLayer.class)
 public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> {
 
+    @SuppressWarnings("resource")
     @Inject(method =  "render", at = @At("HEAD"))
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
             float g, float h, float j, float k, float l, CallbackInfo info) {

@@ -92,7 +92,8 @@ public abstract class CustomConfigScreen extends Screen {
 		this.renderTooltip(poseStack, list, i, j);
 	}
 	
-	private void updateText(ProgressOption option) {
+	@SuppressWarnings("resource")
+    private void updateText(ProgressOption option) {
 	    AbstractWidget widget = getOptions().findOption(option);
         if(widget instanceof SliderButton) {
             ((SliderButton)widget).setMessage(option.getMessage(Minecraft.getInstance().options));
@@ -142,7 +143,8 @@ public abstract class CustomConfigScreen extends Screen {
 		return new ProgressOption(translationKey, min, max, 1, (options) -> (double)current.get(), (options, val) -> update.accept(val.intValue()), (options, opt) -> comp, (minecraft) -> minecraft.font.split(new TranslatableComponent(tooltip), 200));
 	}
 
-	public <T extends Enum> CycleOption getEnumOption(String translationKey, Class<T> targetEnum, Supplier<T> current,
+	@SuppressWarnings("rawtypes")
+    public <T extends Enum> CycleOption getEnumOption(String translationKey, Class<T> targetEnum, Supplier<T> current,
 			Consumer<T> update) {
 		return CycleOption.create(translationKey, Arrays.asList(targetEnum.getEnumConstants()),
 				(t) -> new TranslatableComponent(translationKey + "." + t.name()), options -> current.get(),

@@ -56,7 +56,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
-		if(settings.getSkinLayers() == null && !SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
+		if(!SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
 			return; // no head layer setup and wasn't able to setup
 		}
 		

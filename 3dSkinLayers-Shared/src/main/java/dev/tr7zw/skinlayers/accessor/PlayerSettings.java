@@ -1,6 +1,7 @@
 package dev.tr7zw.skinlayers.accessor;
 
 import dev.tr7zw.skinlayers.render.CustomizableModelPart;
+import net.minecraft.resources.ResourceLocation;
 
 public interface PlayerSettings {
 
@@ -11,5 +12,9 @@ public interface PlayerSettings {
 	public CustomizableModelPart[] getSkinLayers();
 	
 	public void setupSkinLayers(CustomizableModelPart[] box);
+	
+	public ResourceLocation getCurrentSkin();
+    
+    public void setCurrentSkin(ResourceLocation skin);
 
 }
