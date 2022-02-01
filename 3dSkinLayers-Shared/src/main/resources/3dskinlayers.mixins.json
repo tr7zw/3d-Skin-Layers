@@ -14,7 +14,8 @@
     "SkullModelMixin",
     "SkullBlockEntityMixin",
     "BlockEntityWithoutLevelRendererMixin",
-    "CustomHeadLayerMixin"
+    "CustomHeadLayerMixin",
+    "HttpTextureMixin"
   ],
   "injectors": {
     "defaultRequire": 1

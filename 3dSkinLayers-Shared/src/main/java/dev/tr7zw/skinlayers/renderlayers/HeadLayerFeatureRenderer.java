@@ -44,7 +44,7 @@ public class HeadLayerFeatureRenderer
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer player, float f, float g, float h, float j, float k,
 			float l) {
-		if (!player.isSkinLoaded() || player.isInvisible() || !SkinLayersModBase.config.enableHat) {
+		if (player.isInvisible() || !SkinLayersModBase.config.enableHat) {
 			return;
 		}
 		if(mc.level == null) {
@@ -59,7 +59,7 @@ public class HeadLayerFeatureRenderer
 		
 		PlayerSettings settings = (PlayerSettings) player;
 		// check for it being setup first to speedup the rendering
-		if(settings.getHeadLayers() == null && !SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
+		if(!SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
 			return; // no head layer setup and wasn't able to setup
 		}
 

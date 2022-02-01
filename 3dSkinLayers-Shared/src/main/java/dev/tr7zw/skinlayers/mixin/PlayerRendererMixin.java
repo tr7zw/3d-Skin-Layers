@@ -38,10 +38,15 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         this.addLayer(new BodyLayerFeatureRenderer(this));
     }
     
+    @SuppressWarnings("resource")
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
         if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
+        PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
+        if(settings.getSkinLayers() == null) {
+            return; // fall back to vanilla
+        }
         playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
         playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
         playerModel.leftSleeve.visible = playerModel.leftSleeve.visible && !SkinLayersModBase.config.enableLeftSleeve;
