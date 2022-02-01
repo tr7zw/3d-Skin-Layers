@@ -63,6 +63,7 @@ public class SkullBlockEntityRendererMixin {
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             float voxelSize = SkinLayersModBase.config.skullVoxelSize;
             poseStack.scale(voxelSize, voxelSize, voxelSize);
+            lastSkull.getHeadLayers().y = -0.25f;
             lastSkull.getHeadLayers().yRot = f * 0.017453292F;
             //lastSkull.getHeadLayers().xRot = g * 0.017453292F;
             lastSkull.getHeadLayers().render(poseStack, multiBufferSource.getBuffer(renderType), i, OverlayTexture.NO_OVERLAY);
