@@ -13,7 +13,7 @@
     "sources": "https://github.com/tr7zw/3d-skin-layers"
   },
 
-  "license": "MIT",
+  "license": "tr7zw Protective License",
   "icon": "assets/3dskinlayers/icon.png",
 
   "environment": "client",
