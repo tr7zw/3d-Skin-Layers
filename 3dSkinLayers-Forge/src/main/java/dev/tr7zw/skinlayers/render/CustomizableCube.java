@@ -6,6 +6,7 @@ import dev.tr7zw.skinlayers.Direction;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class CustomizableCube {
 
@@ -80,32 +81,18 @@ public class CustomizableCube {
     }
 
     public void render(WorldRenderer p_draw_1_, float p_draw_2_) {
-        //Matrix4f matrix4f = pose.pose();
-        //Matrix3f matrix3f = pose.normal();
-        Vector3f vector3f = new Vector3f();
         Polygon polygon;
         for (int id = 0; id < polygonCount; id++) {
-            GlStateManager.pushMatrix();
             polygon = polygons[id];
-            //vector3f = vector3f.set(polygon.normal) .();
-            //vector3f.transform(matrix3f);
-            float l = vector3f.x;
-            float m = vector3f.y;
-            float n = vector3f.z;
+            p_draw_1_.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
             for (int i = 0; i < 4; i++) {
                 Vertex vertex = polygon.vertices[i];
                 p_draw_1_
-                .pos(l+ vertex.pos.x * p_draw_2_, m+vertex.pos.y* p_draw_2_,
-                        n+vertex.pos.z* p_draw_2_)
-                .tex(vertex.u, vertex.v)//.normal(lvt_6_1_, lvt_7_1_, lvt_8_1_)
+                .pos(vertex.pos.x * p_draw_2_, vertex.pos.y* p_draw_2_,
+                        vertex.pos.z* p_draw_2_)
+                .tex(vertex.u, vertex.v).normal(i, id, p_draw_2_)
                 .endVertex();
-                
-                //Vector4f vector4f = new Vector4f(vertex.o, vertex.p, vertex.q, 1.0F);
-                //vector4f.transform(matrix4f);
-                //vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u, vertex.v, overlay,
-                //        light, l, m, n);
             }
-            GlStateManager.popMatrix();
             Tessellator.getInstance().draw();
         }
     }

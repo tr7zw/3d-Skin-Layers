@@ -73,6 +73,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		GlStateManager.pushMatrix();
 		playerRenderer.getMainModel().bipedHead.postRender(0.0625F);
 		//this.getParentModel().head.translateAndRotate(matrixStack);
+	    GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		GlStateManager.scale(voxelSize, voxelSize, voxelSize);
 		// Overlay refuses to work correctly, this is a workaround for now
 		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;

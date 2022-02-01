@@ -1,6 +1,7 @@
 package dev.tr7zw.skinlayers.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -29,17 +30,20 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
         //this.addLayer(new BodyLayerFeatureRenderer(this));
     }
     
-    @Inject(method = "setModelVisibilities", at = @At("RETURN"))
-    public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        if(Minecraft.getMinecraft().thePlayer.getPositionVector().squareDistanceTo(abstractClientPlayer.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
-        ModelPlayer playerModel = ((RenderPlayer)(Object)this).getMainModel();
-        playerModel.bipedHeadwear.isHidden = !SkinLayersModBase.config.enableHat;
-        playerModel.bipedBodyWear.isHidden = !SkinLayersModBase.config.enableJacket;
-        playerModel.bipedLeftArmwear.isHidden = !SkinLayersModBase.config.enableLeftSleeve;
-        playerModel.bipedRightArmwear.isHidden = !SkinLayersModBase.config.enableRightSleeve;
-        playerModel.bipedLeftLegwear.isHidden = !SkinLayersModBase.config.enableLeftPants;
-        playerModel.bipedRightLegwear.isHidden = !SkinLayersModBase.config.enableRightPants;
+    @Inject(method = "setModelVisibilities", at = @At("HEAD"))
+    private void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
+        //if(Minecraft.getMinecraft().thePlayer.getPositionVector().squareDistanceTo(abstractClientPlayer.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
+        ModelPlayer playerModel = getMainModel();
+        playerModel.bipedHeadwear.isHidden = SkinLayersModBase.config.enableHat;
+        playerModel.bipedBodyWear.isHidden = SkinLayersModBase.config.enableJacket;
+        playerModel.bipedLeftArmwear.isHidden = SkinLayersModBase.config.enableLeftSleeve;
+        playerModel.bipedRightArmwear.isHidden = SkinLayersModBase.config.enableRightSleeve;
+        playerModel.bipedLeftLegwear.isHidden = SkinLayersModBase.config.enableLeftPants;
+        playerModel.bipedRightLegwear.isHidden = SkinLayersModBase.config.enableRightPants;
     }
+    
+    @Shadow
+    public abstract ModelPlayer getMainModel();
     
 //    @Inject(method = "renderHand", at = @At("RETURN"))
 //    private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
