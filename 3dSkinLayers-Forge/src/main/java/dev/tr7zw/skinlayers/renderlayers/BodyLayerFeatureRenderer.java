@@ -76,7 +76,6 @@ implements LayerRenderer<AbstractClientPlayer> {
         Supplier<Boolean> configGetter;
         public Layer(int layersId, boolean mirrored, EnumPlayerModelParts modelPart, Shape shape,
                 Supplier<ModelRenderer> vanillaGetter, Supplier<Boolean> configGetter) {
-            super();
             this.layersId = layersId;
             this.mirrored = mirrored;
             this.modelPart = modelPart;
@@ -110,7 +109,7 @@ implements LayerRenderer<AbstractClientPlayer> {
         for(Layer layer : bodyLayers) {
             if(abstractClientPlayer.isWearing(layer.modelPart) && !layer.vanillaGetter.get().isHidden && layer.configGetter.get()) {
                 GlStateManager.pushMatrix();
-                layer.vanillaGetter.get().postRender(deltaTick);
+                layer.vanillaGetter.get().postRender(0.0625F);
                 if(layer.shape == Shape.ARMS) {
                     layers[layer.layersId].x = 0.998f;
                 } else if(layer.shape == Shape.ARMS_SLIM) {
@@ -118,6 +117,8 @@ implements LayerRenderer<AbstractClientPlayer> {
                 }
                 if(layer.shape == Shape.BODY) {
                     widthScaling = SkinLayersModBase.config.bodyVoxelWidthSize;
+                }else {
+                    widthScaling = SkinLayersModBase.config.baseVoxelSize;
                 }
                 if(layer.mirrored) {
                     layers[layer.layersId].x *= -1;
