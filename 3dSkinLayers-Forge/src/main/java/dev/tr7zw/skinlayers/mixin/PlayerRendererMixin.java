@@ -10,6 +10,7 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.renderlayers.BodyLayerFeatureRenderer;
 import dev.tr7zw.skinlayers.renderlayers.HeadLayerFeatureRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
@@ -35,14 +36,25 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
     
     @Inject(method = "setModelVisibilities", at = @At("HEAD"))
     private void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        //if(Minecraft.getMinecraft().thePlayer.getPositionVector().squareDistanceTo(abstractClientPlayer.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
         ModelPlayer playerModel = getMainModel();
-        playerModel.bipedHeadwear.isHidden = SkinLayersModBase.config.enableHat;
-        playerModel.bipedBodyWear.isHidden = SkinLayersModBase.config.enableJacket;
-        playerModel.bipedLeftArmwear.isHidden = SkinLayersModBase.config.enableLeftSleeve;
-        playerModel.bipedRightArmwear.isHidden = SkinLayersModBase.config.enableRightSleeve;
-        playerModel.bipedLeftLegwear.isHidden = SkinLayersModBase.config.enableLeftPants;
-        playerModel.bipedRightLegwear.isHidden = SkinLayersModBase.config.enableRightPants;
+        if(Minecraft.getMinecraft().thePlayer.getPositionVector().squareDistanceTo(abstractClientPlayer.getPositionVector()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
+            playerModel.bipedHeadwear.isHidden = playerModel.bipedHeadwear.isHidden || SkinLayersModBase.config.enableHat;
+            playerModel.bipedBodyWear.isHidden = playerModel.bipedBodyWear.isHidden || SkinLayersModBase.config.enableJacket;
+            playerModel.bipedLeftArmwear.isHidden = playerModel.bipedLeftArmwear.isHidden || SkinLayersModBase.config.enableLeftSleeve;
+            playerModel.bipedRightArmwear.isHidden = playerModel.bipedRightArmwear.isHidden || SkinLayersModBase.config.enableRightSleeve;
+            playerModel.bipedLeftLegwear.isHidden = playerModel.bipedLeftLegwear.isHidden || SkinLayersModBase.config.enableLeftPants;
+            playerModel.bipedRightLegwear.isHidden = playerModel.bipedRightLegwear.isHidden || SkinLayersModBase.config.enableRightPants;
+        } else {
+            // not correct, but the correct way doesn't work cause 1.8 or whatever
+            if(!abstractClientPlayer.isSpectator()) {
+                playerModel.bipedHeadwear.isHidden = false;
+                playerModel.bipedBodyWear.isHidden = false;
+                playerModel.bipedLeftArmwear.isHidden = false;
+                playerModel.bipedRightArmwear.isHidden = false;
+                playerModel.bipedLeftLegwear.isHidden = false;
+                playerModel.bipedRightLegwear.isHidden = false;
+            }
+        }
     }
     
     @Override
