@@ -114,9 +114,9 @@ implements LayerRenderer<AbstractClientPlayer> {
                 }
                 layer.vanillaGetter.get().postRender(0.0625F);
                 if(layer.shape == Shape.ARMS) {
-                    layers[layer.layersId].x = 0.998f;
+                    layers[layer.layersId].x = 0.998f*16;
                 } else if(layer.shape == Shape.ARMS_SLIM) {
-                    layers[layer.layersId].x = 0.499f;
+                    layers[layer.layersId].x = 0.499f*16;
                 }
                 if(layer.shape == Shape.BODY) {
                     widthScaling = SkinLayersModBase.config.bodyVoxelWidthSize;
