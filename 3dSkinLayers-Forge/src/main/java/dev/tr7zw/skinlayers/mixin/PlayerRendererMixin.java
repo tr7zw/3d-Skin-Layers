@@ -7,13 +7,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
+import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.renderlayers.BodyLayerFeatureRenderer;
 import dev.tr7zw.skinlayers.renderlayers.HeadLayerFeatureRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
@@ -64,6 +67,45 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
 
     @Shadow
     public abstract ModelPlayer getMainModel();
+    
+    @Inject(method = "renderRightArm", at = @At("RETURN"))
+    public void renderRightArm(AbstractClientPlayer player, CallbackInfo info) {
+        renderFirstPersonArm(player, 3);
+    }
+
+    @Inject(method = "renderLeftArm", at = @At("RETURN"))
+    public void renderLeftArm(AbstractClientPlayer player, CallbackInfo info) {
+        renderFirstPersonArm(player, 2);
+    }
+    
+    private void renderFirstPersonArm(AbstractClientPlayer player, int layerId) {
+        ModelPlayer modelplayer = getMainModel();
+        float pixelScaling = SkinLayersModBase.config.baseVoxelSize;
+        PlayerSettings settings = (PlayerSettings) player;
+        if(settings.getSkinLayers() == null && !setupModel(player, settings)) {
+            return;
+        }
+        GlStateManager.pushMatrix();
+        modelplayer.bipedRightArm.postRender(0.0625F);
+        GlStateManager.scale(0.0625, 0.0625, 0.0625);
+        GlStateManager.scale(pixelScaling, pixelScaling, pixelScaling);
+        if(!smallArms) {
+            settings.getSkinLayers()[layerId].x = -0.998f*16f;
+        } else {
+            settings.getSkinLayers()[layerId].x = -0.499f*16;
+        }
+        settings.getSkinLayers()[layerId].render(false);
+        GlStateManager.popMatrix();
+    }
+    
+    private boolean setupModel(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings) {
+        
+        if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
+            return false; // default skin
+        }
+        SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, smallArms, null); //TODO
+        return true;
+    }
     
 //    @Inject(method = "renderHand", at = @At("RETURN"))
 //    private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
