@@ -36,17 +36,13 @@ public class CustomizableModelPart {
         this.z = h;
     }
 
-    public void render(WorldRenderer p_render_1_, int i, int j) {
-        render(p_render_1_, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
-    }
 
-    public void render(WorldRenderer p_render_1_, int i, int j, float f, float g, float h,
-            float k) {
+    public void render() {
         if (!this.visible)
             return;
         GlStateManager.pushMatrix();
         translateAndRotate();
-        compile(i, j, f, g, h, k);
+        compile();
         GlStateManager.popMatrix();
     }
 
@@ -54,10 +50,9 @@ public class CustomizableModelPart {
         GlStateManager.translate((this.x / 16.0F), (this.y / 16.0F), (this.z / 16.0F));
     }
 
-    private void compile(int i, int j, float f, float g, float h,
-            float k) {
+    private void compile() {
         for (CustomizableCube cube : this.cubes)
-            cube.render(Tessellator.getInstance().getWorldRenderer(), k);
+            cube.render(Tessellator.getInstance().getWorldRenderer());
     }
 
 }

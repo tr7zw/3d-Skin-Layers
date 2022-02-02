@@ -30,7 +30,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 
     @Override
     public void doRenderLayer(AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3,
-            float paramFloat4, float paramFloat5, float paramFloat6, float paramFloat7) {
+            float deltaTick, float paramFloat5, float paramFloat6, float paramFloat7) {
 //    }
 //	
 //	@Override
@@ -54,7 +54,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		}
 
 		this.playerRenderer.bindTexture(player.getLocationSkin());
-		renderCustomHelmet(settings, player, 0, 0);
+		renderCustomHelmet(settings, player, deltaTick);
 	}
 
 	private boolean setupModel(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings) {
@@ -66,19 +66,19 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		return true;
 	}
 
-	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, int light, int overlay) {
+	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, float deltaTick) {
 		if(settings.getHeadLayers() == null)return;
 		if(playerRenderer.getMainModel().bipedHead.isHidden)return;
 		float voxelSize = SkinLayersModBase.config.headVoxelSize;
 		GlStateManager.pushMatrix();
-		playerRenderer.getMainModel().bipedHead.postRender(0.0625F);
+		playerRenderer.getMainModel().bipedHead.postRender(deltaTick);
 		//this.getParentModel().head.translateAndRotate(matrixStack);
 	    GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		GlStateManager.scale(voxelSize, voxelSize, voxelSize);
 		// Overlay refuses to work correctly, this is a workaround for now
 		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 		float color = red ? 0.5f : 1f;
-		settings.getHeadLayers().render(Tessellator.getInstance().getWorldRenderer(), light, overlay, 1.0f, color, color, 1.0f);
+		settings.getHeadLayers().render();
 		GlStateManager.popMatrix();
 
 	}

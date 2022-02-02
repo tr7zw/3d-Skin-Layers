@@ -80,17 +80,18 @@ public class CustomizableCube {
         return true;
     }
 
-    public void render(WorldRenderer p_draw_1_, float p_draw_2_) {
+    public void render(WorldRenderer worldRenderer) {
+        float scaleConstProbably = 1f;
         Polygon polygon;
         for (int id = 0; id < polygonCount; id++) {
             polygon = polygons[id];
-            p_draw_1_.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
             for (int i = 0; i < 4; i++) {
                 Vertex vertex = polygon.vertices[i];
-                p_draw_1_
-                .pos(vertex.pos.x * p_draw_2_, vertex.pos.y* p_draw_2_,
-                        vertex.pos.z* p_draw_2_)
-                .tex(vertex.u, vertex.v).normal(i, id, p_draw_2_)
+                worldRenderer
+                .pos(vertex.pos.x * scaleConstProbably, vertex.pos.y* scaleConstProbably,
+                        vertex.pos.z* scaleConstProbably)
+                .tex(vertex.u, vertex.v).normal(1, 1, 1)
                 .endVertex();
             }
             Tessellator.getInstance().draw();
