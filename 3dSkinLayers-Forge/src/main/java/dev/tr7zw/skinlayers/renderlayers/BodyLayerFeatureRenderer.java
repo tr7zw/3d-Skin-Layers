@@ -109,6 +109,9 @@ implements LayerRenderer<AbstractClientPlayer> {
         for(Layer layer : bodyLayers) {
             if(abstractClientPlayer.isWearing(layer.modelPart) && !layer.vanillaGetter.get().isHidden && layer.configGetter.get()) {
                 GlStateManager.pushMatrix();
+                if(abstractClientPlayer.isSneaking()) {
+                    GlStateManager.translate(0.0F, 0.2F, 0.0F);
+                }
                 layer.vanillaGetter.get().postRender(0.0625F);
                 if(layer.shape == Shape.ARMS) {
                     layers[layer.layersId].x = 0.998f;

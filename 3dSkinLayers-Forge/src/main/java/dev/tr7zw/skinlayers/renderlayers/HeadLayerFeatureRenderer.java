@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
+import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -20,11 +21,12 @@ import net.minecraft.item.ItemStack;
 public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPlayer> {
 
 	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.skull);
-	
+    private final boolean thinArms;
 	private static final Minecraft mc = Minecraft.getMinecraft();
 	private RenderPlayer playerRenderer;
 	
     public HeadLayerFeatureRenderer(RenderPlayer playerRenderer) {
+        thinArms = ((PlayerEntityModelAccessor)playerRenderer).hasThinArms();
         this.playerRenderer = playerRenderer;
     }
 
@@ -62,7 +64,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, false, null); //TODO
+		SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null); //TODO
 		return true;
 	}
 
@@ -71,10 +73,14 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		if(playerRenderer.getMainModel().bipedHead.isHidden)return;
 		float voxelSize = SkinLayersModBase.config.headVoxelSize;
 		GlStateManager.pushMatrix();
-		playerRenderer.getMainModel().bipedHead.postRender(deltaTick);
+		if(abstractClientPlayer.isSneaking()) {
+            GlStateManager.translate(0.0F, 0.2F, 0.0F);
+        }
+		playerRenderer.getMainModel().bipedHead.postRender(0.0625F);
 		//this.getParentModel().head.translateAndRotate(matrixStack);
 	    GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		GlStateManager.scale(voxelSize, voxelSize, voxelSize);
+		
 		// Overlay refuses to work correctly, this is a workaround for now
 		boolean tintRed = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 		settings.getHeadLayers().render(tintRed);
