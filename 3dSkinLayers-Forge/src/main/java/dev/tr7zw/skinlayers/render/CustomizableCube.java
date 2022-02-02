@@ -1,5 +1,6 @@
 package dev.tr7zw.skinlayers.render;
 
+import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 
 import dev.tr7zw.skinlayers.Direction;
@@ -7,6 +8,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.Vec3;
 
 public class CustomizableCube {
 
@@ -80,18 +82,17 @@ public class CustomizableCube {
         return true;
     }
 
-    public void render(WorldRenderer worldRenderer) {
-        float scaleConstProbably = 1f;
+    public void render(WorldRenderer worldRenderer, boolean redTint) {
         Polygon polygon;
         for (int id = 0; id < polygonCount; id++) {
             polygon = polygons[id];
-            worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
             for (int i = 0; i < 4; i++) {
                 Vertex vertex = polygon.vertices[i];
                 worldRenderer
-                .pos(vertex.pos.x * scaleConstProbably, vertex.pos.y* scaleConstProbably,
-                        vertex.pos.z* scaleConstProbably)
-                .tex(vertex.u, vertex.v).normal(1, 1, 1)
+                .pos(vertex.pos.x, vertex.pos.y,
+                        vertex.pos.z)
+                .tex(vertex.u, vertex.v).color(1f, redTint ? 0.5f : 1f, redTint ? 0.5f : 1f, 1f).normal(polygon.normal.x, polygon.normal.y, polygon.normal.z)
                 .endVertex();
             }
             Tessellator.getInstance().draw();

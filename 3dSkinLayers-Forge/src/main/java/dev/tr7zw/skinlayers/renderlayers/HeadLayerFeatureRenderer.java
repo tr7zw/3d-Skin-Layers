@@ -76,9 +76,8 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 	    GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		GlStateManager.scale(voxelSize, voxelSize, voxelSize);
 		// Overlay refuses to work correctly, this is a workaround for now
-		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
-		float color = red ? 0.5f : 1f;
-		settings.getHeadLayers().render();
+		boolean tintRed = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
+		settings.getHeadLayers().render(tintRed);
 		GlStateManager.popMatrix();
 
 	}

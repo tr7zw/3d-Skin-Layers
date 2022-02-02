@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 
 /**
  * Cut down copy of the Vanilla ModelPart to bypass Optifine/Sodium screwing
@@ -37,12 +36,12 @@ public class CustomizableModelPart {
     }
 
 
-    public void render() {
+    public void render(boolean redTint) {
         if (!this.visible)
             return;
         GlStateManager.pushMatrix();
         translateAndRotate();
-        compile();
+        compile(redTint);
         GlStateManager.popMatrix();
     }
 
@@ -50,9 +49,9 @@ public class CustomizableModelPart {
         GlStateManager.translate((this.x / 16.0F), (this.y / 16.0F), (this.z / 16.0F));
     }
 
-    private void compile() {
+    private void compile(boolean redTint) {
         for (CustomizableCube cube : this.cubes)
-            cube.render(Tessellator.getInstance().getWorldRenderer());
+            cube.render(Tessellator.getInstance().getWorldRenderer(), redTint);
     }
 
 }
