@@ -83,20 +83,21 @@ public class CustomizableCube {
     }
 
     public void render(WorldRenderer worldRenderer, boolean redTint) {
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
         Polygon polygon;
         for (int id = 0; id < polygonCount; id++) {
             polygon = polygons[id];
-            worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
+            
             for (int i = 0; i < 4; i++) {
                 Vertex vertex = polygon.vertices[i];
                 worldRenderer
                 .pos(vertex.pos.x, vertex.pos.y,
                         vertex.pos.z)
-                .tex(vertex.u, vertex.v).color(1f, redTint ? 0.5f : 1f, redTint ? 0.5f : 1f, 1f).normal(polygon.normal.x, polygon.normal.y, polygon.normal.z)
+                .tex(vertex.u, vertex.v).color(255, redTint ? 127 : 255, redTint ? 127 : 255, 255).normal(polygon.normal.x, polygon.normal.y, polygon.normal.z)
                 .endVertex();
             }
-            Tessellator.getInstance().draw();
         }
+        Tessellator.getInstance().draw();
     }
 
     private static class Polygon {

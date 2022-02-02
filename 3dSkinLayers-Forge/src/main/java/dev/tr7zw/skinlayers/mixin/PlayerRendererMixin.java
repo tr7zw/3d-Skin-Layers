@@ -7,8 +7,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
+import dev.tr7zw.skinlayers.renderlayers.BodyLayerFeatureRenderer;
 import dev.tr7zw.skinlayers.renderlayers.HeadLayerFeatureRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
@@ -17,9 +18,11 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 
 @Mixin(RenderPlayer.class)
-public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractClientPlayer> {
+public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractClientPlayer> implements PlayerEntityModelAccessor {
 
-
+    @Shadow
+    private boolean smallArms;
+    
     public PlayerRendererMixin(RenderManager p_i46156_1_, ModelBase p_i46156_2_, float p_i46156_3_) {
         super(p_i46156_1_, p_i46156_2_, p_i46156_3_);
     }
@@ -27,7 +30,7 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {
         this.addLayer(new HeadLayerFeatureRenderer((RenderPlayer)(Object)this));
-        //this.addLayer(new BodyLayerFeatureRenderer(this));
+        this.addLayer(new BodyLayerFeatureRenderer((RenderPlayer)(Object)this));
     }
     
     @Inject(method = "setModelVisibilities", at = @At("HEAD"))
@@ -42,6 +45,11 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
         playerModel.bipedRightLegwear.isHidden = SkinLayersModBase.config.enableRightPants;
     }
     
+    @Override
+    public boolean hasThinArms() {
+        return smallArms;
+    }
+
     @Shadow
     public abstract ModelPlayer getMainModel();
     
