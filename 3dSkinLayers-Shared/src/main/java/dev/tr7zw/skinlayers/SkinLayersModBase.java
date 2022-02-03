@@ -141,6 +141,7 @@ public abstract class SkinLayersModBase {
         PlayerSettings settings = (PlayerSettings) player;
         settings.setupSkinLayers(null);
         settings.setupHeadLayers(null);
+        settings.setCurrentSkin(null);
     }
 
 }
