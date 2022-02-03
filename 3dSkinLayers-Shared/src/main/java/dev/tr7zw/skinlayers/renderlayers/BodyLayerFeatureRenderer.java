@@ -76,6 +76,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
         ;
         
         private final float yOffsetMagicValue;
+        @SuppressWarnings("unused")
         private final Dimensions dimensions; // unused, maybe useful to correct some deformations
 
         private Shape(float yOffsetMagicValue, Dimensions dimensions) {

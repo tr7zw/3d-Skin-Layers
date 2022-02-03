@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.entity.SkullBlockEntity;
 @Mixin(SkullBlockRenderer.class)
 public class SkullBlockEntityRendererMixin {
     
+    @SuppressWarnings("resource")
     @Inject(method = "render", at = @At("HEAD"))
     public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
