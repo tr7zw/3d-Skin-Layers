@@ -75,7 +75,10 @@ public class HeadLayerFeatureRenderer
 		float voxelSize = SkinLayersModBase.config.headVoxelSize;
 		matrixStack.pushPose();
 		this.getParentModel().head.translateAndRotate(matrixStack);
+		matrixStack.translate(0,  -0.25, 0);
 		matrixStack.scale(voxelSize, voxelSize, voxelSize);
+		matrixStack.translate(0, 0.25, 0);
+		matrixStack.translate(0, -0.04, 0);
 		// Overlay refuses to work correctly, this is a workaround for now
 		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 		float color = red ? 0.5f : 1f;

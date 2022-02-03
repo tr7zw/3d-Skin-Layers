@@ -1,5 +1,8 @@
 package dev.tr7zw.skinlayers.render;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
@@ -7,12 +10,8 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 
-import dev.tr7zw.skinlayers.SkinLayersModBase;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.core.Direction;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CustomizableCube extends Cube {
 
