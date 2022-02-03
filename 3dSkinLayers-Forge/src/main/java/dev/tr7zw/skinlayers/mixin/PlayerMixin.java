@@ -17,7 +17,6 @@ public abstract class PlayerMixin extends EntityLivingBase implements PlayerSett
     
 	public PlayerMixin(World p_i1594_1_) {
         super(p_i1594_1_);
-        // TODO Auto-generated constructor stub
     }
 
     private CustomizableModelPart headLayer;

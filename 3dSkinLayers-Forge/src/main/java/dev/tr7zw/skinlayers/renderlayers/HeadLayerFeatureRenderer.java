@@ -64,7 +64,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null); //TODO
+		SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null);
 		return true;
 	}
 
