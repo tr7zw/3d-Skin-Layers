@@ -1,5 +1,6 @@
 package dev.tr7zw.skinlayers;
 
+import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -23,6 +24,10 @@ public class EntityCullingMod extends SkinLayersModBase {
         ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, () -> new ConfigGuiFactory((mc, screen) -> {
             return createConfigScreen(screen);
         }));
+        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+                () -> new IExtensionPoint.DisplayTest(
+                        () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
+                        (remote, isServer) -> true));
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     }
 
