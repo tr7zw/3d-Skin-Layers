@@ -8,12 +8,12 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
 
 @Mod("skinlayers3d")
-public class EntityCullingMod extends SkinLayersModBase {
+public class SkinLayersMod extends SkinLayersModBase {
 
     //Forge only
     private boolean onServer = false;
     
-    public EntityCullingMod() {
+    public SkinLayersMod() {
         try {
             Class clientClass = net.minecraft.client.Minecraft.class;
         }catch(Throwable ex) {
