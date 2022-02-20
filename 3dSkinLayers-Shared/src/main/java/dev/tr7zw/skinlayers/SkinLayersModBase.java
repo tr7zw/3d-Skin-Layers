@@ -27,6 +27,7 @@ public abstract class SkinLayersModBase {
     public static Config config = null;
     private File settingsFile = new File("config", "skinlayers.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static boolean disguiseHeadsCompatibility = false;
 
     public void onInitialize() {
         instance = this;
@@ -41,6 +42,13 @@ public abstract class SkinLayersModBase {
         if (config == null) {
             config = new Config();
             writeConfig();
+        }
+        try {
+            Class clientClass = Class.forName("dev.tr7zw.disguiseheads.DisguiseHeadsShared");
+            disguiseHeadsCompatibility = true;
+            LOGGER.info("Found DisguiseHeads, enable compatibility!");
+        }catch(Throwable ex) {
+            //not installed
         }
     }
 

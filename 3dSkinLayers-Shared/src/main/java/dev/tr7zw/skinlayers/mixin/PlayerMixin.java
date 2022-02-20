@@ -26,6 +26,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
 	private CustomizableModelPart headLayer;
 	private CustomizableModelPart[] skinLayer;
 	private ResourceLocation currentSkin = null;
+	private boolean thinarms = false;
 	
 
 	@Override
@@ -62,5 +63,17 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
 	public UUID getUUID() {
 		return super.uuid;
 	}
+
+    @Override
+    public boolean hasThinArms() {
+        return thinarms;
+    }
+
+    @Override
+    public void setThinArms(boolean thin) {
+        this.thinarms = thin;
+    }
+    
+    
 	
 }
