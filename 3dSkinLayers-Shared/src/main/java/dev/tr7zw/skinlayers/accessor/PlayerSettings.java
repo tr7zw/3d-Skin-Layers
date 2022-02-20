@@ -16,5 +16,9 @@ public interface PlayerSettings {
 	public ResourceLocation getCurrentSkin();
     
     public void setCurrentSkin(ResourceLocation skin);
+    
+    public boolean hasThinArms();
+    
+    public void setThinArms(boolean thin);
 
 }

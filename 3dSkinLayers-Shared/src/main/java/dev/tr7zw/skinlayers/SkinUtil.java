@@ -54,7 +54,7 @@ public class SkinUtil {
         if(skinLocation == null) {
             return false;//this *should* never happen, but just to be sure
         }
-        if(skinLocation.equals(settings.getCurrentSkin())) { // if they are equal, the skin is processed and either failed or is ready
+        if(skinLocation.equals(settings.getCurrentSkin()) && thinArms == settings.hasThinArms()) { // if they are equal, the skin is processed and either failed or is ready
             return settings.getSkinLayers() != null;
         }
         // Starting here should only run in case the skin has changed by getting loaded/another mod changed the skin
@@ -62,6 +62,7 @@ public class SkinUtil {
         try {
             if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { // Skin is null or not a 64x64 skin, hd skins won't work
                 settings.setCurrentSkin(skinLocation);
+                settings.setThinArms(thinArms);
                 settings.setupHeadLayers(null);
                 settings.setupSkinLayers(null);
                 return false;
@@ -80,6 +81,7 @@ public class SkinUtil {
             settings.setupSkinLayers(layers);
             settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
             settings.setCurrentSkin(skinLocation);
+            settings.setThinArms(thinArms);
             return true;
         }finally {
             if(skin != null)

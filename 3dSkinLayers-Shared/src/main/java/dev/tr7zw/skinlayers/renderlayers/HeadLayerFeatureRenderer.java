@@ -35,7 +35,7 @@ public class HeadLayerFeatureRenderer
         thinArms = ((PlayerEntityModelAccessor)getParentModel()).hasThinArms();
     }
 
-	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.PLAYER_HEAD, Items.ZOMBIE_HEAD, Items.CREEPER_HEAD, Items.DRAGON_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
+	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.ZOMBIE_HEAD, Items.CREEPER_HEAD, Items.DRAGON_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
 	
 	private static final Minecraft mc = Minecraft.getInstance();
 	
@@ -54,7 +54,10 @@ public class HeadLayerFeatureRenderer
 		
 		ItemStack itemStack = player.getItemBySlot(EquipmentSlot.HEAD);
 		if (itemStack != null && hideHeadLayers.contains(itemStack.getItem())) {
-			return;
+		    return;
+		}
+		if(itemStack != null && itemStack.getItem() == Items.PLAYER_HEAD && !SkinLayersModBase.disguiseHeadsCompatibility) {
+		    return;
 		}
 		
 		PlayerSettings settings = (PlayerSettings) player;
