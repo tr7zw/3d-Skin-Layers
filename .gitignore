@@ -31,4 +31,9 @@ bin/
 # fabric
 
 run/
-3dSkinLayers-Shared/logs/latest.log
+
+# compose
+
+*.gradle
+*.properties
+gradle/wrapper

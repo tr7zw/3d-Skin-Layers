@@ -33,7 +33,7 @@ public class SkullBlockEntityRendererMixin {
             MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
         LocalPlayer player = Minecraft.getInstance().player;
         if(!SkinLayersModBase.config.enableSkulls)return;
-        if(skullBlockEntity.getBlockPos().distSqr((int)player.getX(), (int)player.getY(), (int)player.getZ(), true) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
+        if(skullBlockEntity.getBlockPos().distToCenterSqr((int)player.getX(), (int)player.getY(), (int)player.getZ()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
             if(lastSkull.getHeadLayers() == null) {
                 SkinUtil.setup3dLayers(skullBlockEntity.getOwnerProfile(), lastSkull);

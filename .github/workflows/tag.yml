@@ -1,10 +1,6 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
+name: Create Release
 
-name: build
-on: [pull_request, push]
+on: create
 
 jobs:
   build:
@@ -12,7 +8,7 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          17
+          16
         ]
         # and run on both Linux and Windows
         os: [ubuntu-20.04]
@@ -29,11 +25,10 @@ jobs:
         run: chmod +x ./gradlecw
       - name: build
         run: ./gradlecw build
-      - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from LTS java on one OS
-        uses: actions/upload-artifact@v2
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: Artifacts
-          path: |
+          files: |
             3dSkinLayers-Fabric/build/libs/*
             3dSkinLayers-Forge/build/libs/*
