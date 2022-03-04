@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
@@ -33,13 +34,20 @@ public class SkullBlockEntityRendererMixin {
             MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
         LocalPlayer player = Minecraft.getInstance().player;
         if(!SkinLayersModBase.config.enableSkulls)return;
-        if(skullBlockEntity.getBlockPos().distToCenterSqr((int)player.getX(), (int)player.getY(), (int)player.getZ()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
+        if(internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int)player.getX(), (int)player.getY(), (int)player.getZ()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
             if(lastSkull.getHeadLayers() == null) {
                 SkinUtil.setup3dLayers(skullBlockEntity.getOwnerProfile(), lastSkull);
             }
             renderNext = lastSkull.getHeadLayers() != null;
         }
+    }
+    
+    private double internalDistToCenterSqr(BlockPos pos, double d, double e, double f) {
+        double g = pos.getX() + 0.5D - d;
+        double h = pos.getY() + 0.5D - e;
+        double i = pos.getZ() + 0.5D - f;
+        return g * g + h * h + i * i;
     }
     
     @Inject(method = "renderSkull", at = @At("HEAD"))
