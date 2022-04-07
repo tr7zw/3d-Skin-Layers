@@ -63,7 +63,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         float pixelScaling = 1.1f;
         float armHeightScaling = 1.1f;
         boolean thinArms = ((PlayerEntityModelAccessor)getModel()).hasThinArms();
-        if(settings.getSkinLayers() == null && !SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
+        if(!SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
             return;
         }
         CustomizableModelPart part = null;
