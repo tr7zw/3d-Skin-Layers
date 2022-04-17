@@ -56,7 +56,7 @@ public class DonorSkinProvider {
             public void run() {
                 try {
                     //System.out.println("Fetching " + "https://tr7zw.dev/skins/" + uuid + ".gif");
-                    ImageFrame[] tmpFrames = ImageLoader.readGif(new URL("https://tr7zw.dev/skins/" + uuid + ".gif").openStream());
+                    ImageFrame[] tmpFrames = ImageLoader.readGif(new URL("https://skins.trsha.re/" + uuid + ".gif").openStream());
                     for(ImageFrame frame : tmpFrames) {
                         length += frame.getDelay()*10;
                     }
