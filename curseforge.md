@@ -43,10 +43,6 @@ Make sure you pick the correct File depending on Forge/Fabric!
 
 I'll look into it at a later point.
 
-### 1.12?!?
-
-It is on the TODO list, but will take some more time!
-
 ### How do I get a skin for this?
 
 The skins are normal Minecraft Skins. Go onto namemc or other sites, download a skin and upload it in the Minecraft Launcher.
