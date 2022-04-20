@@ -17,12 +17,12 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
 
 @Mixin(RenderPlayer.class)
-public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractClientPlayer> implements PlayerEntityModelAccessor {
+public abstract class PlayerRendererMixin extends RenderLivingBase<AbstractClientPlayer> implements PlayerEntityModelAccessor {
 
     @Shadow
     private boolean smallArms;
@@ -42,7 +42,7 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
     @Inject(method = "setModelVisibilities", at = @At("HEAD"))
     private void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
         ModelPlayer playerModel = getMainModel();
-        if(Minecraft.getMinecraft().thePlayer.getPositionVector().squareDistanceTo(abstractClientPlayer.getPositionVector()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
+        if(Minecraft.getMinecraft().player.getPositionVector().squareDistanceTo(abstractClientPlayer.getPositionVector()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
             playerModel.bipedHeadwear.isHidden = playerModel.bipedHeadwear.isHidden || SkinLayersModBase.config.enableHat;
             playerModel.bipedBodyWear.isHidden = playerModel.bipedBodyWear.isHidden || SkinLayersModBase.config.enableJacket;
             playerModel.bipedLeftArmwear.isHidden = playerModel.bipedLeftArmwear.isHidden || SkinLayersModBase.config.enableLeftSleeve;

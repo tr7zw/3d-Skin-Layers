@@ -14,12 +14,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPlayer> {
 
-	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.skull);
+	private Set<Item> hideHeadLayers = Sets.newHashSet(Items.SKULL);
     private final boolean thinArms;
 	private static final Minecraft mc = Minecraft.getMinecraft();
 	private RenderPlayer playerRenderer;
@@ -35,9 +36,9 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		if (!player.hasSkin() || player.isInvisible() || !SkinLayersModBase.config.enableHat) {
 			return;
 		}
-		if(mc.thePlayer.getPositionVector().squareDistanceTo(player.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
+		if(mc.player.getPositionVector().squareDistanceTo(player.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
 		
-		ItemStack itemStack = player.getEquipmentInSlot(1); //TODO
+		ItemStack itemStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
 		if (itemStack != null && hideHeadLayers.contains(itemStack.getItem())) {
 			return;
 		}

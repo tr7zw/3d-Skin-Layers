@@ -26,6 +26,10 @@ Since this mod is purely visual and fully clientside, so it doesn't have to be i
 
 Support via [![Discord](https://tr7zw.dev/curse/Discord.png)](https://discord.gg/2wKH8yeThf) or [Github](https://github.com/tr7zw/3d-skin-layers)!
 
+## Build 1.12 notes
+
+For myself or anyone unfortunate enough to have to work with 1.12/1.8: The refmap file does not copy itself into the jar and no matter what I do it refuses to do so. Currently it's a manual job, but I don't expect to have to do many 1.12.2 updates.
+
 ## License
 
 This project is licensed under [``tr7zw Protective License``](LICENSE).

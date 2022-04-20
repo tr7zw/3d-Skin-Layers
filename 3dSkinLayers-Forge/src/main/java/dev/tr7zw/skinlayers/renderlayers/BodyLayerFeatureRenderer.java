@@ -41,10 +41,10 @@ implements LayerRenderer<AbstractClientPlayer> {
         if (!player.hasSkin() || player.isInvisible()) {
             return;
         }
-        if(mc.theWorld == null) {
+        if(mc.world == null) {
             return; // in a menu or something and the model gets rendered
         }
-        if(mc.thePlayer.getPositionVector().squareDistanceTo(player.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
+        if(mc.player.getPositionVector().squareDistanceTo(player.getPositionVector()) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
         
         PlayerSettings settings = (PlayerSettings) player;
         // check for it being setup first to speedup the rendering

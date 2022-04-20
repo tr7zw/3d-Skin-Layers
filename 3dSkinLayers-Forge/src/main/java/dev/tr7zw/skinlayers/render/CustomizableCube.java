@@ -1,14 +1,10 @@
 package dev.tr7zw.skinlayers.render;
 
-import org.lwjgl.util.vector.Vector;
 import org.lwjgl.util.vector.Vector3f;
 
 import dev.tr7zw.skinlayers.Direction;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.Vec3;
 
 public class CustomizableCube {
 
@@ -82,16 +78,16 @@ public class CustomizableCube {
         return true;
     }
 
-    public void render(WorldRenderer worldRenderer, boolean redTint) {
+    public void render(Tessellator worldRenderer, boolean redTint) {
         redTint = false;
-        worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
+        worldRenderer.getBuffer().begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
         Polygon polygon;
         for (int id = 0; id < polygonCount; id++) {
             polygon = polygons[id];
             
             for (int i = 0; i < 4; i++) {
                 Vertex vertex = polygon.vertices[i];
-                worldRenderer
+                worldRenderer.getBuffer()
                 .pos(vertex.pos.x, vertex.pos.y,
                         vertex.pos.z)
                 .tex(vertex.u, vertex.v).color(255, redTint ? 127 : 255, redTint ? 127 : 255, 255).normal(polygon.normal.x, polygon.normal.y, polygon.normal.z)

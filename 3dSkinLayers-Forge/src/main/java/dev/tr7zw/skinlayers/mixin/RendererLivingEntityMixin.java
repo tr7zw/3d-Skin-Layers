@@ -9,10 +9,10 @@ import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.EntityLivingBase;
 
-@Mixin(RendererLivingEntity.class)
+@Mixin(RenderLivingBase.class)
 public class RendererLivingEntityMixin<T extends EntityLivingBase> {
 
     @Inject(method = "renderModel", at = @At("TAIL"))
@@ -22,7 +22,7 @@ public class RendererLivingEntityMixin<T extends EntityLivingBase> {
             return;
         }
         boolean flag = !p_renderModel_1_.isInvisible();
-        boolean flag1 = (!flag && !p_renderModel_1_.isInvisibleToPlayer((Minecraft.getMinecraft()).thePlayer));
+        boolean flag1 = (!flag && !p_renderModel_1_.isInvisibleToPlayer((Minecraft.getMinecraft()).player));
         if (flag || flag1) {
             PlayerEntityModelAccessor playerRenderer = (PlayerEntityModelAccessor) this;
             if (flag1) {

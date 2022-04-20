@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
-@Mod(modid = "skinlayers", name = "3dSkinLayers", version = "@VER@", clientSideOnly = true)
+@Mod(modid = "skinlayers", name = "3dSkinLayers", version = "1.1.0", clientSideOnly = true)
 public class SkinLayersMod extends SkinLayersModBase {
 
     //Forge only

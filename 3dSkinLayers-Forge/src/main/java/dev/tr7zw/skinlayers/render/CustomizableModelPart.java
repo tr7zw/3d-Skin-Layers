@@ -51,7 +51,7 @@ public class CustomizableModelPart {
 
     private void compile(boolean redTint) {
         for (CustomizableCube cube : this.cubes)
-            cube.render(Tessellator.getInstance().getWorldRenderer(), redTint);
+            cube.render(Tessellator.getInstance(), redTint);
     }
 
 }
