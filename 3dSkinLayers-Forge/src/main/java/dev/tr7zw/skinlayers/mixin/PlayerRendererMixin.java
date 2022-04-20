@@ -26,6 +26,8 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
 
     @Shadow
     private boolean smallArms;
+    private HeadLayerFeatureRenderer headLayer;
+    private BodyLayerFeatureRenderer bodyLayer;
     
     public PlayerRendererMixin(RenderManager p_i46156_1_, ModelBase p_i46156_2_, float p_i46156_3_) {
         super(p_i46156_1_, p_i46156_2_, p_i46156_3_);
@@ -33,8 +35,8 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {
-        this.addLayer(new HeadLayerFeatureRenderer((RenderPlayer)(Object)this));
-        this.addLayer(new BodyLayerFeatureRenderer((RenderPlayer)(Object)this));
+        headLayer = new HeadLayerFeatureRenderer((RenderPlayer)(Object)this);
+        bodyLayer = new BodyLayerFeatureRenderer((RenderPlayer)(Object)this);
     }
     
     @Inject(method = "setModelVisibilities", at = @At("HEAD"))
@@ -60,6 +62,18 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
         }
     }
     
+    
+    
+    @Override
+    public HeadLayerFeatureRenderer getHeadLayer() {
+        return headLayer;
+    }
+
+    @Override
+    public BodyLayerFeatureRenderer getBodyLayer() {
+        return bodyLayer;
+    }
+
     @Override
     public boolean hasThinArms() {
         return smallArms;

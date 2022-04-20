@@ -53,7 +53,7 @@ implements LayerRenderer<AbstractClientPlayer> {
         }
 
         
-        this.playerRenderer.bindTexture(player.getLocationSkin());
+        //this.playerRenderer.bindTexture(player.getLocationSkin());
         renderLayers(player, (CustomizableModelPart[]) settings.getSkinLayers(), deltaTick);
     }
 

@@ -11,7 +11,6 @@ import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.init.Items;
@@ -33,12 +32,6 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
     @Override
     public void doRenderLayer(AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3,
             float deltaTick, float paramFloat5, float paramFloat6, float paramFloat7) {
-//    }
-//	
-//	@Override
-//    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-//            AbstractClientPlayer player, float f, float g, float h, float j, float k,
-//			float l) {
 		if (!player.hasSkin() || player.isInvisible() || !SkinLayersModBase.config.enableHat) {
 			return;
 		}
@@ -55,7 +48,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 			return; // no head layer setup and wasn't able to setup
 		}
 
-		this.playerRenderer.bindTexture(player.getLocationSkin());
+		//this.playerRenderer.bindTexture(player.getLocationSkin());
 		renderCustomHelmet(settings, player, deltaTick);
 	}
 

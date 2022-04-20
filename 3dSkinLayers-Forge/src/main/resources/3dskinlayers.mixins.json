@@ -8,7 +8,7 @@
   ],
   "client": [
     "PlayerMixin",
-    "PlayerModelMixin",
+    "RendererLivingEntityMixin",
     "PlayerRendererMixin"
   ],
   "injectors": {

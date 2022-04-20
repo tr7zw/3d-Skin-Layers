@@ -83,6 +83,7 @@ public class CustomizableCube {
     }
 
     public void render(WorldRenderer worldRenderer, boolean redTint) {
+        redTint = false;
         worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
         Polygon polygon;
         for (int id = 0; id < polygonCount; id++) {
