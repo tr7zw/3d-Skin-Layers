@@ -1,6 +1,7 @@
 ![](https://tr7zw.dev/curse/3dskin-banner.jpg)
 
-[![Discord](https://tr7zw.dev/curse/Discord-long.png)](https://discord.gg/2wKH8yeThf)
+[![Downloads](http://cf.way2muchnoise.eu/full_521480_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d)
+[![Versions](http://cf.way2muchnoise.eu/versions/521480.svg)](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d)[![Discord](https://tr7zw.dev/curse/Discord-long.png)](https://discord.gg/2wKH8yeThf)[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O5O7ACGRH)
 
 # 3d Skin Layers
 
