@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.entity.player.PlayerModelPart;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
@@ -59,6 +60,8 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
         if(sleeve.visible)return; // Vanilla one is active
+        // Check the vanilla hide setting
+        if(!abstractClientPlayer.isModelPartShown(this.getModel().leftSleeve == sleeve ? PlayerModelPart.LEFT_SLEEVE : PlayerModelPart.RIGHT_SLEEVE))return;
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         float pixelScaling = 1.1f;
         float armHeightScaling = 1.1f;
