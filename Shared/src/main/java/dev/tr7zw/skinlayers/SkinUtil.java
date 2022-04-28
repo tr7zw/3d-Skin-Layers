@@ -87,6 +87,8 @@ public class SkinUtil {
                     // not backed by an image
                 }
             }
+            // This would work, but hd skins will crash the JVM. Only 
+            /*
             try {
                 NativeImage img = new NativeImage(Format.RGBA, 64, 64, true);
                 GlStateManager._bindTexture(texture.getId());
@@ -96,6 +98,7 @@ public class SkinUtil {
             }catch(Exception ex) {
                 SkinLayersModBase.LOGGER.error("Error while trying to grab a texture from the GPU.", ex);
             }
+            */
            SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation + ". Potentially a conflict with another mod.");
             return null;
         }catch(Exception ex) {
