@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class DonorSkinProvider {
     public static final Logger LOGGER = LogManager.getLogger();
     private static File settingsFile = new File("config", "tr7zwDonorSettings.json");
     private static DonorSettings settings;
+    private static final String userAgent = "DonorSkin/1.0.0";
     
     static {
         if(settingsFile.exists()) {
@@ -93,7 +95,9 @@ public class DonorSkinProvider {
             @Override
             public void run() {
                 try {
-                    ImageFrame[] tmpFrames = ImageLoader.readGif(new URL("https://skins.trsha.re/" + uuid + ".gif").openStream());
+                    URLConnection con = new URL("https://skins.trsha.re/" + uuid + ".gif").openConnection();
+                    con.setRequestProperty("User-Agent", userAgent);
+                    ImageFrame[] tmpFrames = ImageLoader.readGif(con.getInputStream());
                     for(ImageFrame frame : tmpFrames) {
                         length += frame.getDelay()*10;
                     }
