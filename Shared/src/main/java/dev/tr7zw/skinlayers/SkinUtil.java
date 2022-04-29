@@ -10,9 +10,7 @@ import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.NativeImage;
-import com.mojang.blaze3d.platform.NativeImage.Format;
 
 import dev.tr7zw.skinlayers.accessor.HttpTextureAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;

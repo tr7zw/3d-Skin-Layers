@@ -44,8 +44,8 @@ public abstract class SkinLayersModBase {
             writeConfig();
         }
         try {
-            Class clientClass = Class.forName("dev.tr7zw.disguiseheads.DisguiseHeadsShared");
-            disguiseHeadsCompatibility = true;
+            Class<?> clientClass = Class.forName("dev.tr7zw.disguiseheads.DisguiseHeadsShared");
+            disguiseHeadsCompatibility = clientClass != null; // to  shut up the compiler that the var is not used
             LOGGER.info("Found DisguiseHeads, enable compatibility!");
         }catch(Throwable ex) {
             //not installed
