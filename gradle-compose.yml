@@ -4,7 +4,7 @@ replacements:
   group: "dev.tr7zw"
   name: "3d-Skin-Layers"
   id: "3dskinlayers"
-  version: "1.4.3"
+  version: "1.4.4"
   author: "tr7zw"
   dependencies: ""
   licensename: "LICENSE"
