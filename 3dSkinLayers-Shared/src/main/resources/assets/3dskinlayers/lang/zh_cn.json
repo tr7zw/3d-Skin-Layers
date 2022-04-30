@@ -1,0 +1,20 @@
+{
+  "text.skinlayers.title": "3D 双层皮肤 Mod 设置",
+
+  "text.skinlayers.enable.hat": "开启 3D 帽子",
+  "text.skinlayers.enable.jacket": "开启 3D 上衣",
+  "text.skinlayers.enable.leftsleeve": "开启 3D 左袖子",
+  "text.skinlayers.enable.rightsleeve": "开启 3D 右袖子",
+  "text.skinlayers.enable.leftpants": "开启 3D 左裤子",
+  "text.skinlayers.enable.rightpants": "开启 3D 右裤子",
+  "text.skinlayers.renderdistancelod": "3D 渲染距离",
+  "text.skinlayers.basevoxelsize": "像素块大小",
+  "text.skinlayers.headvoxelsize": "头部像素块大小",
+  "text.skinlayers.bodyvoxelheightsize": "身体像素块高度",
+  "text.skinlayers.bodyvoxelwidthsize": "身体像素块宽度",
+  "text.skinlayers.skulls.enable": "开启 3D 头颅",
+  "text.skinlayers.skullsitems.enable": "开启 3D 头颅物品",
+  "text.skinlayers.skulls.voxelsize": "头颅像素块大小",
+  "text.skinlayers.reset": "恢复为默认",
+  "text.skinlayers.fastrender.enable": "开启快速渲染"
+}
