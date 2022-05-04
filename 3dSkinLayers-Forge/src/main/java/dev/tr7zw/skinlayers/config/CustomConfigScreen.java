@@ -78,7 +78,7 @@ public abstract class CustomConfigScreen extends GuiScreen {
     public void drawScreen(int p_drawScreen_1_, int p_drawScreen_2_, float p_drawScreen_3_) {
         drawDefaultBackground();
         this.optionsRowList.drawScreen(p_drawScreen_1_, p_drawScreen_2_, p_drawScreen_3_);
-        drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 5, 16777215);
+        drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 5, 16777215);
         super.drawScreen(p_drawScreen_1_, p_drawScreen_2_, p_drawScreen_3_);
     }
 

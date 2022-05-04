@@ -21,13 +21,13 @@ public class GuiEnumButton<T extends Enum> extends GuiButton {
         this.targetEnum = targetEnum;
         this.current = current;
         this.update = update;
-    }
+    }  
 
     @Override
-    public void drawButton(Minecraft p_drawButton_1_, int p_drawButton_2_, int p_drawButton_3_) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         this.displayString = I18n.format(translationKey) + ": "
                 + I18n.format(enumTranslationKey + "." + current.get().name(), new Object[0]);
-        super.drawButton(p_drawButton_1_, p_drawButton_2_, p_drawButton_3_);
+        super.drawButton(mc, mouseX, mouseY, partialTicks);
     }
 
     @Override

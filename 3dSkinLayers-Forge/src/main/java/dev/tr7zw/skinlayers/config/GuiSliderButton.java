@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,8 +43,8 @@ public class GuiSliderButton extends GuiButton {
         if (!this.visible)
             return;
         if (this.dragging) {
-            this.sliderValue = ((float)p_mouseDragged_2_ - (float)this.xPosition + 4f) / ((float)this.width - 8f);
-            this.sliderValue = MathHelper.clamp_float(this.sliderValue, 0.0F, 1.0F);
+            this.sliderValue = ((float)p_mouseDragged_2_ - (float)this.x + 4f) / ((float)this.width - 8f);
+            this.sliderValue = MathHelper.clamp(this.sliderValue, 0.0F, 1.0F);
             float lvt_4_1_ = min + (sliderValue * (max-min));
             lvt_4_1_ = (int)(lvt_4_1_/steps);
             lvt_4_1_ *= steps;
@@ -52,18 +52,18 @@ public class GuiSliderButton extends GuiButton {
             this.sliderValue = (float) ((current.get()-min) / (max-min));
             this.displayString = I18n.format(translationKey) + ": " + getRounded(current.get());
         }
-        p_mouseDragged_1_.getTextureManager().bindTexture(buttonTextures);
+        p_mouseDragged_1_.getTextureManager().bindTexture(BUTTON_TEXTURES);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (this.width - 8)), this.yPosition, 0, 66, 4,
+        drawTexturedModalRect(this.x + (int) (this.sliderValue * (this.width - 8)), this.y, 0, 66, 4,
                 20);
-        drawTexturedModalRect(this.xPosition + (int) (this.sliderValue * (this.width - 8)) + 4, this.yPosition, 196, 66,
+        drawTexturedModalRect(this.x + (int) (this.sliderValue * (this.width - 8)) + 4, this.y, 196, 66,
                 4, 20);
     }
 
     public boolean mousePressed(Minecraft p_mousePressed_1_, int p_mousePressed_2_, int p_mousePressed_3_) {
         if (super.mousePressed(p_mousePressed_1_, p_mousePressed_2_, p_mousePressed_3_)) {
-            this.sliderValue = ((float)p_mousePressed_2_ - (float)this.xPosition + 4f) / ((float)this.width - 8f);
-            this.sliderValue = MathHelper.clamp_float(this.sliderValue, 0.0F, 1.0F);
+            this.sliderValue = ((float)p_mousePressed_2_ - (float)this.x + 4f) / ((float)this.width - 8f);
+            this.sliderValue = MathHelper.clamp(this.sliderValue, 0.0F, 1.0F);
             float lvt_4_1_ = min + (sliderValue * (max-min));
             update.accept((double) lvt_4_1_);
             this.sliderValue = (float) (max /current.get());

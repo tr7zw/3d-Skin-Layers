@@ -85,17 +85,17 @@ public abstract class SkinLayersModBase {
             options.add(getDoubleOption("text.skinlayers.basevoxelsize", 1.001f, 1.4f, 0.001f,
                     () -> (double) config.baseVoxelSize, (i) -> {
                         config.baseVoxelSize = i.floatValue();
-                        SkinLayersModBase.instance.refreshLayers(this.minecraft.thePlayer);
+                        SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
                     }));
             options.add(getDoubleOption("text.skinlayers.headvoxelsize", 1.001f, 1.25f, 0.001f,
                     () -> (double) config.headVoxelSize, (i) -> {
                         config.headVoxelSize = i.floatValue();
-                        SkinLayersModBase.instance.refreshLayers(this.minecraft.thePlayer);
+                        SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
                     }));
             options.add(getDoubleOption("text.skinlayers.bodyvoxelwidthsize", 1.001f, 1.4f, 0.001f,
                     () -> (double) config.bodyVoxelWidthSize, (i) -> {
                         config.bodyVoxelWidthSize = i.floatValue();
-                        SkinLayersModBase.instance.refreshLayers(this.minecraft.thePlayer);
+                        SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
                   }));
             options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> config.enableSkulls,
                     (b) -> config.enableSkulls = b));
@@ -119,7 +119,7 @@ public abstract class SkinLayersModBase {
         @Override
         public void drawScreen(int p_drawScreen_1_, int p_drawScreen_2_, float p_drawScreen_3_) {
             super.drawScreen(p_drawScreen_1_, p_drawScreen_2_, p_drawScreen_3_);
-            if (this.minecraft.theWorld != null) {
+            if (this.minecraft.world != null) {
                 int x = this.width/2;
                 int y = this.height-45;
                 int size = (int) (40f * (this.height / 200f));
@@ -129,7 +129,7 @@ public abstract class SkinLayersModBase {
                 lookY = Math.min(lookY, 10);
                 GlStateManager.enableDepth();
                 GuiInventory.drawEntityOnScreen(x, y, size, lookX, lookY,
-                        this.minecraft.thePlayer);
+                        this.minecraft.player);
             }
         }
         
