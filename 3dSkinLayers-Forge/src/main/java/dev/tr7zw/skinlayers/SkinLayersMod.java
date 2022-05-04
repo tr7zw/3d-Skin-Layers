@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
-@Mod(modid = "skinlayers3d", name = "3dSkinLayers", version = "1.1.0", clientSideOnly = true, guiFactory = "dev.tr7zw.skinlayers.config.GuiFactory")
+@Mod(modid = "skinlayers3d", name = "3dSkinLayers", version = "1.2.0", clientSideOnly = true, guiFactory = "dev.tr7zw.skinlayers.config.GuiFactory")
 public class SkinLayersMod extends SkinLayersModBase {
 
     //Forge only
