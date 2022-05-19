@@ -31,4 +31,3 @@ jobs:
         with:
           files: |
             3dSkinLayers-Fabric/build/libs/*
-            3dSkinLayers-Forge/build/libs/*

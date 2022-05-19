@@ -1,8 +1,5 @@
 ![](https://tr7zw.dev/curse/3dskin-banner.jpg)
 
-[![Downloads](http://cf.way2muchnoise.eu/full_521480_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d)
-[![Versions](http://cf.way2muchnoise.eu/versions/521480.svg)](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d)[![Discord](https://tr7zw.dev/curse/Discord-long.png)](https://discord.gg/2wKH8yeThf)[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O5O7ACGRH)
-
 # 3d Skin Layers
 
 Replaces the usually flat second layer of player skins with a 3d modeled version. Will automatically switch to the vanilla 2d rendering when players are further away than 12 blocks in order to increase the framerate. Also supports transparent parts on things like glasses! Just keep in mind that the outer skin layer is slightly bigger than the main player model, so the cubes will not line up perfectly with the skin.

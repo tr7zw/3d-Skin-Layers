@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
-import net.minecraft.client.Option;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.entity.player.Player;
@@ -67,7 +67,7 @@ public abstract class SkinLayersModBase {
 
             @Override
             public void initialize() {
-                List<Option> options = new ArrayList<>();
+                List<OptionInstance<?>> options = new ArrayList<>();
                 options.add(getOnOffOption("text.skinlayers.enable.hat", () -> config.enableHat,
                         (b) -> config.enableHat = b));
                 options.add(getOnOffOption("text.skinlayers.enable.jacket", () -> config.enableJacket,
@@ -107,7 +107,7 @@ public abstract class SkinLayersModBase {
                         }));
                 options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> config.fastRender,
                         (b) -> config.fastRender = b));
-                getOptions().addSmall(options.toArray(new Option[0]));
+                getOptions().addSmall(options.toArray(new OptionInstance[0]));
 
             }
 

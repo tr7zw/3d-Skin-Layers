@@ -2,6 +2,7 @@ package dev.tr7zw.skinlayers;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.Optional;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
@@ -27,9 +28,10 @@ public class SkinUtil {
     
     private static NativeImage getTexture(ResourceLocation resourceLocation) {
         try {
-            if(Minecraft.getInstance().getResourceManager().hasResource(resourceLocation)) {
-                Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
-                NativeImage skin = NativeImage.read(resource.getInputStream());
+            Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
+            if(optionalRes.isPresent()) {
+                Resource resource = optionalRes.get();
+                NativeImage skin = NativeImage.read(resource.open());
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
