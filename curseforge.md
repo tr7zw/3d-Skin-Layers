@@ -1,4 +1,4 @@
-![](https://tr7zw.dev/curse/3dskin-banner.jpg)
+[![](https://tr7zw.dev/curse/3dskin-banner.jpg)](https://tr7zw.github.io/project/3dskinlayers/)
 
 [![Discord](https://tr7zw.dev/curse/Discord-long.png)](https://discord.gg/2wKH8yeThf)[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O5O7ACGRH)
 
@@ -14,7 +14,7 @@ Since this mod is purely visual and fully clientside, so it doesn't have to be i
 
 ## Incompatible
 
-- HD Skins
+- HD Skins(newer versions will try to fall back to 2d)
 - Epic Fight Mod
 - Emotecraft animations
 
