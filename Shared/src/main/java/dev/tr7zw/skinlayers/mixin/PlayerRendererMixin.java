@@ -65,11 +65,14 @@ public abstract class PlayerRendererMixin
     @Inject(method = "renderHand", at = @At("RETURN"))
     private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
-        if (sleeve.visible)
-            return; // Vanilla one is active
+        boolean rightSleeve = this.getModel().leftSleeve == sleeve ? false : true;
+        
+        if (rightSleeve ? !SkinLayersModBase.config.enableRightSleeve : !SkinLayersModBase.config.enableLeftSleeve)
+            return; // Vanilla is active
+        sleeve.visible = false; // hide the vanilla sleeve
         // Check the vanilla hide setting
-        if (!abstractClientPlayer.isModelPartShown(
-                this.getModel().leftSleeve == sleeve ? PlayerModelPart.LEFT_SLEEVE : PlayerModelPart.RIGHT_SLEEVE))
+        if (!abstractClientPlayer
+                .isModelPartShown(rightSleeve ? PlayerModelPart.RIGHT_SLEEVE : PlayerModelPart.LEFT_SLEEVE))
             return;
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         float pixelScaling = 1.1f;
