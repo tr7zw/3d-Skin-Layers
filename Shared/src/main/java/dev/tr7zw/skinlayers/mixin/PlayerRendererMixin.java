@@ -27,7 +27,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.PlayerModelPart;
 
 @Mixin(PlayerRenderer.class)
-public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+public abstract class PlayerRendererMixin
+        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
     public PlayerRendererMixin(Context context, PlayerModel<AbstractClientPlayer> entityModel, float f) {
         super(context, entityModel, f);
@@ -38,62 +39,70 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         this.addLayer(new HeadLayerFeatureRenderer(this));
         this.addLayer(new BodyLayerFeatureRenderer(this));
     }
-    
+
     @SuppressWarnings("resource")
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        if(Minecraft.getInstance().player.distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD)return;
+        if (Minecraft.getInstance().player != null || Minecraft.getInstance().player
+                .distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD
+                        * SkinLayersModBase.config.renderDistanceLOD) {
+            return;
+        }
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-        if(settings.getSkinLayers() == null) {
+        if (settings.getSkinLayers() == null) {
             return; // fall back to vanilla
         }
         playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
         playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
         playerModel.leftSleeve.visible = playerModel.leftSleeve.visible && !SkinLayersModBase.config.enableLeftSleeve;
-        playerModel.rightSleeve.visible = playerModel.rightSleeve.visible && !SkinLayersModBase.config.enableRightSleeve;
+        playerModel.rightSleeve.visible = playerModel.rightSleeve.visible
+                && !SkinLayersModBase.config.enableRightSleeve;
         playerModel.leftPants.visible = playerModel.leftPants.visible && !SkinLayersModBase.config.enableLeftPants;
         playerModel.rightPants.visible = playerModel.rightPants.visible && !SkinLayersModBase.config.enableRightPants;
     }
-    
+
     @Inject(method = "renderHand", at = @At("RETURN"))
     private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
-        if(sleeve.visible)return; // Vanilla one is active
+        if (sleeve.visible)
+            return; // Vanilla one is active
         // Check the vanilla hide setting
-        if(!abstractClientPlayer.isModelPartShown(this.getModel().leftSleeve == sleeve ? PlayerModelPart.LEFT_SLEEVE : PlayerModelPart.RIGHT_SLEEVE))return;
+        if (!abstractClientPlayer.isModelPartShown(
+                this.getModel().leftSleeve == sleeve ? PlayerModelPart.LEFT_SLEEVE : PlayerModelPart.RIGHT_SLEEVE))
+            return;
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         float pixelScaling = 1.1f;
         float armHeightScaling = 1.1f;
-        boolean thinArms = ((PlayerEntityModelAccessor)getModel()).hasThinArms();
-        if(!SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
+        boolean thinArms = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
+        if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
             return;
         }
         CustomizableModelPart part = null;
-        if(sleeve == this.model.leftSleeve) {
+        if (sleeve == this.model.leftSleeve) {
             part = settings.getSkinLayers()[2];
-        }else {
+        } else {
             part = settings.getSkinLayers()[3];
         }
         part.copyFrom(arm);
         poseStack.pushPose();
         poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
         part.y -= 0.6;
-        if(!thinArms) {
-            if(sleeve == this.model.leftSleeve) {
+        if (!thinArms) {
+            if (sleeve == this.model.leftSleeve) {
                 part.x += 0.4;
             } else {
                 part.x -= 0.4;
             }
         }
         part.render(poseStack,
-            multiBufferSource
-                    .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),
-            i, OverlayTexture.NO_OVERLAY);
+                multiBufferSource
+                        .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),
+                i, OverlayTexture.NO_OVERLAY);
         part.setPos(0, 0, 0);
         part.setRotation(0, 0, 0);
         poseStack.popPose();
 
     }
-    
+
 }
