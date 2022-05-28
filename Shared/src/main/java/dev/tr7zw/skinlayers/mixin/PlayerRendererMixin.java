@@ -43,7 +43,7 @@ public abstract class PlayerRendererMixin
     @SuppressWarnings("resource")
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        if (Minecraft.getInstance().player != null || Minecraft.getInstance().player
+        if (Minecraft.getInstance().player == null || Minecraft.getInstance().player
                 .distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return;
