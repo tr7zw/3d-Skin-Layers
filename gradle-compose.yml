@@ -4,8 +4,9 @@ replacements:
   group: "dev.tr7zw"
   name: "3d-Skin-Layers"
   id: "3dskinlayers"
-  version: "1.4.3"
+  version: "1.4.6"
   author: "tr7zw"
+  relocationpackage: "dev.tr7zw.skinlayers"
   dependencies: ""
   licensename: "LICENSE"
 rootProject:

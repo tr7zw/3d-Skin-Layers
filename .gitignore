@@ -37,3 +37,4 @@ run/
 *.gradle
 *.properties
 gradle/wrapper
+VersionShared
