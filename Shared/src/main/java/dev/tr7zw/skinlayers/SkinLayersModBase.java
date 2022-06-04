@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import net.minecraft.client.Option;
 import net.minecraft.client.gui.screens.Screen;
