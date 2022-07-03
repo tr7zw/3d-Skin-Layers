@@ -1,0 +1,20 @@
+{
+    "text.skinlayers.title": "3D Skin Layer 設定",
+
+    "text.skinlayers.enable.hat": "3D 帽子",
+    "text.skinlayers.enable.jacket": "3D 外套",
+    "text.skinlayers.enable.leftsleeve": "3D 左衣袖",
+    "text.skinlayers.enable.rightsleeve": "3D 右衣袖",
+    "text.skinlayers.enable.leftpants": "3D 左褲管",
+    "text.skinlayers.enable.rightpants": "3D 右褲管",
+    "text.skinlayers.renderdistancelod": "細節層次距離",
+    "text.skinlayers.basevoxelsize": "像素大小",
+    "text.skinlayers.headvoxelsize": "頭部像素大小",
+    "text.skinlayers.bodyvoxelheightsize": "身體像素高",
+    "text.skinlayers.bodyvoxelwidthsize": "軀幹像素寬",
+    "text.skinlayers.skulls.enable": "3D 頭顱",
+    "text.skinlayers.skullsitems.enable": "3D 頭顱物品",
+    "text.skinlayers.skulls.voxelsize": "頭顱像素大小",
+    "text.skinlayers.reset": "預設",
+    "text.skinlayers.fastrender.enable": "快速繪製"
+  }
