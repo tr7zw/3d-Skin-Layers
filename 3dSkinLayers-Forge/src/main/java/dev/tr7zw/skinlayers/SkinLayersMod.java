@@ -1,6 +1,6 @@
 package dev.tr7zw.skinlayers;
 
-import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
+import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +21,7 @@ public class SkinLayersMod extends SkinLayersModBase {
             onServer = true;
             return;
         }
-        ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, () -> new ConfigGuiFactory((mc, screen) -> {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
             return createConfigScreen(screen);
         }));
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
