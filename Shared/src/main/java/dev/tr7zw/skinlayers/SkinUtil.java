@@ -37,7 +37,7 @@ public class SkinUtil {
                 HttpTextureAccessor httpTexture = (HttpTextureAccessor) texture;
                 try {
                     return httpTexture.getImage();
-                }catch(FileNotFoundException ex) {
+                }catch(Exception ex) {
                     //not there
                 }
             }
