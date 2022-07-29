@@ -72,7 +72,7 @@ public class SkinUtil {
                     NativeImage img = httpTexture.getImage();
                     cache.put(texture, img);
                     return img;
-                }catch(FileNotFoundException ex) {
+                }catch(Exception ex) {
                     //not there
                 }
             }
