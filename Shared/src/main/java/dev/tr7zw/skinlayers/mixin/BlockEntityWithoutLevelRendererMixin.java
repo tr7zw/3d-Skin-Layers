@@ -51,6 +51,9 @@ public class BlockEntityWithoutLevelRendererMixin {
                 GameProfile gameProfile = null;
                 if (itemStack.hasTag()) {
                     CompoundTag compoundTag = itemStack.getTag();
+                    if(compoundTag.contains("CustomModelData")) {
+                        return; // do not try to 3d-fy custom head models
+                    }
                     if (compoundTag.contains("SkullOwner", 10)) {
                         gameProfile = NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
                     } else if (compoundTag.contains("SkullOwner", 8)
