@@ -35,7 +35,7 @@ public abstract class SkinLayersModBase {
             try {
                 config = new Gson().fromJson(
                         new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8), Config.class);
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
