@@ -1,0 +1,20 @@
+{
+    "text.skinlayers.title": "3D Skin Layer 설정",
+
+    "text.skinlayers.enable.hat": "3D 모자",
+    "text.skinlayers.enable.jacket": "3D 상의",
+    "text.skinlayers.enable.leftsleeve": "3D 왼소매",
+    "text.skinlayers.enable.rightsleeve": "3D 오른소매",
+    "text.skinlayers.enable.leftpants": "3D 왼쪽 바지",
+    "text.skinlayers.enable.rightpants": "3D 오른쪽 바지",
+    "text.skinlayers.renderdistancelod": "렌더링 거리",
+    "text.skinlayers.basevoxelsize": "복셀 크기",
+    "text.skinlayers.headvoxelsize": "머리 복셀 크기",
+    "text.skinlayers.bodyvoxelheightsize": "몸 복셀 높이",
+    "text.skinlayers.bodyvoxelwidthsize": "몸통 복셀 너비",
+    "text.skinlayers.skulls.enable": "3D 두개골",
+    "text.skinlayers.skullsitems.enable": "3D 두개골 아이템",
+    "text.skinlayers.skulls.voxelsize": "두개골 복셀 크기",
+    "text.skinlayers.reset": "초기화",
+    "text.skinlayers.fastrender.enable": "빠른 렌더링"
+  }
