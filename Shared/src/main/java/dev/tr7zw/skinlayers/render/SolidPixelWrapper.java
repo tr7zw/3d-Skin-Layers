@@ -8,6 +8,7 @@ import java.util.Set;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.api.Mesh;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.core.Direction;
 
@@ -36,7 +37,7 @@ public class SolidPixelWrapper {
      * Right - WEST
      * Left  - EAST
      **/
-    public static CustomizableModelPart wrapBox(NativeImage natImage,
+    public static Mesh wrapBox(NativeImage natImage,
             int width, int height, int depth, int textureU, int textureV, boolean topPivot, float rotationOffset) {
         CustomizableCubeListBuilder cubes = CustomizableCubeListBuilder.create();
         float staticXOffset = -width / 2f;

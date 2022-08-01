@@ -13,7 +13,7 @@ import com.mojang.math.Vector4f;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 import net.minecraft.core.Direction;
 
-public class CustomizableCube extends Cube {
+class CustomizableCube extends Cube {
 
     private final Direction[] hidden;
     protected final Polygon[] polygons;

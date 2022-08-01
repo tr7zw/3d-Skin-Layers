@@ -2,18 +2,21 @@ package dev.tr7zw.skinlayers.accessor;
 
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.PlayerData;
-import dev.tr7zw.skinlayers.render.CustomizableModelPart;
 import net.minecraft.resources.ResourceLocation;
 
 public interface PlayerSettings extends PlayerData{
-
-	public CustomizableModelPart getHeadLayers();
 	
-	public void setupHeadLayers(CustomizableModelPart box);
+	public void setHeadMesh(Mesh box);
 	
-	public CustomizableModelPart[] getSkinLayers();
+	public void setTorsoMesh(Mesh box);
 	
-	public void setupSkinLayers(CustomizableModelPart[] box);
+	public void setLeftArmMesh(Mesh box);
+	
+	public void setRightArmMesh(Mesh box);
+	
+	public void setLeftLegMesh(Mesh box);
+	
+	public void setRightLegMesh(Mesh box);
 	
 	public ResourceLocation getCurrentSkin();
     
@@ -22,47 +25,14 @@ public interface PlayerSettings extends PlayerData{
     public boolean hasThinArms();
     
     public void setThinArms(boolean thin);
-
-    @Override
-    default Mesh getHeadMesh() {
-        return getHeadLayers();
-    }
-
-    @Override
-    default Mesh getTorsoMesh() {
-        if(getSkinLayers() == null)
-            return null;
-        return getSkinLayers()[4];
-    }
-
-    @Override
-    default Mesh getLeftArmMesh() {
-        if(getSkinLayers() == null)
-            return null;
-        return getSkinLayers()[2];
-    }
-
-    @Override
-    default Mesh getRightArmMesh() {
-        if(getSkinLayers() == null)
-            return null;
-        return getSkinLayers()[3];
-    }
-
-    @Override
-    default Mesh getLeftLegMesh() {
-        if(getSkinLayers() == null)
-            return null;
-        return getSkinLayers()[0];
-    }
-
-    @Override
-    default Mesh getRightLegMesh() {
-        if(getSkinLayers() == null)
-            return null;
-        return getSkinLayers()[1];
-    }
-
     
+    public default void clearMeshes() {
+        setHeadMesh(null);
+        setTorsoMesh(null);
+        setLeftArmMesh(null);
+        setRightArmMesh(null);
+        setLeftLegMesh(null);
+        setRightLegMesh(null);
+    }
     
 }

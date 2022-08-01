@@ -147,8 +147,7 @@ public abstract class SkinLayersModBase {
         if (player == null || !(player instanceof PlayerSettings))
             return;
         PlayerSettings settings = (PlayerSettings) player;
-        settings.setupSkinLayers(null);
-        settings.setupHeadLayers(null);
+        settings.clearMeshes();
         settings.setCurrentSkin(null);
     }
 
