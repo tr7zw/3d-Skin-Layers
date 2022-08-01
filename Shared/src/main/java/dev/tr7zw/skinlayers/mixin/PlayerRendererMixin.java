@@ -85,13 +85,14 @@ public abstract class PlayerRendererMixin
         part.copyFrom(arm);
         poseStack.pushPose();
         poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
-        float x = -5f;
+        boolean left = sleeve == this.model.leftSleeve;
+        float x = left ? 5f : -5f;
         float y = 1.4f;
         if (!thinArms) {
-            if (sleeve == this.model.leftSleeve) {
-                x += 0.4f;
+            if (left) {
+                x += 0.4;
             } else {
-                x -= 0.4f;
+                x -= 0.4;
             }
         }
         part.setPosition(x, y, 0);
