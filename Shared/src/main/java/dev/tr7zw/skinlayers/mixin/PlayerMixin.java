@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.spongepowered.asm.mixin.Mixin;
 
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
-import dev.tr7zw.skinlayers.render.CustomizableModelPart;
+import dev.tr7zw.skinlayers.api.Mesh;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,31 +23,74 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
 		super(entityType, world);
 	}
 
-	private CustomizableModelPart headLayer;
-	private CustomizableModelPart[] skinLayer;
+	private Mesh headMesh;
+	private Mesh torsoMesh;
+	private Mesh leftArmMesh;
+	private Mesh rightArmMesh;
+	private Mesh leftLegMesh;
+	private Mesh rightLegMesh;
 	private ResourceLocation currentSkin = null;
 	private boolean thinarms = false;
 	
+	@Override
+    public Mesh getHeadMesh() {
+        return headMesh;
+    }
 
-	@Override
-	public CustomizableModelPart[] getSkinLayers() {
-		return skinLayer;
-	}
-	
-	@Override
-	public void setupSkinLayers(CustomizableModelPart[] box) {
-		this.skinLayer = box;
-	}
-	
-	@Override
-	public CustomizableModelPart getHeadLayers() {
-		return headLayer;
-	}
-	
-	@Override
-	public void setupHeadLayers(CustomizableModelPart box) {
-		this.headLayer = box;
-	}
+    @Override
+    public void setHeadMesh(Mesh headMesh) {
+        this.headMesh = headMesh;
+    }
+
+    @Override
+    public Mesh getTorsoMesh() {
+        return torsoMesh;
+    }
+
+    @Override
+    public void setTorsoMesh(Mesh torsoMesh) {
+        this.torsoMesh = torsoMesh;
+    }
+
+    @Override
+    public Mesh getLeftArmMesh() {
+        return leftArmMesh;
+    }
+
+    @Override
+    public void setLeftArmMesh(Mesh leftArmMesh) {
+        this.leftArmMesh = leftArmMesh;
+    }
+
+    @Override
+    public Mesh getRightArmMesh() {
+        return rightArmMesh;
+    }
+
+    @Override
+    public void setRightArmMesh(Mesh rightArmMesh) {
+        this.rightArmMesh = rightArmMesh;
+    }
+
+    @Override
+    public Mesh getLeftLegMesh() {
+        return leftLegMesh;
+    }
+
+    @Override
+    public void setLeftLegMesh(Mesh leftLegMesh) {
+        this.leftLegMesh = leftLegMesh;
+    }
+
+    @Override
+    public Mesh getRightLegMesh() {
+        return rightLegMesh;
+    }
+
+    @Override
+    public void setRightLegMesh(Mesh rightLegMesh) {
+        this.rightLegMesh = rightLegMesh;
+    }
 
     @Override
     public ResourceLocation getCurrentSkin() {

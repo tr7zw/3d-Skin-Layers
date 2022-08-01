@@ -73,7 +73,7 @@ public class HeadLayerFeatureRenderer
 	}
 
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
-		if(settings.getHeadLayers() == null)return;
+		if(settings.getHeadMesh() == null)return;
 		if(!this.getParentModel().head.visible || !abstractClientPlayer.isModelPartShown(PlayerModelPart.HAT))return;
 		float voxelSize = SkinLayersModBase.config.headVoxelSize;
 		matrixStack.pushPose();
@@ -85,7 +85,7 @@ public class HeadLayerFeatureRenderer
 		// Overlay refuses to work correctly, this is a workaround for now
 		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 		float color = red ? 0.5f : 1f;
-		settings.getHeadLayers().render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
+		settings.getHeadMesh().render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 		matrixStack.popPose();
 
 	}

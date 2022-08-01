@@ -23,15 +23,15 @@ import net.minecraft.client.model.geom.PartPose;
  * with the CustomizableCube class
  *
  */
-public class CustomizableModelPart implements Mesh {
+class CustomizableModelPart implements Mesh {
 
-    public float x;
-    public float y;
-    public float z;
-    public float xRot;
-    public float yRot;
-    public float zRot;
-    public boolean visible = true;
+    private float x;
+    private float y;
+    private float z;
+    private float xRot;
+    private float yRot;
+    private float zRot;
+    private boolean visible = true;
     private final List<Cube> cubes;
     private final Map<String, ModelPart> children;
     private float[] polygonData = null;
@@ -155,6 +155,16 @@ public class CustomizableModelPart implements Mesh {
         // other cubes
         for (Cube cube : this.cubes)
             cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    @Override
+    public boolean isVisible() {
+        return visible;
     }
 
 }

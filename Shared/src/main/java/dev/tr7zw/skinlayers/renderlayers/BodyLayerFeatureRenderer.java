@@ -2,6 +2,7 @@ package dev.tr7zw.skinlayers.renderlayers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,7 +12,7 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
-import dev.tr7zw.skinlayers.render.CustomizableModelPart;
+import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.render.SolidPixelWrapper.Dimensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -30,11 +31,11 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	        RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
 			super(renderLayerParent);
 			thinArms = ((PlayerEntityModelAccessor)getParentModel()).hasThinArms();
-			bodyLayers.add(new Layer(0, false, PlayerModelPart.LEFT_PANTS_LEG, Shape.LEGS, () -> this.getParentModel().leftLeg, () -> SkinLayersModBase.config.enableLeftPants));
-			bodyLayers.add(new Layer(1, false, PlayerModelPart.RIGHT_PANTS_LEG, Shape.LEGS, () -> this.getParentModel().rightLeg, () -> SkinLayersModBase.config.enableRightPants));
-			bodyLayers.add(new Layer(2, false, PlayerModelPart.LEFT_SLEEVE, thinArms ? Shape.ARMS_SLIM : Shape.ARMS, () -> this.getParentModel().leftArm, () -> SkinLayersModBase.config.enableLeftSleeve));
-			bodyLayers.add(new Layer(3, true, PlayerModelPart.RIGHT_SLEEVE, thinArms ? Shape.ARMS_SLIM : Shape.ARMS, () -> this.getParentModel().rightArm, () -> SkinLayersModBase.config.enableRightSleeve));
-			bodyLayers.add(new Layer(4, false, PlayerModelPart.JACKET, Shape.BODY, () -> this.getParentModel().body, () -> SkinLayersModBase.config.enableJacket));
+			bodyLayers.add(new Layer(PlayerSettings::getLeftLegMesh, false, PlayerModelPart.LEFT_PANTS_LEG, Shape.LEGS, () -> this.getParentModel().leftLeg, () -> SkinLayersModBase.config.enableLeftPants));
+			bodyLayers.add(new Layer(PlayerSettings::getRightLegMesh, false, PlayerModelPart.RIGHT_PANTS_LEG, Shape.LEGS, () -> this.getParentModel().rightLeg, () -> SkinLayersModBase.config.enableRightPants));
+			bodyLayers.add(new Layer(PlayerSettings::getLeftArmMesh, false, PlayerModelPart.LEFT_SLEEVE, thinArms ? Shape.ARMS_SLIM : Shape.ARMS, () -> this.getParentModel().leftArm, () -> SkinLayersModBase.config.enableLeftSleeve));
+			bodyLayers.add(new Layer(PlayerSettings::getRightArmMesh, true, PlayerModelPart.RIGHT_SLEEVE, thinArms ? Shape.ARMS_SLIM : Shape.ARMS, () -> this.getParentModel().rightArm, () -> SkinLayersModBase.config.enableRightSleeve));
+			bodyLayers.add(new Layer(PlayerSettings::getTorsoMesh, false, PlayerModelPart.JACKET, Shape.BODY, () -> this.getParentModel().body, () -> SkinLayersModBase.config.enableJacket));
 	}
 
 	private final boolean thinArms;
@@ -61,12 +62,12 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		VertexConsumer vertexConsumer = multiBufferSource
 				.getBuffer(RenderType.entityTranslucentCull(player.getSkinTextureLocation()));
 		int m = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
-		renderLayers(player, settings.getSkinLayers(), poseStack, vertexConsumer, i, m);
+		renderLayers(player, settings, poseStack, vertexConsumer, i, m);
 	}
 
     private final List<Layer> bodyLayers = new ArrayList<>();
     
-    private record Layer(int layersId, boolean mirrored, PlayerModelPart modelPart, Shape shape, Supplier<ModelPart> vanillaGetter, Supplier<Boolean> configGetter) {
+    private record Layer(Function<PlayerSettings, Mesh> meshGetter, boolean mirrored, PlayerModelPart modelPart, Shape shape, Supplier<ModelPart> vanillaGetter, Supplier<Boolean> configGetter) {
     }
     
     private enum Shape {
@@ -84,8 +85,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
     }
     
-	public void renderLayers(AbstractClientPlayer abstractClientPlayer, CustomizableModelPart[] layers, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
-		if(layers == null)return;
+	public void renderLayers(AbstractClientPlayer abstractClientPlayer, PlayerSettings settings, PoseStack matrixStack, VertexConsumer vertices, int light, int overlay) {
 		float pixelScaling = SkinLayersModBase.config.baseVoxelSize;
 		float heightScaling = 1.035f;
 		float widthScaling = SkinLayersModBase.config.baseVoxelSize;
@@ -93,24 +93,29 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	    boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
 	    float color = red ? 0.5f : 1f;
 		for(Layer layer : bodyLayers) {
-		    if(abstractClientPlayer.isModelPartShown(layer.modelPart) && layer.vanillaGetter.get().visible && layer.configGetter.get()) {
+		    Mesh mesh = layer.meshGetter.apply(settings);
+		    if(mesh != null && abstractClientPlayer.isModelPartShown(layer.modelPart) && layer.vanillaGetter.get().visible && layer.configGetter.get()) {
 	            matrixStack.pushPose();
 	            layer.vanillaGetter.get().translateAndRotate(matrixStack);
+	            float x = 0;
+	            float y = 0;
 	            if(layer.shape == Shape.ARMS) {
-	                layers[layer.layersId].x = 0.998f;
+	                x = 0.998f;
 	            } else if(layer.shape == Shape.ARMS_SLIM) {
-	                layers[layer.layersId].x = 0.499f;
+	                x = 0.499f;
 	            }
 	            if(layer.shape == Shape.BODY) {
 	                widthScaling = SkinLayersModBase.config.bodyVoxelWidthSize;
 	            }
 	            if(layer.mirrored) {
-	                layers[layer.layersId].x *= -1;
+	                x *= -1;
 	            }
 	            matrixStack.scale(widthScaling, heightScaling, pixelScaling);
-	            layers[layer.layersId].y = layer.shape.yOffsetMagicValue;
+	            y = layer.shape.yOffsetMagicValue;
 	            
-	            layers[layer.layersId].render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
+	            mesh.setPosition(x, y, 0);
+	            
+	            mesh.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 	            matrixStack.popPose();
 	        }
 		}

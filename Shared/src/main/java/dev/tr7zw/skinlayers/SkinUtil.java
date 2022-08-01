@@ -15,7 +15,6 @@ import com.mojang.blaze3d.platform.NativeImage;
 import dev.tr7zw.skinlayers.accessor.HttpTextureAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
-import dev.tr7zw.skinlayers.render.CustomizableModelPart;
 import dev.tr7zw.skinlayers.render.SolidPixelWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -112,30 +111,27 @@ public class SkinUtil {
             return false;//this *should* never happen, but just to be sure
         }
         if(skinLocation.equals(settings.getCurrentSkin()) && thinArms == settings.hasThinArms()) { // if they are equal, the skin is processed and either failed or is ready
-            return settings.getSkinLayers() != null;
+            return settings.getHeadMesh() != null;
         }
         // Starting here should only run in case the skin has changed by getting loaded/another mod changed the skin
         NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
         if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { // Skin is null or not a 64x64 skin, hd skins won't work
             settings.setCurrentSkin(skinLocation);
             settings.setThinArms(thinArms);
-            settings.setupHeadLayers(null);
-            settings.setupSkinLayers(null);
+            settings.clearMeshes();
             return false;
         }
-        CustomizableModelPart[] layers = new CustomizableModelPart[5];
-        layers[0] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 48, true, 0f);
-        layers[1] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 32, true, 0f);
+        settings.setLeftLegMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 48, true, 0f));
+        settings.setRightLegMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 32, true, 0f));
         if(thinArms) {
-            layers[2] = SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 48, 48, true, -2.5f);
-            layers[3] = SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 40, 32, true, -2.5f);
+            settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 48, 48, true, -2.5f));
+            settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 40, 32, true, -2.5f));
         } else {
-            layers[2] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 48, 48, true, -2.5f);
-            layers[3] = SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 40, 32, true, -2.5f);
+            settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 48, 48, true, -2.5f));
+            settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 40, 32, true, -2.5f));
         }
-        layers[4] = SolidPixelWrapper.wrapBox(skin, 8, 12, 4, 16, 32, true, -0.8f);
-        settings.setupSkinLayers(layers);
-        settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
+        settings.setTorsoMesh(SolidPixelWrapper.wrapBox(skin, 8, 12, 4, 16, 32, true, -0.8f));
+        settings.setHeadMesh(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
         settings.setCurrentSkin(skinLocation);
         settings.setThinArms(thinArms);
         return true;

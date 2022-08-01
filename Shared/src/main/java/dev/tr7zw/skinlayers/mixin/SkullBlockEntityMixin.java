@@ -3,21 +3,21 @@ package dev.tr7zw.skinlayers.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
-import dev.tr7zw.skinlayers.render.CustomizableModelPart;
+import dev.tr7zw.skinlayers.api.Mesh;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 @Mixin(SkullBlockEntity.class)
 public class SkullBlockEntityMixin implements SkullSettings {
 
-    private CustomizableModelPart hatModel = null;
+    private Mesh hatModel = null;
     
     @Override
-    public CustomizableModelPart getHeadLayers() {
+    public Mesh getHeadLayers() {
         return hatModel;
     }
 
     @Override
-    public void setupHeadLayers(CustomizableModelPart box) {
+    public void setupHeadLayers(Mesh box) {
         this.hatModel = box;
     }
 

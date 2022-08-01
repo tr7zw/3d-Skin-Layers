@@ -11,7 +11,7 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
-import dev.tr7zw.skinlayers.render.CustomizableModelPart;
+import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.renderlayers.BodyLayerFeatureRenderer;
 import dev.tr7zw.skinlayers.renderlayers.HeadLayerFeatureRenderer;
 import net.minecraft.client.Minecraft;
@@ -50,7 +50,7 @@ public abstract class PlayerRendererMixin
         }
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-        if (settings.getSkinLayers() == null) {
+        if (settings.getHeadMesh() == null) {
             return; // fall back to vanilla
         }
         playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
@@ -81,23 +81,21 @@ public abstract class PlayerRendererMixin
         if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
             return;
         }
-        CustomizableModelPart part = null;
-        if (sleeve == this.model.leftSleeve) {
-            part = settings.getSkinLayers()[2];
-        } else {
-            part = settings.getSkinLayers()[3];
-        }
+        Mesh part = sleeve == this.model.leftSleeve ? settings.getLeftArmMesh() : settings.getRightArmMesh();
         part.copyFrom(arm);
         poseStack.pushPose();
         poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
-        part.y -= 0.6;
+        float x = 0;
+        float y = 0;
+        y -= 0.6;
         if (!thinArms) {
             if (sleeve == this.model.leftSleeve) {
-                part.x += 0.4;
+                x += 0.4;
             } else {
-                part.x -= 0.4;
+                x -= 0.4;
             }
         }
+        part.setPosition(x, y, 0);
         part.render(poseStack,
                 multiBufferSource
                         .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),

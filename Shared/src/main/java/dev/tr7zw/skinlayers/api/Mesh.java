@@ -22,4 +22,8 @@ public interface Mesh {
 
     public void copyFrom(ModelPart modelPart);
     
+    public void setVisible(boolean visible);
+    
+    public boolean isVisible();
+    
 }
