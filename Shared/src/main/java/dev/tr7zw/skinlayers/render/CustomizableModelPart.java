@@ -11,6 +11,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 
+import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.render.CustomizableCube.Polygon;
 import dev.tr7zw.skinlayers.render.CustomizableCube.Vertex;
 import net.minecraft.client.model.geom.ModelPart;
@@ -22,7 +23,7 @@ import net.minecraft.client.model.geom.PartPose;
  * with the CustomizableCube class
  *
  */
-public class CustomizableModelPart {
+public class CustomizableModelPart implements Mesh {
 
     public float x;
     public float y;
@@ -95,7 +96,7 @@ public class CustomizableModelPart {
         return modelPart;
     }
 
-    public void setPos(float f, float g, float h) {
+    public void setPosition(float f, float g, float h) {
         this.x = f;
         this.y = g;
         this.z = h;
