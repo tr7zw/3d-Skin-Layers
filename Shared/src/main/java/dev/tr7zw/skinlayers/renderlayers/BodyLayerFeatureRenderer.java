@@ -22,8 +22,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.PlayerModelPart;
 
 public class BodyLayerFeatureRenderer 
@@ -61,9 +59,9 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		}
 		
 		VertexConsumer vertexConsumer = multiBufferSource
-				.getBuffer(RenderType.entityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
-		int m = LivingEntityRenderer.getOverlayCoords((LivingEntity) player, (float) 0.0f);
-		renderLayers(player, (CustomizableModelPart[]) settings.getSkinLayers(), poseStack, vertexConsumer, i, m);
+				.getBuffer(RenderType.entityTranslucentCull(player.getSkinTextureLocation()));
+		int m = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
+		renderLayers(player, settings.getSkinLayers(), poseStack, vertexConsumer, i, m);
 	}
 
     private final List<Layer> bodyLayers = new ArrayList<>();

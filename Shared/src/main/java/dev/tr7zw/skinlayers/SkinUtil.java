@@ -1,6 +1,5 @@
 package dev.tr7zw.skinlayers;
 
-import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
