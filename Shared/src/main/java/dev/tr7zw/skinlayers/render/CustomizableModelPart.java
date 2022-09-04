@@ -12,6 +12,8 @@ import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 
 import dev.tr7zw.skinlayers.api.Mesh;
+import dev.tr7zw.skinlayers.api.MeshTransformer;
+import dev.tr7zw.skinlayers.api.SkinLayersAPI;
 import dev.tr7zw.skinlayers.render.CustomizableCube.Polygon;
 import dev.tr7zw.skinlayers.render.CustomizableCube.Vertex;
 import net.minecraft.client.model.geom.ModelPart;
@@ -109,16 +111,16 @@ class CustomizableModelPart implements Mesh {
     }
 
     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j) {
-        render(poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
+        render(null, poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
+    public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
             float alpha) {
         if (!this.visible)
             return;
         poseStack.pushPose();
         translateAndRotate(poseStack);
-        compile(poseStack.last(), vertexConsumer, light, overlay, red, green, blue, alpha);
+        compile(vanillaModel, poseStack.last(), vertexConsumer, light, overlay, red, green, blue, alpha);
         for (ModelPart modelPart : this.children.values())
             modelPart.render(poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
         poseStack.popPose();
@@ -134,27 +136,35 @@ class CustomizableModelPart implements Mesh {
             poseStack.mulPose(Vector3f.XP.rotation(this.xRot));
     }
     
-    private void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
+    private void compile(ModelPart vanillaModel, PoseStack.Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
             float alpha) {
+        MeshTransformer transformer = SkinLayersAPI.getMeshTransformerProvider().prepareTransformer(vanillaModel);
         // compacted Cubes
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
         Vector3f vector3f = new Vector3f();
-        Vector4f vector4f = new Vector4f();
+        Vector4f vector4f[] = new Vector4f[] {new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f()};
         for (int id = 0; id < polygonData.length; id+=polyDataSize) {
             vector3f.set(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
             vector3f.transform(matrix3f);
             for (int o = 0; o < 4; o++) {
-                vector4f.set(polygonData[id + 3 + (o*5) + 0], polygonData[id + 3 + (o*5) + 1], polygonData[id + 3 + (o*5) + 2], 1.0F);
-                vector4f.transform(matrix4f);
-                vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, polygonData[id + 3 + (o*5) + 3], polygonData[id + 3 + (o*5) + 4], overlay,
+                vector4f[o].set(polygonData[id + 3 + (o*5) + 0], polygonData[id + 3 + (o*5) + 1], polygonData[id + 3 + (o*5) + 2], 1.0F);
+                vector4f[o].transform(matrix4f);
+            }
+            // optional transformations for bending layers
+            transformer.transform(vector3f, vector4f);
+            
+            for (int o = 0; o < 4; o++) {
+                vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(), red, green, blue, alpha, polygonData[id + 3 + (o*5) + 3], polygonData[id + 3 + (o*5) + 4], overlay,
                         light, vector3f.x(), vector3f.y(), vector3f.z());
             }
         }
         
         // other cubes
-        for (Cube cube : this.cubes)
+        for (Cube cube : this.cubes) {
+            transformer.transform(cube);
             cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
+        }
     }
 
     @Override

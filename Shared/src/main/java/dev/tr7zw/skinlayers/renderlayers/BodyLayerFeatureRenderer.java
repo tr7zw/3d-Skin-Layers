@@ -115,7 +115,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	            
 	            mesh.setPosition(x, y, 0);
 	            
-	            mesh.render(matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
+	            mesh.render(layer.vanillaGetter.get(), matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
 	            matrixStack.popPose();
 	        }
 		}
