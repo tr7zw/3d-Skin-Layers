@@ -9,6 +9,8 @@ public class SkinLayersAPI {
 
     private static final MeshHelper meshHelper = new MeshHelperImplementation();
     private static final MeshProvider meshProvider = new MeshProviderImplementation();
+    private static MeshTransformerProvider meshTransformerProvider = MeshTransformerProvider.EMPTY_PROVIDER;
+    
     
     private SkinLayersAPI() {
         // private
@@ -20,6 +22,14 @@ public class SkinLayersAPI {
     
     public static MeshProvider getMeshProvider() {
         return meshProvider;
+    }
+    
+    public static void setupMeshTransformerProvider(MeshTransformerProvider provider) {
+        SkinLayersAPI.meshTransformerProvider = provider;
+    }
+    
+    public static MeshTransformerProvider getMeshTransformerProvider() {
+        return meshTransformerProvider;
     }
     
     private static class MeshHelperImplementation implements MeshHelper {
@@ -43,5 +53,6 @@ public class SkinLayersAPI {
         }
         
     }
+  
     
 }
