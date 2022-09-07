@@ -146,15 +146,15 @@ class CustomizableModelPart implements Mesh {
         Vector4f vector4f[] = new Vector4f[] {new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f()};
         for (int id = 0; id < polygonData.length; id+=polyDataSize) {
             vector3f.set(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
-            vector3f.transform(matrix3f);
             for (int o = 0; o < 4; o++) {
                 vector4f[o].set(polygonData[id + 3 + (o*5) + 0], polygonData[id + 3 + (o*5) + 1], polygonData[id + 3 + (o*5) + 2], 1.0F);
-                vector4f[o].transform(matrix4f);
             }
             // optional transformations for bending layers
             transformer.transform(vector3f, vector4f);
-            
+
+            vector3f.transform(matrix3f);
             for (int o = 0; o < 4; o++) {
+                vector4f[o].transform(matrix4f);
                 vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(), red, green, blue, alpha, polygonData[id + 3 + (o*5) + 3], polygonData[id + 3 + (o*5) + 4], overlay,
                         light, vector3f.x(), vector3f.y(), vector3f.z());
             }
