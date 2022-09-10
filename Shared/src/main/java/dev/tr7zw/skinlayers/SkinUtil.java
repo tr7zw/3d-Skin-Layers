@@ -124,13 +124,13 @@ public class SkinUtil {
         settings.setLeftLegMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 48, true, 0f));
         settings.setRightLegMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 32, true, 0f));
         if(thinArms) {
-            settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 48, 48, true, -2.5f));
-            settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 40, 32, true, -2.5f));
+            settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 48, 48, true, -2f));
+            settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 40, 32, true, -2f));
         } else {
-            settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 48, 48, true, -2.5f));
-            settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 40, 32, true, -2.5f));
+            settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 48, 48, true, -2));
+            settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 40, 32, true, -2));
         }
-        settings.setTorsoMesh(SolidPixelWrapper.wrapBox(skin, 8, 12, 4, 16, 32, true, -0.8f));
+        settings.setTorsoMesh(SolidPixelWrapper.wrapBox(skin, 8, 12, 4, 16, 32, true, 0));
         settings.setHeadMesh(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
         settings.setCurrentSkin(skinLocation);
         settings.setThinArms(thinArms);
