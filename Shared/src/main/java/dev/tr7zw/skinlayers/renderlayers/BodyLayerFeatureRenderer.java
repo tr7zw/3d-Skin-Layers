@@ -72,7 +72,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     }
     
     private enum Shape {
-        HEAD(0, new Dimensions(8,8,8)), BODY(0.6f, new Dimensions(8,12,4)), LEGS(-0.2f, new Dimensions(4,14,4)), ARMS(0.4f, new Dimensions(4,14,4)), ARMS_SLIM(0.4f, new Dimensions(3,14,4))
+        HEAD(0, new Dimensions(8,8,8)), BODY(-0.2f, new Dimensions(8,12,4)), LEGS(-0.2f, new Dimensions(4,14,4)), ARMS(-0.1f, new Dimensions(4,14,4)), ARMS_SLIM(-0.1f, new Dimensions(3,14,4))
         ;
         
         private final float yOffsetMagicValue;
