@@ -45,7 +45,7 @@ public abstract class SkinLayersModBase {
     protected KeyMapping keybind = new KeyMapping("key.skinlayers.dumpmodels", -1, "3d Skin Layers");
     protected boolean pressed = false;
     public boolean dumpModels = false;
-    public Set<AbstractClientPlayer> dumpedPlayers = new HashSet<>();
+    public Set<Player> dumpedPlayers = new HashSet<>();
 
     public void onInitialize() {
         instance = this;

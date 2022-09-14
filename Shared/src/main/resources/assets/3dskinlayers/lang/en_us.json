@@ -16,5 +16,6 @@
     "text.skinlayers.skullsitems.enable": "3D Skull Items",
     "text.skinlayers.skulls.voxelsize": "Skull Voxel Size",
     "text.skinlayers.reset": "Default",
-    "text.skinlayers.fastrender.enable": "Fast Render"
+    "text.skinlayers.fastrender.enable": "Fast Render",
+    "key.skinlayers.dumpmodels": "Dump Models"
   }

@@ -15,7 +15,6 @@ import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.exporter.MultiBufferObjConsumer;
-import dev.tr7zw.skinlayers.exporter.ObjConsumer;
 import dev.tr7zw.skinlayers.renderlayers.BodyLayerFeatureRenderer;
 import dev.tr7zw.skinlayers.renderlayers.HeadLayerFeatureRenderer;
 import net.minecraft.ChatFormatting;
