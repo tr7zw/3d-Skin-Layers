@@ -1,6 +1,10 @@
 package dev.tr7zw.skinlayers;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +38,12 @@ public class SkinLayersMod extends SkinLayersModBase {
     private void setup(final FMLCommonSetupEvent event) {
         if(onServer)return;
         onInitialize();
+    }
+
+    @Override
+    public void initModloader() {
+        Minecraft.getInstance().options.keyMappings = ArrayUtils.add(Minecraft.getInstance().options.keyMappings, keybind);
+        MinecraftForge.EVENT_BUS.addListener(this::doClientTick);
     }
     
 }

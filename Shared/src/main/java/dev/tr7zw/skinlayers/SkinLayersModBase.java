@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,10 +19,20 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public abstract class SkinLayersModBase {
 
@@ -29,6 +42,10 @@ public abstract class SkinLayersModBase {
     private File settingsFile = new File("config", "skinlayers.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public static boolean disguiseHeadsCompatibility = false;
+    protected KeyMapping keybind = new KeyMapping("key.skinlayers.dumpmodels", -1, "3d Skin Layers");
+    protected boolean pressed = false;
+    public boolean dumpModels = false;
+    public Set<AbstractClientPlayer> dumpedPlayers = new HashSet<>();
 
     public void onInitialize() {
         instance = this;
@@ -51,6 +68,7 @@ public abstract class SkinLayersModBase {
         }catch(Throwable ex) {
             //not installed
         }
+        initModloader();
     }
 
     public void writeConfig() {
@@ -62,6 +80,28 @@ public abstract class SkinLayersModBase {
             e1.printStackTrace();
         }
     }
+    
+    @SuppressWarnings("resource")
+    public void clientTick() {
+        if(dumpModels) {
+            LocalPlayer player = Minecraft.getInstance().player;
+            player.sendSystemMessage(Component.literal("Finished! Dumped " + dumpedPlayers.size() + " players!").withStyle(ChatFormatting.GREEN));
+            dumpedPlayers.clear();
+        }
+        dumpModels = false;
+        if (keybind.isDown()) {
+            if (pressed)
+                return;
+            pressed = true;
+            dumpModels = true;
+            LocalPlayer player = Minecraft.getInstance().player;
+            player.sendSystemMessage(Component.literal("Dumping all rendered player models...").withStyle(ChatFormatting.GREEN));
+        } else {
+            pressed = false;
+        }
+    }
+    
+    public abstract void initModloader();
 
     public Screen createConfigScreen(Screen parent) {
         CustomConfigScreen screen = new CustomConfigScreen(parent, "text.skinlayers.title") {
