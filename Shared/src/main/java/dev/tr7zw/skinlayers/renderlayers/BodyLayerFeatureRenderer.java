@@ -12,6 +12,7 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
+import dev.tr7zw.skinlayers.api.LayerFeatureTransformerAPI;
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.render.SolidPixelWrapper.Dimensions;
 import net.minecraft.client.Minecraft;
@@ -58,7 +59,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		if(!SkinUtil.setup3dLayers(player, settings, thinArms, this.getParentModel())) {
 			return; // no head layer setup and wasn't able to setup
 		}
-		
+
 		VertexConsumer vertexConsumer = multiBufferSource
 				.getBuffer(RenderType.entityTranslucentCull(player.getSkinTextureLocation()));
 		int m = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
@@ -71,7 +72,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     }
     
     private enum Shape {
-        HEAD(0, new Dimensions(8,8,8)), BODY(0.6f, new Dimensions(8,12,4)), LEGS(-0.2f, new Dimensions(4,14,4)), ARMS(0.4f, new Dimensions(4,14,4)), ARMS_SLIM(0.4f, new Dimensions(3,14,4))
+        HEAD(0, new Dimensions(8,8,8)), BODY(-0.2f, new Dimensions(8,12,4)), LEGS(-0.2f, new Dimensions(4,14,4)), ARMS(-0.1f, new Dimensions(4,14,4)), ARMS_SLIM(-0.1f, new Dimensions(3,14,4))
         ;
         
         private final float yOffsetMagicValue;
@@ -96,6 +97,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		    Mesh mesh = layer.meshGetter.apply(settings);
 		    if(mesh != null && abstractClientPlayer.isModelPartShown(layer.modelPart) && layer.vanillaGetter.get().visible && layer.configGetter.get()) {
 	            matrixStack.pushPose();
+				LayerFeatureTransformerAPI.getTransformer().transform(abstractClientPlayer, matrixStack, layer.vanillaGetter.get());
 	            layer.vanillaGetter.get().translateAndRotate(matrixStack);
 	            float x = 0;
 	            float y = 0;
