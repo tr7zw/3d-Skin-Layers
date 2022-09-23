@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import net.minecraft.client.Option;
 import net.minecraft.client.gui.screens.Screen;
@@ -44,8 +45,8 @@ public abstract class SkinLayersModBase {
             writeConfig();
         }
         try {
-            Class clientClass = Class.forName("dev.tr7zw.disguiseheads.DisguiseHeadsShared");
-            disguiseHeadsCompatibility = true;
+            Class<?> clientClass = Class.forName("dev.tr7zw.disguiseheads.DisguiseHeadsShared");
+            disguiseHeadsCompatibility = clientClass != null; // to  shut up the compiler that the var is not used
             LOGGER.info("Found DisguiseHeads, enable compatibility!");
         }catch(Throwable ex) {
             //not installed

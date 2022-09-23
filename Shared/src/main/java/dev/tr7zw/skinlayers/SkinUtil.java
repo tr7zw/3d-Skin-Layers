@@ -1,7 +1,12 @@
 package dev.tr7zw.skinlayers;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.RemovalNotification;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.blaze3d.platform.NativeImage;
@@ -14,11 +19,24 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 
 public class SkinUtil {
 
+    private static Cache<AbstractTexture, NativeImage> cache = CacheBuilder.newBuilder().expireAfterAccess(60L, TimeUnit.SECONDS).removalListener(new RemovalListener<AbstractTexture, NativeImage>() {
+
+        @Override
+        public void onRemoval(RemovalNotification<AbstractTexture, NativeImage> notification) {
+            try {
+                notification.getValue().close();
+            }catch(Exception ex) {
+                SkinLayersModBase.LOGGER.error("Error while closing a texture.", ex);
+            }
+        }
+    }).build();
+    
     private static NativeImage getSkinTexture(AbstractClientPlayer player) {
         return getTexture(player.getSkinTextureLocation());
     }
@@ -31,18 +49,56 @@ public class SkinUtil {
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
+            if(texture == null) {
+                return null;
+            }
+            NativeImage cachedImage = cache.getIfPresent(texture);
+            if(cachedImage != null) {
+                try {
+                    cachedImage.getPixelRGBA(0, 0); // check that it's allocated
+                    return cachedImage;
+                }catch(Exception ex) {
+                    // got invalidated, remove from cache
+                    cache.invalidate(texture);
+                }
+            }
             if(texture instanceof HttpTextureAccessor) {
                 HttpTextureAccessor httpTexture = (HttpTextureAccessor) texture;
                 try {
-                    return httpTexture.getImage();
-                }catch(Exception ex) {
+                    NativeImage img = httpTexture.getImage();
+                    cache.put(texture, img);
+                    return img;
+                }catch(FileNotFoundException ex) {
                     //not there
                 }
             }
+            if(texture instanceof DynamicTexture) {
+                try {
+                    NativeImage img = ((DynamicTexture) texture).getPixels();
+                    img.getPixelRGBA(0, 0); // check that it's allocated
+                    // Do not cache dynamic textures. It's a O(1) call to get them, and the cache would close them after 60 seconds
+                    //cache.put(texture, img);
+                    return img;
+                }catch(Exception ex) {
+                    // not backed by an image
+                }
+            }
+            // This would work, but hd skins will crash the JVM. Only 
+            /*
+            try {
+                NativeImage img = new NativeImage(Format.RGBA, 64, 64, true);
+                GlStateManager._bindTexture(texture.getId());
+                img.downloadTexture(0, false);
+                cache.put(texture, img);
+                return img;
+            }catch(Exception ex) {
+                SkinLayersModBase.LOGGER.error("Error while trying to grab a texture from the GPU.", ex);
+            }
+            */
            SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation + ". Potentially a conflict with another mod.");
             return null;
         }catch(Exception ex) {
-            ex.printStackTrace();
+            SkinLayersModBase.LOGGER.error("Error while resolving a skin texture.", ex);
             return null;
         }
     }
@@ -92,16 +148,11 @@ public class SkinUtil {
         ResourceLocation resourceLocation = Minecraft.getInstance().getSkinManager()
                 .registerTexture(texture, MinecraftProfileTexture.Type.SKIN);
         NativeImage skin = SkinUtil.getTexture(resourceLocation);
-        try {
-            if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { 
-                return false;
-            }
-            settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
-            return true;
-        }finally {
-            if(skin != null)
-                skin.close();
+        if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { 
+            return false;
         }
+        settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
+        return true;
     }
     
 }
