@@ -38,7 +38,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
             float g, float h, float j, float k, float l, CallbackInfo info) {
         if(!SkinLayersModBase.config.enableSkulls)return;
-        if(livingEntity.distanceToSqr(Minecraft.getInstance().player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
+        if(Minecraft.getInstance().player != null && livingEntity.distanceToSqr(Minecraft.getInstance().player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }
         ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
