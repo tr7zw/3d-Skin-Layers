@@ -10,9 +10,9 @@ Replaces the usually flat second layer of player skins with a 3d modeled version
 
 Since this mod is purely visual and fully clientside, it doesn't have to be installed on servers and works everywhere!
 
-*Want to play with friends on a server? Using my code 'tr7zw' on Meloncube gives you 25% off while supporting my mods at the same time!*
+**Want to play with friends on a server? Using my code 'tr7zw' on Meloncube gives you 25% off while supporting my mods at the same time!**
 
-![](https://raw.githubusercontent.com/tr7zw/3d-Skin-Layers/1.19/img/MC_NU_PROMO.png)
+[![](https://raw.githubusercontent.com/tr7zw/3d-Skin-Layers/1.19/img/MC_NU_PROMO.png)](https://meloncube.net/tr7zw)
 
 ## Dependencies
 
@@ -31,6 +31,7 @@ Since this mod is purely visual and fully clientside, it doesn't have to be inst
 - Iris
 - Optifine
 - Emotecraft animations(1.19+)
+- BetterCombat(1.19+)
 
 ## Download
 
