@@ -67,8 +67,10 @@ public class SkinUtil {
                 HttpTextureAccessor httpTexture = (HttpTextureAccessor) texture;
                 try {
                     NativeImage img = httpTexture.getImage();
-                    cache.put(texture, img);
-                    return img;
+                    if(img != null) {
+                        cache.put(texture, img);
+                        return img;
+                    }
                 }catch(FileNotFoundException ex) {
                     //not there
                 }
@@ -76,10 +78,12 @@ public class SkinUtil {
             if(texture instanceof DynamicTexture) {
                 try {
                     NativeImage img = ((DynamicTexture) texture).getPixels();
-                    img.getPixelRGBA(0, 0); // check that it's allocated
-                    // Do not cache dynamic textures. It's a O(1) call to get them, and the cache would close them after 60 seconds
-                    //cache.put(texture, img);
-                    return img;
+                    if(img != null) {
+                        img.getPixelRGBA(0, 0); // check that it's allocated
+                        // Do not cache dynamic textures. It's a O(1) call to get them, and the cache would close them after 60 seconds
+                        //cache.put(texture, img);
+                        return img;
+                    }
                 }catch(Exception ex) {
                     // not backed by an image
                 }
