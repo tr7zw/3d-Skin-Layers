@@ -1,5 +1,5 @@
 version: '0.0.1'
-source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.1/"
+source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.3-fabriconly-mcpublish/"
 replacements:
   group: "dev.tr7zw"
   name: "3d-Skin-Layers"
@@ -14,5 +14,5 @@ rootProject:
 subProjects:
   3dSkinLayers-Fabric:
     template: "Fabric"
-  3dSkinLayers-Forge:
-    template: "Forge"
+#  3dSkinLayers-Forge:
+#    template: "Forge"

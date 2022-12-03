@@ -1,7 +1,7 @@
 package dev.tr7zw.skinlayers.api;
 
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import net.minecraft.client.model.geom.ModelPart.Cube;
 

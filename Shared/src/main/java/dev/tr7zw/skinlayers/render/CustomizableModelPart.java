@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
 
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.MeshTransformer;
@@ -127,14 +129,13 @@ class CustomizableModelPart implements Mesh {
     }
 
     public void translateAndRotate(PoseStack poseStack) {
-        poseStack.translate((this.x / 16.0F), (this.y / 16.0F), (this.z / 16.0F));
-        if (this.zRot != 0.0F)
-            poseStack.mulPose(Vector3f.ZP.rotation(this.zRot));
-        if (this.yRot != 0.0F)
-            poseStack.mulPose(Vector3f.YP.rotation(this.yRot));
-        if (this.xRot != 0.0F)
-            poseStack.mulPose(Vector3f.XP.rotation(this.xRot));
+        poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
+        if (this.xRot != 0.0F || this.yRot != 0.0F || this.zRot != 0.0F)
+                poseStack.mulPose((new Quaternionf()).rotationZYX(this.zRot, this.yRot, this.xRot));
     }
+    
+    // render constants to reduce allocations
+    private Vector4f vector4f[] = new Vector4f[] {new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f()};
     
     private void compile(ModelPart vanillaModel, PoseStack.Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
             float alpha) {
@@ -142,19 +143,17 @@ class CustomizableModelPart implements Mesh {
         // compacted Cubes
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
-        Vector3f vector3f = new Vector3f();
-        Vector4f vector4f[] = new Vector4f[] {new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f()};
         for (int id = 0; id < polygonData.length; id+=polyDataSize) {
-            vector3f.set(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
+            Vector3f vector3f = new Vector3f(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
             for (int o = 0; o < 4; o++) {
                 vector4f[o].set(polygonData[id + 3 + (o*5) + 0], polygonData[id + 3 + (o*5) + 1], polygonData[id + 3 + (o*5) + 2], 1.0F);
             }
             // optional transformations for bending layers
             transformer.transform(vector3f, vector4f);
 
-            vector3f.transform(matrix3f);
+            vector3f = matrix3f.transform(vector3f);
             for (int o = 0; o < 4; o++) {
-                vector4f[o].transform(matrix4f);
+                matrix4f.transform(vector4f[o]);
                 vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(), red, green, blue, alpha, polygonData[id + 3 + (o*5) + 3], polygonData[id + 3 + (o*5) + 4], overlay,
                         light, vector3f.x(), vector3f.y(), vector3f.z());
             }
