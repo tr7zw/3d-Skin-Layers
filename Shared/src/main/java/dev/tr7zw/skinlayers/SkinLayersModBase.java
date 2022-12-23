@@ -108,6 +108,10 @@ public abstract class SkinLayersModBase {
                         }));
                 options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> config.fastRender,
                         (b) -> config.fastRender = b));
+                options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.2f, 0.001f,
+                        () -> (double) config.firstPersonPixelScaling, (i) -> {
+                            config.firstPersonPixelScaling = i.floatValue();
+                        }));
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
 
             }

@@ -75,7 +75,7 @@ public abstract class PlayerRendererMixin
                 .isModelPartShown(rightSleeve ? PlayerModelPart.RIGHT_SLEEVE : PlayerModelPart.LEFT_SLEEVE))
             return;
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-        float pixelScaling = 1.1f;
+        
         float armHeightScaling = 1.1f;
         boolean thinArms = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
         if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, thinArms, getModel())) {
@@ -84,15 +84,21 @@ public abstract class PlayerRendererMixin
         Mesh part = sleeve == this.model.leftSleeve ? settings.getLeftArmMesh() : settings.getRightArmMesh();
         part.copyFrom(arm);
         poseStack.pushPose();
-        poseStack.scale(pixelScaling, armHeightScaling, pixelScaling);
+        poseStack.scale(SkinLayersModBase.config.firstPersonPixelScaling, armHeightScaling, SkinLayersModBase.config.firstPersonPixelScaling);
         boolean left = sleeve == this.model.leftSleeve;
         float x = left ? 5f : -5f;
         float y = 1.4f;
+        double scaleOffset = (SkinLayersModBase.config.firstPersonPixelScaling - 1.1) * 5;
+        if(left) {
+            x -= scaleOffset;
+        } else {
+            x += scaleOffset;
+        }
         if (!thinArms) {
             if (left) {
-                x += 0.4;
+                x += 0.45;
             } else {
-                x -= 0.4;
+                x -= 0.45;
             }
         }
         part.setPosition(x, y, 0);

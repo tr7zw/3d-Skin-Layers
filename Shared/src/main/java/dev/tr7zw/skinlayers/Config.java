@@ -22,4 +22,6 @@ public class Config {
     
     public boolean fastRender = true;
     
+    public float firstPersonPixelScaling = 1.1f;
+    
 }
