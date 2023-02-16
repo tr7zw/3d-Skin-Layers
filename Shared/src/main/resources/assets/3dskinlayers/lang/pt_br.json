@@ -16,5 +16,6 @@
     "text.skinlayers.skullsitems.enable": "Itens do Crânio 3D",
     "text.skinlayers.skulls.voxelsize": "Tamanho do Voxel do Crânio",
     "text.skinlayers.reset": "Restaurar",
-    "text.skinlayers.fastrender.enable": "Renderização Rápida"
+    "text.skinlayers.fastrender.enable": "Renderização Rápida",
+    "text.skinlayers.firstperson.voxelsize": "Tamanho do voxel em primeira pessoa"
   }
