@@ -39,3 +39,4 @@ run/
 gradle/wrapper
 VersionShared
 UtilityCode
+logs/
