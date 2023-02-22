@@ -1,9 +1,7 @@
 name: Create Release
-
 on:
   release:
     types: [published]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,11 +22,10 @@ jobs:
           files: |
             3dSkinLayers-Fabric/build/libs/*
             3dSkinLayers-Forge/build/libs/*
-
       - name: Publish-Forge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          curseforge-id: $curseforgeid$
+          curseforge-id: 521480
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}  
           loaders: forge
           name: ${{github.ref_name}} - Forge
@@ -37,7 +34,7 @@ jobs:
       - name: Publish-Forge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          modrinth-id: $modrinthid$
+          modrinth-id: zV5r3pPn
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           loaders: forge
           name: ${{github.ref_name}} - Forge
@@ -45,9 +42,9 @@ jobs:
       - name: Publish-Fabric
         uses: Kir-Antipov/mc-publish@v3.2
         with:
-          modrinth-id: $modrinthid$
+          modrinth-id: zV5r3pPn
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          curseforge-id: $curseforgeid$
+          curseforge-id: 521480
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}  
           loaders: fabric
           name: ${{github.ref_name}} - Fabric

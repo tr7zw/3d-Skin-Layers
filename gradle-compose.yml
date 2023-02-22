@@ -1,14 +1,18 @@
-version: '0.0.1'
-source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.3-mcpublish/"
+version: '0.0.2'
+source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.19.3"
 replacements:
-  group: "dev.tr7zw"
   name: "3d-Skin-Layers"
   id: "3dskinlayers"
   version: "1.5.2"
-  author: "tr7zw"
   relocationpackage: "dev.tr7zw.skinlayers"
-  dependencies: ""
-  licensename: "LICENSE"
+  modrinthid: zV5r3pPn
+  curseforgeid: 521480
+enabledFlags:
+  - autopublish
+  - publishFabric
+  - publishForge
+  - modrinth
+  - curseforge
 rootProject:
   template: "."
 subProjects:
