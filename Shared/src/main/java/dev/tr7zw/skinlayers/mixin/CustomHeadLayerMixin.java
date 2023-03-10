@@ -57,7 +57,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
             }
             if(gameProfile != null) {
                 lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
-                if(lastSkull.getHeadLayers() == null) {
+                if(!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
                     SkinUtil.setup3dLayers(gameProfile, lastSkull);
                 }
                 renderNext = lastSkull.getHeadLayers() != null;

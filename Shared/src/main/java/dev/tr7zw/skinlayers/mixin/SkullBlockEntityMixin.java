@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.entity.SkullBlockEntity;
 public class SkullBlockEntityMixin implements SkullSettings {
 
     private Mesh hatModel = null;
+    private boolean initialized = false;
     
     @Override
     public Mesh getHeadLayers() {
@@ -19,6 +20,16 @@ public class SkullBlockEntityMixin implements SkullSettings {
     @Override
     public void setupHeadLayers(Mesh box) {
         this.hatModel = box;
+    }
+
+    @Override
+    public boolean initialized() {
+        return initialized;
+    }
+
+    @Override
+    public void setInitialized() {
+        this.initialized = true;
     }
 
 }

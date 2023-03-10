@@ -39,10 +39,10 @@ public class SkinUtil {
     }).build();
     
     private static NativeImage getSkinTexture(AbstractClientPlayer player) {
-        return getTexture(player.getSkinTextureLocation());
+        return getTexture(player.getSkinTextureLocation(), null);
     }
     
-    private static NativeImage getTexture(ResourceLocation resourceLocation) {
+    private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
         try {
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
             if(optionalRes.isPresent()) {
@@ -75,6 +75,7 @@ public class SkinUtil {
                 }catch(Exception ex) {
                     //not there
                 }
+                return null; // not yet initialized, but also not ready
             }
             if(texture instanceof DynamicTexture) {
                 try {
@@ -88,6 +89,7 @@ public class SkinUtil {
                 }catch(Exception ex) {
                     // not backed by an image
                 }
+                return null; // not yet initialized, but also not ready
             }
             // This would work, but hd skins will crash the JVM. Only 
             /*
@@ -101,7 +103,8 @@ public class SkinUtil {
                 SkinLayersModBase.LOGGER.error("Error while trying to grab a texture from the GPU.", ex);
             }
             */
-           SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation + ". Potentially a conflict with another mod.");
+            settings.setInitialized(); // initialize as invalid
+            SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation + ". Potentially a conflict with another mod. (" + texture.getClass().getName() + ")");
             return null;
         }catch(Exception ex) {
             SkinLayersModBase.LOGGER.error("Error while resolving a skin texture.", ex);
@@ -153,11 +156,12 @@ public class SkinUtil {
         }
         ResourceLocation resourceLocation = Minecraft.getInstance().getSkinManager()
                 .registerTexture(texture, MinecraftProfileTexture.Type.SKIN);
-        NativeImage skin = SkinUtil.getTexture(resourceLocation);
+        NativeImage skin = SkinUtil.getTexture(resourceLocation, settings);
         if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { 
             return false;
         }
         settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
+        settings.setInitialized();
         return true;
     }
     
