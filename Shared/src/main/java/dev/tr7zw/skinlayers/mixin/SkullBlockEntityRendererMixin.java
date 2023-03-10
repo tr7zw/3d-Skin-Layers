@@ -37,7 +37,8 @@ public class SkullBlockEntityRendererMixin {
         if(!SkinLayersModBase.config.enableSkulls)return;
         if(internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int)player.getX(), (int)player.getY(), (int)player.getZ()) < SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
-            if(lastSkull.getHeadLayers() == null) {
+            if(!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
+                lastSkull.setInitialized(); // do this first, so if anything goes horribly wrong, it doesn't happen next frame again
                 SkinUtil.setup3dLayers(skullBlockEntity.getOwnerProfile(), lastSkull);
             }
             renderNext = lastSkull.getHeadLayers() != null;
