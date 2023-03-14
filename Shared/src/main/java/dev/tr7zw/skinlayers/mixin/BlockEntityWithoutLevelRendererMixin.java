@@ -23,11 +23,11 @@ import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import net.minecraft.client.model.SkullModelBase;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Block;
@@ -41,7 +41,7 @@ public class BlockEntityWithoutLevelRendererMixin {
     private Map<SkullBlock.Type, SkullModelBase> skullModels;
     
     @Inject(method = "renderByItem", at = @At("HEAD"))
-    public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack poseStack,
+    public void renderByItem(ItemStack itemStack, ItemDisplayContext itemDisplayContext, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
         if(!SkinLayersModBase.config.enableSkullsItems)return;
         Item item = itemStack.getItem();

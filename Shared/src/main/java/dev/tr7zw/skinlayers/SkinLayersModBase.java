@@ -132,7 +132,7 @@ public abstract class SkinLayersModBase {
                     int lookY = y - 80 - yMouse;
                     // Prevent the model from clipping into the back of the gui^^
                     lookY = Math.min(lookY, 10);
-                    InventoryScreen.renderEntityInInventory(x, y, size, lookX, lookY,
+                    InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, x, y, size, lookX, lookY,
                             this.minecraft.player);
                 }
             }

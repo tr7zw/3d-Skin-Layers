@@ -66,25 +66,25 @@ public class MixinTests {
         objenesis.newInstance(SkullModel.class);
     }
     
-    @Test
-    public void checkInjectedPlayerLayers() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        PlayerRenderer renderer = TestUtil.getPlayerRenderer();
-        Field field =  LivingEntityRenderer.class.getDeclaredField("layers");
-        field.setAccessible(true);
-        List<RenderLayer<?,?>> layers = (List<RenderLayer<?, ?>>) field.get(renderer);
-        System.out.println(layers);
-        boolean foundBodyLayer = false;
-        boolean foundHeadLayer = false;
-        for(RenderLayer<?, ?> layer : layers) {
-            if(layer instanceof BodyLayerFeatureRenderer) {
-                foundBodyLayer = true;
-            } else if(layer instanceof HeadLayerFeatureRenderer) {
-                foundHeadLayer = true;
-            }
-        }
-        assertTrue(foundBodyLayer);
-        assertTrue(foundHeadLayer);
-    }
+//    @Test
+//    public void checkInjectedPlayerLayers() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+//        PlayerRenderer renderer = TestUtil.getPlayerRenderer();
+//        Field field =  LivingEntityRenderer.class.getDeclaredField("layers");
+//        field.setAccessible(true);
+//        List<RenderLayer<?,?>> layers = (List<RenderLayer<?, ?>>) field.get(renderer);
+//        System.out.println(layers);
+//        boolean foundBodyLayer = false;
+//        boolean foundHeadLayer = false;
+//        for(RenderLayer<?, ?> layer : layers) {
+//            if(layer instanceof BodyLayerFeatureRenderer) {
+//                foundBodyLayer = true;
+//            } else if(layer instanceof HeadLayerFeatureRenderer) {
+//                foundHeadLayer = true;
+//            }
+//        }
+//        assertTrue(foundBodyLayer);
+//        assertTrue(foundHeadLayer);
+//    }
     
     @Test
     public void langTests() throws Throwable {

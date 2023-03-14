@@ -1,5 +1,6 @@
 package dev.tr7zw.skinlayers.render;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ class CustomizableCube extends Cube {
     
     public CustomizableCube(int u, int v, float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extraX, float extraY,
             float extraZ, boolean mirror, float textureWidth, float textureHeight, Direction[] hide, Direction[][] hideCorners) {
-        super(0, 0, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, false, 0f, 0f); // unused
+        super(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight, Collections.emptySet()); // unused
         this.hidden = hide;
         this.minX = x;
         this.minY = y;

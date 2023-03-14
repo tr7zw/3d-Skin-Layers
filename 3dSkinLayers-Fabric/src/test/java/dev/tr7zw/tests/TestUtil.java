@@ -1,6 +1,5 @@
 package dev.tr7zw.tests;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -14,7 +13,6 @@ import java.util.function.BiConsumer;
 import com.google.common.collect.ImmutableMap;
 
 import dev.tr7zw.config.CustomConfigScreen;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.model.PlayerModel;
@@ -30,9 +28,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.StringDecomposer;
 
 public class TestUtil {
 
@@ -93,6 +89,11 @@ public class TestUtil {
 
             public FormattedCharSequence getVisualOrder(FormattedText formattedText) {
                 return null;
+            }
+
+            @Override
+            public String getOrDefault(String paramString1, String paramString2) {
+                return (String) storage.getOrDefault(paramString1, paramString2);
             }
         };
     }
