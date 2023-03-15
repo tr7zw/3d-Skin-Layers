@@ -25,6 +25,7 @@ jobs:
           name: Artifacts
           path: |
             3dSkinLayers-Fabric/build/libs/*
+            3dSkinLayers-Forge/build/libs/*
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()
