@@ -61,7 +61,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		}
 
 		VertexConsumer vertexConsumer = multiBufferSource
-				.getBuffer(RenderType.entityTranslucentCull(player.getSkinTextureLocation()));
+				.getBuffer(RenderType.itemEntityTranslucentCull(player.getSkinTextureLocation()));
 		int m = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
 		renderLayers(player, settings, poseStack, vertexConsumer, i, m);
 	}

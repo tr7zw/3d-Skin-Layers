@@ -67,7 +67,7 @@ public class HeadLayerFeatureRenderer
 		}
 
 		VertexConsumer vertexConsumer = multiBufferSource
-				.getBuffer(RenderType.entityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
+				.getBuffer(RenderType.itemEntityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
 		int overlay = LivingEntityRenderer.getOverlayCoords((LivingEntity) player, 0.0f);
 		renderCustomHelmet(settings, player, poseStack, vertexConsumer, i, overlay);
 	}
