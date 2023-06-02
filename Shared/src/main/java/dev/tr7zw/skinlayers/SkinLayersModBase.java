@@ -12,11 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import net.minecraft.client.OptionInstance;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.entity.player.Player;
@@ -122,8 +121,8 @@ public abstract class SkinLayersModBase {
             }
 
             @Override
-            public void render(PoseStack poseStack, int xMouse, int yMouse, float f) {
-                super.render(poseStack, xMouse, yMouse, f);
+            public void render(GuiGraphics guiGraphics, int xMouse, int yMouse, float f) {
+                super.render(guiGraphics, xMouse, yMouse, f);
                 if (this.minecraft.level != null) {
                     int x = minecraft.getWindow().getGuiScaledWidth()/2;
                     int y = minecraft.getWindow().getGuiScaledHeight()-45;
@@ -132,7 +131,7 @@ public abstract class SkinLayersModBase {
                     int lookY = y - 80 - yMouse;
                     // Prevent the model from clipping into the back of the gui^^
                     lookY = Math.min(lookY, 10);
-                    InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, x, y, size, lookX, lookY,
+                    InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, size, lookX, lookY,
                             this.minecraft.player);
                 }
             }
