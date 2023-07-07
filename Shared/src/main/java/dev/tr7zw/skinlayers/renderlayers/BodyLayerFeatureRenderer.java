@@ -61,7 +61,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		}
 
 		VertexConsumer vertexConsumer = multiBufferSource
-				.getBuffer(RenderType.entityTranslucentCull(player.getSkinTextureLocation()));
+				.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation(), true));
 		int m = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
 		renderLayers(player, settings, poseStack, vertexConsumer, i, m);
 	}
@@ -90,9 +90,6 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 		float pixelScaling = SkinLayersModBase.config.baseVoxelSize;
 		float heightScaling = 1.035f;
 		float widthScaling = SkinLayersModBase.config.baseVoxelSize;
-		// Overlay refuses to work correctly, this is a workaround for now
-	    boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
-	    float color = red ? 0.5f : 1f;
 		for(Layer layer : bodyLayers) {
 		    Mesh mesh = layer.meshGetter.apply(settings);
 		    if(mesh != null && abstractClientPlayer.isModelPartShown(layer.modelPart) && layer.vanillaGetter.get().visible && layer.configGetter.get()) {
@@ -117,7 +114,7 @@ extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	            
 	            mesh.setPosition(x, y, 0);
 	            
-	            mesh.render(layer.vanillaGetter.get(), matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
+	            mesh.render(layer.vanillaGetter.get(), matrixStack, vertices, light, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
 	            matrixStack.popPose();
 	        }
 		}

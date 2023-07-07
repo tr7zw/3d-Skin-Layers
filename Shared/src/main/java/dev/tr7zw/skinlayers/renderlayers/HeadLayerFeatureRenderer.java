@@ -67,8 +67,8 @@ public class HeadLayerFeatureRenderer
 		}
 
 		VertexConsumer vertexConsumer = multiBufferSource
-				.getBuffer(RenderType.entityTranslucentCull((ResourceLocation) player.getSkinTextureLocation()));
-		int overlay = LivingEntityRenderer.getOverlayCoords((LivingEntity) player, 0.0f);
+		        .getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation(), true));
+		int overlay = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
 		renderCustomHelmet(settings, player, poseStack, vertexConsumer, i, overlay);
 	}
 
@@ -82,10 +82,7 @@ public class HeadLayerFeatureRenderer
 		matrixStack.scale(voxelSize, voxelSize, voxelSize);
 		matrixStack.translate(0, 0.25, 0);
 		matrixStack.translate(0, -0.04, 0);
-		// Overlay refuses to work correctly, this is a workaround for now
-		boolean red = abstractClientPlayer.hurtTime > 0 || abstractClientPlayer.deathTime > 0;
-		float color = red ? 0.5f : 1f;
-		settings.getHeadMesh().render(this.getParentModel().head, matrixStack, vertices, light, overlay, 1.0f, color, color, 1.0f);
+		settings.getHeadMesh().render(this.getParentModel().head, matrixStack, vertices, light, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
 		matrixStack.popPose();
 
 	}
