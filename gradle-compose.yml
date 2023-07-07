@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20"
 replacements:
   name: "3d-Skin-Layers"
   id: "3dskinlayers"
-  version: "1.5.3"
+  version: "1.5.4"
   relocationpackage: "dev.tr7zw.skinlayers"
   modrinthid: zV5r3pPn
   curseforgeid: 521480
