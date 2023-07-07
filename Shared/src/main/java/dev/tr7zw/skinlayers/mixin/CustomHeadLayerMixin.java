@@ -34,11 +34,14 @@ import net.minecraft.world.level.block.AbstractSkullBlock;
 public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> {
 
     @SuppressWarnings("resource")
-    @Inject(method =  "render", at = @At("HEAD"))
+    @Inject(method = "render", at = @At("HEAD"))
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
             float g, float h, float j, float k, float l, CallbackInfo info) {
-        if(!SkinLayersModBase.config.enableSkulls)return;
-        if(Minecraft.getInstance().player != null && livingEntity.distanceToSqr(Minecraft.getInstance().player) > SkinLayersModBase.config.renderDistanceLOD*SkinLayersModBase.config.renderDistanceLOD) {
+        if (!SkinLayersModBase.config.enableSkulls)
+            return;
+        if (Minecraft.getInstance().player != null && livingEntity
+                .distanceToSqr(Minecraft.getInstance().player) > SkinLayersModBase.config.renderDistanceLOD
+                        * SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }
         ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
@@ -49,20 +52,20 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
             GameProfile gameProfile = null;
             if (itemStack.hasTag()) {
                 CompoundTag compoundTag = itemStack.getTag();
-                if(compoundTag.contains("CustomModelData")) {
+                if (compoundTag.contains("CustomModelData")) {
                     return; // do not try to 3d-fy custom head models
                 }
                 if (compoundTag.contains("SkullOwner", 10))
                     gameProfile = NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
             }
-            if(gameProfile != null) {
+            if (gameProfile != null) {
                 lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
-                if(!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
+                if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
                     SkinUtil.setup3dLayers(gameProfile, lastSkull);
                 }
                 renderNext = lastSkull.getHeadLayers() != null;
             }
         }
     }
-    
+
 }

@@ -6,5 +6,5 @@ public interface SkullData {
      * @return The Mesh or null if there is none.
      */
     public Mesh getMesh();
-    
+
 }

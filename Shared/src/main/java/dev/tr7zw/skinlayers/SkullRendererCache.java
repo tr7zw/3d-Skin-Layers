@@ -11,12 +11,12 @@ public class SkullRendererCache {
     public static boolean renderNext = false;
     public static SkullSettings lastSkull = null;
     public static WeakHashMap<ItemStack, SkullSettings> itemCache = new WeakHashMap<>();
-    
+
     public static class ItemSettings implements SkullSettings {
 
         private Mesh hatModel = null;
         private boolean initialized = false;
-        
+
         @Override
         public Mesh getHeadLayers() {
             return hatModel;
@@ -36,7 +36,7 @@ public class SkullRendererCache {
         public void setInitialized() {
             this.initialized = true;
         }
-        
+
     }
-    
+
 }

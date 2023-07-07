@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import net.minecraft.client.OptionInstance;
@@ -45,10 +46,10 @@ public abstract class SkinLayersModBase {
         }
         try {
             Class<?> clientClass = Class.forName("dev.tr7zw.disguiseheads.DisguiseHeadsShared");
-            disguiseHeadsCompatibility = clientClass != null; // to  shut up the compiler that the var is not used
+            disguiseHeadsCompatibility = clientClass != null; // to shut up the compiler that the var is not used
             LOGGER.info("Found DisguiseHeads, enable compatibility!");
-        }catch(Throwable ex) {
-            //not installed
+        } catch (Throwable ex) {
+            // not installed
         }
     }
 
@@ -96,7 +97,7 @@ public abstract class SkinLayersModBase {
                         () -> (double) config.bodyVoxelWidthSize, (i) -> {
                             config.bodyVoxelWidthSize = i.floatValue();
                             refreshLayers(this.minecraft.player);
-                      }));
+                        }));
                 options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> config.enableSkulls,
                         (b) -> config.enableSkulls = b));
                 options.add(getOnOffOption("text.skinlayers.skullsitems.enable", () -> config.enableSkullsItems,
@@ -124,8 +125,8 @@ public abstract class SkinLayersModBase {
             public void render(GuiGraphics guiGraphics, int xMouse, int yMouse, float f) {
                 super.render(guiGraphics, xMouse, yMouse, f);
                 if (this.minecraft.level != null) {
-                    int x = minecraft.getWindow().getGuiScaledWidth()/2;
-                    int y = minecraft.getWindow().getGuiScaledHeight()-45;
+                    int x = minecraft.getWindow().getGuiScaledWidth() / 2;
+                    int y = minecraft.getWindow().getGuiScaledHeight() - 45;
                     int size = (int) (40f * (minecraft.getWindow().getGuiScaledHeight() / 200f));
                     int lookX = x - xMouse;
                     int lookY = y - 80 - yMouse;

@@ -12,11 +12,11 @@ public class SkullModelMixin implements SkullModelAccessor {
 
     @Shadow
     private ModelPart head;
-    
+
     @Override
     public void showHat(boolean val) {
         head.getAllParts().forEach(part -> {
-            if(part != head) { // is the hat, not the head
+            if (part != head) { // is the hat, not the head
                 part.visible = val;
             }
         });

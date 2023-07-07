@@ -26,10 +26,12 @@ class CustomizableCube extends Cube {
     public final float maxX;
     public final float maxY;
     public final float maxZ;
-    
-    public CustomizableCube(int u, int v, float x, float y, float z, float sizeX, float sizeY, float sizeZ, float extraX, float extraY,
-            float extraZ, boolean mirror, float textureWidth, float textureHeight, Direction[] hide, Direction[][] hideCorners) {
-        super(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight, Collections.emptySet()); // unused
+
+    public CustomizableCube(int u, int v, float x, float y, float z, float sizeX, float sizeY, float sizeZ,
+            float extraX, float extraY, float extraZ, boolean mirror, float textureWidth, float textureHeight,
+            Direction[] hide, Direction[][] hideCorners) {
+        super(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight,
+                Collections.emptySet()); // unused
         this.hidden = hide;
         this.minX = x;
         this.minY = y;
@@ -68,51 +70,72 @@ class CustomizableCube extends Cube {
         float maxV = v + 1.0F;
 
         Map<Direction.Axis, Direction[]> axisToCorner = new HashMap<>();
-        nextCorner: for(Direction[] corner : hideCorners) {
-            nextAxis: for(Direction.Axis axis : Direction.Axis.VALUES) {
-                for(Direction dir : corner) {
-                    if(dir.getAxis() == axis) continue nextAxis;
+        nextCorner: for (Direction[] corner : hideCorners) {
+            nextAxis: for (Direction.Axis axis : Direction.Axis.VALUES) {
+                for (Direction dir : corner) {
+                    if (dir.getAxis() == axis)
+                        continue nextAxis;
                 }
 
                 axisToCorner.put(axis, corner);
                 continue nextCorner;
             }
         }
-        
-        if(visibleFace(Direction.DOWN))
-            this.polygons[this.polygonCount++] = new Polygon(removeCornerVertex(new Vertex[]{vertexPNP, vertexNNP, vertexNNN, vertexPNN}, axisToCorner.get(Direction.Axis.Y)), minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.DOWN);
-        if(visibleFace(Direction.UP))
-            this.polygons[this.polygonCount++] = new Polygon(removeCornerVertex(new Vertex[]{vertexPPN, vertexNPN, vertexNPP, vertexPPP}, axisToCorner.get(Direction.Axis.Y)), minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.UP);
-        if(visibleFace(Direction.NORTH))
-            this.polygons[this.polygonCount++] = new Polygon(removeCornerVertex(new Vertex[]{vertexPNN, vertexNNN, vertexNPN, vertexPPN}, axisToCorner.get(Direction.Axis.Z)), minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.NORTH);
-        if(visibleFace(Direction.SOUTH))
-            this.polygons[this.polygonCount++] = new Polygon(removeCornerVertex(new Vertex[]{vertexNNP, vertexPNP, vertexPPP, vertexNPP}, axisToCorner.get(Direction.Axis.Z)), minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.SOUTH);
-        if(visibleFace(Direction.WEST))
-            this.polygons[this.polygonCount++] = new Polygon(removeCornerVertex(new Vertex[]{vertexNNN, vertexNNP, vertexNPP, vertexNPN}, axisToCorner.get(Direction.Axis.X)), minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.WEST);
-        if(visibleFace(Direction.EAST))
-            this.polygons[this.polygonCount++] = new Polygon(removeCornerVertex(new Vertex[]{vertexPNP, vertexPNN, vertexPPN, vertexPPP}, axisToCorner.get(Direction.Axis.X)), minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.EAST);
+
+        if (visibleFace(Direction.DOWN))
+            this.polygons[this.polygonCount++] = new Polygon(
+                    removeCornerVertex(new Vertex[] { vertexPNP, vertexNNP, vertexNNN, vertexPNN },
+                            axisToCorner.get(Direction.Axis.Y)),
+                    minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.DOWN);
+        if (visibleFace(Direction.UP))
+            this.polygons[this.polygonCount++] = new Polygon(
+                    removeCornerVertex(new Vertex[] { vertexPPN, vertexNPN, vertexNPP, vertexPPP },
+                            axisToCorner.get(Direction.Axis.Y)),
+                    minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.UP);
+        if (visibleFace(Direction.NORTH))
+            this.polygons[this.polygonCount++] = new Polygon(
+                    removeCornerVertex(new Vertex[] { vertexPNN, vertexNNN, vertexNPN, vertexPPN },
+                            axisToCorner.get(Direction.Axis.Z)),
+                    minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.NORTH);
+        if (visibleFace(Direction.SOUTH))
+            this.polygons[this.polygonCount++] = new Polygon(
+                    removeCornerVertex(new Vertex[] { vertexNNP, vertexPNP, vertexPPP, vertexNPP },
+                            axisToCorner.get(Direction.Axis.Z)),
+                    minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.SOUTH);
+        if (visibleFace(Direction.WEST))
+            this.polygons[this.polygonCount++] = new Polygon(
+                    removeCornerVertex(new Vertex[] { vertexNNN, vertexNNP, vertexNPP, vertexNPN },
+                            axisToCorner.get(Direction.Axis.X)),
+                    minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.WEST);
+        if (visibleFace(Direction.EAST))
+            this.polygons[this.polygonCount++] = new Polygon(
+                    removeCornerVertex(new Vertex[] { vertexPNP, vertexPNN, vertexPPN, vertexPPP },
+                            axisToCorner.get(Direction.Axis.X)),
+                    minU, minV, maxU, maxV, textureWidth, textureHeight, mirror, Direction.EAST);
     }
-    
+
     private boolean visibleFace(Direction face) {
-        for(Direction dir : hidden) {
-            if(dir == face) return false;
+        for (Direction dir : hidden) {
+            if (dir == face)
+                return false;
         }
         return true;
     }
 
     private static Vertex[] removeCornerVertex(Vertex[] vertices, Direction[] corner) {
-        if(corner == null) {
+        if (corner == null) {
             return vertices;
         }
 
         Vertex except = vertices[0];
-        for(int i = 1; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             except = compareVertices(except, vertices[i], corner);
         }
 
         int index = 0;
-        for(int i = 0; i < 4; i++) {
-            if(vertices[i] == except) continue;
+        for (int i = 0; i < 4; i++) {
+            if (vertices[i] == except)
+                continue;
             vertices[index++] = vertices[i];
         }
         vertices[3] = vertices[2];
@@ -121,11 +144,12 @@ class CustomizableCube extends Cube {
     }
 
     private static Vertex compareVertices(Vertex vertex1, Vertex vertex2, Direction[] corner) {
-        for(Direction dir : corner) {
-            double d = dir.getAxis().choose(vertex1.pos.x() - vertex2.pos.x(), vertex1.pos.y() - vertex2.pos.y(), vertex1.pos.z() - vertex2.pos.z()) * dir.getAxisDirection().getStep();
-            if(d > 0) {
+        for (Direction dir : corner) {
+            double d = dir.getAxis().choose(vertex1.pos.x() - vertex2.pos.x(), vertex1.pos.y() - vertex2.pos.y(),
+                    vertex1.pos.z() - vertex2.pos.z()) * dir.getAxisDirection().getStep();
+            if (d > 0) {
                 return vertex1;
-            } else if(d < 0) {
+            } else if (d < 0) {
                 return vertex2;
             }
         }
@@ -133,7 +157,8 @@ class CustomizableCube extends Cube {
     }
 
     @Override
-    public void compile(Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void compile(Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green,
+            float blue, float alpha) {
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
         Polygon polygon;
@@ -148,8 +173,8 @@ class CustomizableCube extends Cube {
                 Vertex vertex = polygon.vertices[i];
                 Vector4f vector4f = new Vector4f(vertex.scaledX, vertex.scaledY, vertex.scaledZ, 1.0F);
                 vector4f.mul(matrix4f);
-                vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u, vertex.v, overlay,
-                        light, x, y, z);
+                vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u,
+                        vertex.v, overlay, light, x, y, z);
             }
         }
     }
@@ -159,8 +184,8 @@ class CustomizableCube extends Cube {
 
         public final Vector3f normal;
 
-        public Polygon(Vertex[] vertexs, float minU, float minV, float maxU, float maxV, float textureWidth, float textureHeight, boolean mirror,
-                       Direction direction) {
+        public Polygon(Vertex[] vertexs, float minU, float minV, float maxU, float maxV, float textureWidth,
+                float textureHeight, boolean mirror, Direction direction) {
             this.vertices = vertexs;
             float zeroWidth = 0.0F / textureWidth;
             float zeroHeight = 0.0F / textureHeight;

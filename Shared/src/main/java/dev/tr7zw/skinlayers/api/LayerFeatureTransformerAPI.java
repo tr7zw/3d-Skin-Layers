@@ -1,6 +1,7 @@
 package dev.tr7zw.skinlayers.api;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 
@@ -18,7 +19,8 @@ public class LayerFeatureTransformerAPI {
 
     @FunctionalInterface
     public interface LayerTransformer {
-        LayerTransformer IDENTITY = (abstractClientPlayer, matrixStack, modelPart) -> {};
+        LayerTransformer IDENTITY = (abstractClientPlayer, matrixStack, modelPart) -> {
+        };
 
         void transform(AbstractClientPlayer abstractClientPlayer, PoseStack matrixStack, ModelPart modelPart);
     }

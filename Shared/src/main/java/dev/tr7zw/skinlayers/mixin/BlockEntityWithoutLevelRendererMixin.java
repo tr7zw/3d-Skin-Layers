@@ -39,11 +39,12 @@ public class BlockEntityWithoutLevelRendererMixin {
 
     @Shadow
     private Map<SkullBlock.Type, SkullModelBase> skullModels;
-    
+
     @Inject(method = "renderByItem", at = @At("HEAD"))
     public void renderByItem(ItemStack itemStack, ItemDisplayContext itemDisplayContext, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
-        if(!SkinLayersModBase.config.enableSkullsItems)return;
+        if (!SkinLayersModBase.config.enableSkullsItems)
+            return;
         Item item = itemStack.getItem();
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
@@ -51,7 +52,7 @@ public class BlockEntityWithoutLevelRendererMixin {
                 GameProfile gameProfile = null;
                 if (itemStack.hasTag()) {
                     CompoundTag compoundTag = itemStack.getTag();
-                    if(compoundTag.contains("CustomModelData")) {
+                    if (compoundTag.contains("CustomModelData")) {
                         return; // do not try to 3d-fy custom head models
                     }
                     if (compoundTag.contains("SkullOwner", 10)) {
@@ -64,9 +65,9 @@ public class BlockEntityWithoutLevelRendererMixin {
                                 NbtUtils.writeGameProfile(new CompoundTag(), gp)));
                     }
                 }
-                if(gameProfile != null) {
+                if (gameProfile != null) {
                     lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
-                    if(!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
+                    if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
                         SkinUtil.setup3dLayers(gameProfile, lastSkull);
                     }
                     renderNext = lastSkull.getHeadLayers() != null;
@@ -74,5 +75,5 @@ public class BlockEntityWithoutLevelRendererMixin {
             }
         }
     }
-    
+
 }

@@ -5,5 +5,5 @@ package dev.tr7zw.skinlayers.accessor;
  *
  */
 public interface PlayerEntityModelAccessor {
-	public boolean hasThinArms();
+    public boolean hasThinArms();
 }

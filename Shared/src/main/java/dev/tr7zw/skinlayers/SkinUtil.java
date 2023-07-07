@@ -26,72 +26,75 @@ import net.minecraft.server.packs.resources.Resource;
 
 public class SkinUtil {
 
-    private static Cache<AbstractTexture, NativeImage> cache = CacheBuilder.newBuilder().expireAfterAccess(60L, TimeUnit.SECONDS).removalListener(new RemovalListener<AbstractTexture, NativeImage>() {
+    private static Cache<AbstractTexture, NativeImage> cache = CacheBuilder.newBuilder()
+            .expireAfterAccess(60L, TimeUnit.SECONDS)
+            .removalListener(new RemovalListener<AbstractTexture, NativeImage>() {
 
-        @Override
-        public void onRemoval(RemovalNotification<AbstractTexture, NativeImage> notification) {
-            try {
-                notification.getValue().close();
-            }catch(Exception ex) {
-                SkinLayersModBase.LOGGER.error("Error while closing a texture.", ex);
-            }
-        }
-    }).build();
-    
+                @Override
+                public void onRemoval(RemovalNotification<AbstractTexture, NativeImage> notification) {
+                    try {
+                        notification.getValue().close();
+                    } catch (Exception ex) {
+                        SkinLayersModBase.LOGGER.error("Error while closing a texture.", ex);
+                    }
+                }
+            }).build();
+
     private static NativeImage getSkinTexture(AbstractClientPlayer player) {
         return getTexture(player.getSkinTextureLocation(), null);
     }
-    
+
     private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
         try {
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
-            if(optionalRes.isPresent()) {
+            if (optionalRes.isPresent()) {
                 Resource resource = optionalRes.get();
                 NativeImage skin = NativeImage.read(resource.open());
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
-            if(texture == null) {
+            if (texture == null) {
                 return null;
             }
             NativeImage cachedImage = cache.getIfPresent(texture);
-            if(cachedImage != null) {
+            if (cachedImage != null) {
                 try {
                     cachedImage.getPixelRGBA(0, 0); // check that it's allocated
                     return cachedImage;
-                }catch(Exception ex) {
+                } catch (Exception ex) {
                     // got invalidated, remove from cache
                     cache.invalidate(texture);
                 }
             }
-            if(texture instanceof HttpTextureAccessor) {
+            if (texture instanceof HttpTextureAccessor) {
                 HttpTextureAccessor httpTexture = (HttpTextureAccessor) texture;
                 try {
                     NativeImage img = httpTexture.getImage();
-                    if(img != null) {
+                    if (img != null) {
                         cache.put(texture, img);
                         return img;
                     }
-                }catch(Exception ex) {
-                    //not there
+                } catch (Exception ex) {
+                    // not there
                 }
                 return null; // not yet initialized, but also not ready
             }
-            if(texture instanceof DynamicTexture) {
+            if (texture instanceof DynamicTexture) {
                 try {
                     NativeImage img = ((DynamicTexture) texture).getPixels();
-                    if(img != null) {
+                    if (img != null) {
                         img.getPixelRGBA(0, 0); // check that it's allocated
-                        // Do not cache dynamic textures. It's a O(1) call to get them, and the cache would close them after 60 seconds
-                        //cache.put(texture, img);
+                        // Do not cache dynamic textures. It's a O(1) call to get them, and the cache
+                        // would close them after 60 seconds
+                        // cache.put(texture, img);
                         return img;
                     }
-                }catch(Exception ex) {
+                } catch (Exception ex) {
                     // not backed by an image
                 }
                 return null; // not yet initialized, but also not ready
             }
-            // This would work, but hd skins will crash the JVM. Only 
+            // This would work, but hd skins will crash the JVM. Only
             /*
             try {
                 NativeImage img = new NativeImage(Format.RGBA, 64, 64, true);
@@ -104,25 +107,33 @@ public class SkinUtil {
             }
             */
             settings.setInitialized(); // initialize as invalid
-            SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation + ". Potentially a conflict with another mod. (" + texture.getClass().getName() + ")");
+            SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation
+                    + ". Potentially a conflict with another mod. (" + texture.getClass().getName() + ")");
             return null;
-        }catch(Exception ex) {
+        } catch (Exception ex) {
             SkinLayersModBase.LOGGER.error("Error while resolving a skin texture.", ex);
             return null;
         }
     }
-    
-    public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings, boolean thinArms, PlayerModel<AbstractClientPlayer> model) {
+
+    public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
+            boolean thinArms, PlayerModel<AbstractClientPlayer> model) {
         ResourceLocation skinLocation = abstractClientPlayerEntity.getSkinTextureLocation();
-        if(skinLocation == null) {
-            return false;//this *should* never happen, but just to be sure
+        if (skinLocation == null) {
+            return false;// this *should* never happen, but just to be sure
         }
-        if(skinLocation.equals(settings.getCurrentSkin()) && thinArms == settings.hasThinArms()) { // if they are equal, the skin is processed and either failed or is ready
+        if (skinLocation.equals(settings.getCurrentSkin()) && thinArms == settings.hasThinArms()) { // if they are
+                                                                                                    // equal, the skin
+                                                                                                    // is processed and
+                                                                                                    // either failed or
+                                                                                                    // is ready
             return settings.getHeadMesh() != null;
         }
-        // Starting here should only run in case the skin has changed by getting loaded/another mod changed the skin
+        // Starting here should only run in case the skin has changed by getting
+        // loaded/another mod changed the skin
         NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
-        if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { // Skin is null or not a 64x64 skin, hd skins won't work
+        if (skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { // Skin is null or not a 64x64 skin, hd
+                                                                               // skins won't work
             settings.setCurrentSkin(skinLocation);
             settings.setThinArms(thinArms);
             settings.clearMeshes();
@@ -130,7 +141,7 @@ public class SkinUtil {
         }
         settings.setLeftLegMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 48, true, 0f));
         settings.setRightLegMesh(SolidPixelWrapper.wrapBox(skin, 4, 12, 4, 0, 32, true, 0f));
-        if(thinArms) {
+        if (thinArms) {
             settings.setLeftArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 48, 48, true, -2f));
             settings.setRightArmMesh(SolidPixelWrapper.wrapBox(skin, 3, 12, 4, 40, 32, true, -2f));
         } else {
@@ -143,26 +154,26 @@ public class SkinUtil {
         settings.setThinArms(thinArms);
         return true;
     }
-    
+
     public static boolean setup3dLayers(GameProfile gameprofile, SkullSettings settings) {
-        if(gameprofile == null) {
+        if (gameprofile == null) {
             return false; // no gameprofile
         }
         Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = Minecraft.getInstance().getSkinManager()
                 .getInsecureSkinInformation(gameprofile);
         MinecraftProfileTexture texture = map.get(MinecraftProfileTexture.Type.SKIN);
-        if(texture == null) {
+        if (texture == null) {
             return false; // it's a gameprofile, but no skin.
         }
-        ResourceLocation resourceLocation = Minecraft.getInstance().getSkinManager()
-                .registerTexture(texture, MinecraftProfileTexture.Type.SKIN);
+        ResourceLocation resourceLocation = Minecraft.getInstance().getSkinManager().registerTexture(texture,
+                MinecraftProfileTexture.Type.SKIN);
         NativeImage skin = SkinUtil.getTexture(resourceLocation, settings);
-        if(skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { 
+        if (skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) {
             return false;
         }
         settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
         settings.setInitialized();
         return true;
     }
-    
+
 }

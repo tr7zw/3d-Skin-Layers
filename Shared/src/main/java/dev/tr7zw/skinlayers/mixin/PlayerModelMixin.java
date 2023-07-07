@@ -23,5 +23,5 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel<T> i
     public boolean hasThinArms() {
         return slim;
     }
-    
+
 }

@@ -7,5 +7,5 @@ import com.mojang.blaze3d.platform.NativeImage;
 public interface HttpTextureAccessor {
 
     public NativeImage getImage() throws FileNotFoundException;
-    
+
 }

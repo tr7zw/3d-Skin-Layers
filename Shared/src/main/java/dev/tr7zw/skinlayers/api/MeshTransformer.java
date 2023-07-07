@@ -14,20 +14,20 @@ import net.minecraft.client.model.geom.ModelPart.Cube;
 public interface MeshTransformer {
 
     public void transform(Vector3f position, Vector4f[] vertexData);
-    
+
     public void transform(Cube cube);
-    
+
     public static final MeshTransformer EMPTY_TRANSFORMER = new MeshTransformer() {
-        
+
         @Override
         public void transform(Cube cube) {
             // do nothing
         }
-        
+
         @Override
         public void transform(Vector3f position, Vector4f[] vertexData) {
             // do nothing
         }
     };
-    
+
 }

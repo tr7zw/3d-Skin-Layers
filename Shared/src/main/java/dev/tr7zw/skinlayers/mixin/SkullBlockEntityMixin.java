@@ -11,7 +11,7 @@ public class SkullBlockEntityMixin implements SkullSettings {
 
     private Mesh hatModel = null;
     private boolean initialized = false;
-    
+
     @Override
     public Mesh getHeadLayers() {
         return hatModel;

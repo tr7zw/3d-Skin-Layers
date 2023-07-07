@@ -12,5 +12,5 @@ public interface MeshProvider {
      * @return
      */
     public PlayerData getPlayerMesh(AbstractClientPlayer abstractClientPlayerEntity);
-    
+
 }

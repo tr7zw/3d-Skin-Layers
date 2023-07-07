@@ -10,6 +10,6 @@ public class SkinLayersModMenu implements ModMenuApi {
         return parent -> {
             return SkinLayersModBase.instance.createConfigScreen(parent);
         };
-    }  
-    
+    }
+
 }

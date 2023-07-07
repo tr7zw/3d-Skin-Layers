@@ -13,26 +13,27 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 /**
- * Keep player specific settings, data and modifies the eye location when enabled
+ * Keep player specific settings, data and modifies the eye location when
+ * enabled
  *
  */
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity implements PlayerSettings {
 
-	protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level world) {
-		super(entityType, world);
-	}
+    protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level world) {
+        super(entityType, world);
+    }
 
-	private Mesh headMesh;
-	private Mesh torsoMesh;
-	private Mesh leftArmMesh;
-	private Mesh rightArmMesh;
-	private Mesh leftLegMesh;
-	private Mesh rightLegMesh;
-	private ResourceLocation currentSkin = null;
-	private boolean thinarms = false;
-	
-	@Override
+    private Mesh headMesh;
+    private Mesh torsoMesh;
+    private Mesh leftArmMesh;
+    private Mesh rightArmMesh;
+    private Mesh leftLegMesh;
+    private Mesh rightLegMesh;
+    private ResourceLocation currentSkin = null;
+    private boolean thinarms = false;
+
+    @Override
     public Mesh getHeadMesh() {
         return headMesh;
     }
@@ -103,9 +104,9 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
     }
 
     @Override
-	public UUID getUUID() {
-		return super.uuid;
-	}
+    public UUID getUUID() {
+        return super.uuid;
+    }
 
     @Override
     public boolean hasThinArms() {
@@ -116,7 +117,5 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
     public void setThinArms(boolean thin) {
         this.thinarms = thin;
     }
-    
-    
-	
+
 }

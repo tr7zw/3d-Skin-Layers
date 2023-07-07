@@ -47,15 +47,15 @@ class CustomizableModelPart implements Mesh {
         this.children = map;
         compactCubes(customCubes);
     }
-    
+
     private void compactCubes(List<CustomizableCube> customCubes) {
-        for(CustomizableCube cube : customCubes) {
+        for (CustomizableCube cube : customCubes) {
             polygonAmount += cube.polygonCount;
         }
-        polygonData = new float[polygonAmount*polyDataSize];
+        polygonData = new float[polygonAmount * polyDataSize];
         int offset = 0;
         Polygon polygon;
-        for(CustomizableCube cube : customCubes) {
+        for (CustomizableCube cube : customCubes) {
             for (int id = 0; id < cube.polygonCount; id++) {
                 polygon = cube.polygons[id];
                 Vector3f vector3f = polygon.normal;
@@ -64,11 +64,11 @@ class CustomizableModelPart implements Mesh {
                 polygonData[offset + 2] = vector3f.z();
                 for (int i = 0; i < 4; i++) {
                     Vertex vertex = polygon.vertices[i];
-                    polygonData[offset + 3 + (i*5) + 0] = vertex.scaledX;
-                    polygonData[offset + 3 + (i*5) + 1] = vertex.scaledY;
-                    polygonData[offset + 3 + (i*5) + 2] = vertex.scaledZ;
-                    polygonData[offset + 3 + (i*5) + 3] = vertex.u;
-                    polygonData[offset + 3 + (i*5) + 4] = vertex.v;
+                    polygonData[offset + 3 + (i * 5) + 0] = vertex.scaledX;
+                    polygonData[offset + 3 + (i * 5) + 1] = vertex.scaledY;
+                    polygonData[offset + 3 + (i * 5) + 2] = vertex.scaledZ;
+                    polygonData[offset + 3 + (i * 5) + 3] = vertex.u;
+                    polygonData[offset + 3 + (i * 5) + 4] = vertex.v;
                 }
                 offset += polyDataSize;
             }
@@ -116,8 +116,8 @@ class CustomizableModelPart implements Mesh {
         render(null, poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
-            float alpha) {
+    public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
+            int overlay, float red, float green, float blue, float alpha) {
         if (!this.visible)
             return;
         poseStack.pushPose();
@@ -131,22 +131,23 @@ class CustomizableModelPart implements Mesh {
     public void translateAndRotate(PoseStack poseStack) {
         poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
         if (this.xRot != 0.0F || this.yRot != 0.0F || this.zRot != 0.0F)
-                poseStack.mulPose((new Quaternionf()).rotationZYX(this.zRot, this.yRot, this.xRot));
+            poseStack.mulPose((new Quaternionf()).rotationZYX(this.zRot, this.yRot, this.xRot));
     }
-    
+
     // render constants to reduce allocations
-    private Vector4f vector4f[] = new Vector4f[] {new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f()};
-    
-    private void compile(ModelPart vanillaModel, PoseStack.Pose pose, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue,
-            float alpha) {
+    private Vector4f vector4f[] = new Vector4f[] { new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f() };
+
+    private void compile(ModelPart vanillaModel, PoseStack.Pose pose, VertexConsumer vertexConsumer, int light,
+            int overlay, float red, float green, float blue, float alpha) {
         MeshTransformer transformer = SkinLayersAPI.getMeshTransformerProvider().prepareTransformer(vanillaModel);
         // compacted Cubes
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
-        for (int id = 0; id < polygonData.length; id+=polyDataSize) {
+        for (int id = 0; id < polygonData.length; id += polyDataSize) {
             Vector3f vector3f = new Vector3f(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
             for (int o = 0; o < 4; o++) {
-                vector4f[o].set(polygonData[id + 3 + (o*5) + 0], polygonData[id + 3 + (o*5) + 1], polygonData[id + 3 + (o*5) + 2], 1.0F);
+                vector4f[o].set(polygonData[id + 3 + (o * 5) + 0], polygonData[id + 3 + (o * 5) + 1],
+                        polygonData[id + 3 + (o * 5) + 2], 1.0F);
             }
             // optional transformations for bending layers
             transformer.transform(vector3f, vector4f);
@@ -154,11 +155,12 @@ class CustomizableModelPart implements Mesh {
             vector3f = matrix3f.transform(vector3f);
             for (int o = 0; o < 4; o++) {
                 matrix4f.transform(vector4f[o]);
-                vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(), red, green, blue, alpha, polygonData[id + 3 + (o*5) + 3], polygonData[id + 3 + (o*5) + 4], overlay,
-                        light, vector3f.x(), vector3f.y(), vector3f.z());
+                vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(), red, green, blue, alpha,
+                        polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4], overlay, light,
+                        vector3f.x(), vector3f.y(), vector3f.z());
             }
         }
-        
+
         // other cubes
         for (Cube cube : this.cubes) {
             transformer.transform(cube);

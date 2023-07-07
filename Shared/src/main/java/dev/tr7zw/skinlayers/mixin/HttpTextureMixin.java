@@ -19,17 +19,17 @@ public abstract class HttpTextureMixin extends AbstractTexture implements HttpTe
 
     @Shadow
     private File file;
-    
+
     @Override
     public NativeImage getImage() throws FileNotFoundException {
         if (this.file != null && this.file.isFile()) {
-          FileInputStream fileInputStream = new FileInputStream(this.file);
-          NativeImage nativeImage = load(fileInputStream);
-          return nativeImage;
+            FileInputStream fileInputStream = new FileInputStream(this.file);
+            NativeImage nativeImage = load(fileInputStream);
+            return nativeImage;
         }
         return null;
     }
-    
+
     @Shadow
     public abstract NativeImage load(InputStream inputStream);
 
