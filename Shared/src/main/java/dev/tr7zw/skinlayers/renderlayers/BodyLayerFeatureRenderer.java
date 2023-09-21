@@ -51,7 +51,7 @@ public class BodyLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer, 
 
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, AbstractClientPlayer player,
             float f, float g, float h, float j, float k, float l) {
-        if (!player.isSkinLoaded() || player.isInvisible()) {
+        if (player.isInvisible()) {
             return;
         }
         if (mc.level == null) {
@@ -68,7 +68,7 @@ public class BodyLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer, 
         }
 
         VertexConsumer vertexConsumer = multiBufferSource
-                .getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation(), true));
+                .getBuffer(RenderType.entityTranslucent(player.getSkin().texture(), true));
         int m = LivingEntityRenderer.getOverlayCoords(player, 0.0f);
         renderLayers(player, settings, poseStack, vertexConsumer, i, m);
     }

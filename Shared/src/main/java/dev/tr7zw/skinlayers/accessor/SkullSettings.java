@@ -12,6 +12,8 @@ public interface SkullSettings extends SkullData {
     public boolean initialized();
 
     public void setInitialized();
+    
+    public boolean isLoaded();
 
     @Override
     default Mesh getMesh() {

@@ -28,8 +28,10 @@
   "mixins": [
     "3dskinlayers.mixins.json"
   ],
-
   "depends": {
-    "minecraft": ">=1.20-rc.1"
+    "minecraft": ">=1.20.2"
+  },
+  "breaks": {
+    "tlskincape": "*"
   }
 }

@@ -32,7 +32,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SkullBlock;
-import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 @Mixin(BlockEntityWithoutLevelRenderer.class)
 public class BlockEntityWithoutLevelRendererMixin {
@@ -60,9 +59,6 @@ public class BlockEntityWithoutLevelRendererMixin {
                     } else if (compoundTag.contains("SkullOwner", 8)
                             && !StringUtils.isBlank(compoundTag.getString("SkullOwner"))) {
                         gameProfile = new GameProfile(null, compoundTag.getString("SkullOwner"));
-                        compoundTag.remove("SkullOwner");
-                        SkullBlockEntity.updateGameprofile(gameProfile, (gp) -> compoundTag.put("SkullOwner",
-                                NbtUtils.writeGameProfile(new CompoundTag(), gp)));
                     }
                 }
                 if (gameProfile != null) {

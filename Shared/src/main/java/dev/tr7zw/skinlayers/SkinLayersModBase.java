@@ -127,12 +127,12 @@ public abstract class SkinLayersModBase {
                 if (this.minecraft.level != null) {
                     int x = minecraft.getWindow().getGuiScaledWidth() / 2;
                     int y = minecraft.getWindow().getGuiScaledHeight() - 45;
-                    int size = (int) (40f * (minecraft.getWindow().getGuiScaledHeight() / 200f));
-                    int lookX = x - xMouse;
-                    int lookY = y - 80 - yMouse;
+                    float size = (40f * (minecraft.getWindow().getGuiScaledHeight() / 200f));
+                    float lookX = x - xMouse;
+                    float lookY = y - 80 - yMouse;
                     // Prevent the model from clipping into the back of the gui^^
                     lookY = Math.min(lookY, 10);
-                    InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, size, lookX, lookY,
+                    InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, x+500, y+500, 30, size, lookX, lookY,
                             this.minecraft.player);
                 }
             }

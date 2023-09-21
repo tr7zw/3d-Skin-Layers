@@ -105,7 +105,7 @@ public abstract class PlayerRendererMixin
         part.setPosition(x, y, 0);
         part.render(poseStack,
                 multiBufferSource
-                        .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkinTextureLocation())),
+                        .getBuffer(RenderType.entityTranslucent(abstractClientPlayer.getSkin().texture())),
                 i, OverlayTexture.NO_OVERLAY);
         part.setPosition(0, 0, 0);
         part.setRotation(0, 0, 0);

@@ -1,6 +1,5 @@
 package dev.tr7zw.skinlayers;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -9,7 +8,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import dev.tr7zw.skinlayers.accessor.HttpTextureAccessor;
@@ -21,6 +19,7 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 
@@ -41,7 +40,7 @@ public class SkinUtil {
             }).build();
 
     private static NativeImage getSkinTexture(AbstractClientPlayer player) {
-        return getTexture(player.getSkinTextureLocation(), null);
+        return getTexture(player.getSkin().texture(), null);
     }
 
     private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
@@ -118,7 +117,7 @@ public class SkinUtil {
 
     public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
             boolean thinArms, PlayerModel<AbstractClientPlayer> model) {
-        ResourceLocation skinLocation = abstractClientPlayerEntity.getSkinTextureLocation();
+        ResourceLocation skinLocation = abstractClientPlayerEntity.getSkin().texture();
         if (skinLocation == null) {
             return false;// this *should* never happen, but just to be sure
         }
@@ -159,15 +158,12 @@ public class SkinUtil {
         if (gameprofile == null) {
             return false; // no gameprofile
         }
-        Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = Minecraft.getInstance().getSkinManager()
-                .getInsecureSkinInformation(gameprofile);
-        MinecraftProfileTexture texture = map.get(MinecraftProfileTexture.Type.SKIN);
-        if (texture == null) {
+        PlayerSkin playerSkin = Minecraft.getInstance().getSkinManager()
+                .getInsecureSkin(gameprofile);
+        if (playerSkin.textureUrl() == null) {
             return false; // it's a gameprofile, but no skin.
         }
-        ResourceLocation resourceLocation = Minecraft.getInstance().getSkinManager().registerTexture(texture,
-                MinecraftProfileTexture.Type.SKIN);
-        NativeImage skin = SkinUtil.getTexture(resourceLocation, settings);
+        NativeImage skin = SkinUtil.getTexture(playerSkin.texture(), settings);
         if (skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) {
             return false;
         }
