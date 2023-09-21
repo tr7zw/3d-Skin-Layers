@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
+import dev.tr7zw.skinlayers.render.PreviewHelper;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -127,13 +128,12 @@ public abstract class SkinLayersModBase {
                 if (this.minecraft.level != null) {
                     int x = minecraft.getWindow().getGuiScaledWidth() / 2;
                     int y = minecraft.getWindow().getGuiScaledHeight() - 45;
-                    float size = (40f * (minecraft.getWindow().getGuiScaledHeight() / 200f));
+                    int size = (int) (40f * (minecraft.getWindow().getGuiScaledHeight() / 200f));
                     float lookX = x - xMouse;
                     float lookY = y - 80 - yMouse;
                     // Prevent the model from clipping into the back of the gui^^
                     lookY = Math.min(lookY, 10);
-                    InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, x+500, y+500, 30, size, lookX, lookY,
-                            this.minecraft.player);
+                    PreviewHelper.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, size, lookX, lookY, this.minecraft.player);
                 }
             }
 
