@@ -2,6 +2,7 @@ package dev.tr7zw.skinlayers.accessor;
 
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.SkullData;
+import net.minecraft.resources.ResourceLocation;
 
 public interface SkullSettings extends SkullData {
 
@@ -11,9 +12,11 @@ public interface SkullSettings extends SkullData {
 
     public boolean initialized();
 
-    public void setInitialized();
+    public void setInitialized(boolean initialized);
     
-    public boolean isLoaded();
+    public void setLastTexture(ResourceLocation texture);
+    
+    public ResourceLocation getLastTexture();
 
     @Override
     default Mesh getMesh() {

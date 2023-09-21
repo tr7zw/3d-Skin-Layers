@@ -4,6 +4,7 @@ import java.util.WeakHashMap;
 
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class SkullRendererCache {
@@ -33,8 +34,20 @@ public class SkullRendererCache {
         }
 
         @Override
-        public void setInitialized() {
-            this.initialized = true;
+        public void setInitialized(boolean initialized) {
+            this.initialized = initialized;
+        }
+
+        @Override
+        public void setLastTexture(ResourceLocation texture) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public ResourceLocation getLastTexture() {
+            // TODO Auto-generated method stub
+            return null;
         }
 
     }

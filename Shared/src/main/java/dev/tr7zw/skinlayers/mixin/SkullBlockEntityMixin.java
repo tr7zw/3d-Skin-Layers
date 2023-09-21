@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 @Mixin(SkullBlockEntity.class)
@@ -11,6 +12,7 @@ public class SkullBlockEntityMixin implements SkullSettings {
 
     private Mesh hatModel = null;
     private boolean initialized = false;
+    private ResourceLocation lastTexture = null;
 
     @Override
     public Mesh getHeadLayers() {
@@ -28,8 +30,18 @@ public class SkullBlockEntityMixin implements SkullSettings {
     }
 
     @Override
-    public void setInitialized() {
-        this.initialized = true;
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+
+    @Override
+    public void setLastTexture(ResourceLocation texture) {
+        this.lastTexture = texture;
+    }
+
+    @Override
+    public ResourceLocation getLastTexture() {
+        return lastTexture;
     }
 
 }

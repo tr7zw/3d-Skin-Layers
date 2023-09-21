@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
@@ -22,8 +23,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.SkinManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 @Mixin(SkullBlockRenderer.class)
@@ -40,10 +43,17 @@ public class SkullBlockEntityRendererMixin {
                 (int) player.getZ()) < SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
+            GameProfile gameProfile = skullBlockEntity.getOwnerProfile();
+            SkinManager skinManager = Minecraft.getInstance().getSkinManager();
+            ResourceLocation textureLocation = skinManager.getInsecureSkin(gameProfile).texture();
+            if(textureLocation != lastSkull.getLastTexture()) {
+                lastSkull.setInitialized(false);
+            }
             if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
-                lastSkull.setInitialized(); // do this first, so if anything goes horribly wrong, it doesn't happen next
+                lastSkull.setInitialized(true); // do this first, so if anything goes horribly wrong, it doesn't happen next
                                             // frame again
-                SkinUtil.setup3dLayers(skullBlockEntity.getOwnerProfile(), lastSkull);
+                lastSkull.setLastTexture(textureLocation);
+                SkinUtil.setup3dLayers(gameProfile, lastSkull);
             }
             renderNext = lastSkull.getHeadLayers() != null;
         }

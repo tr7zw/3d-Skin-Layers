@@ -105,7 +105,7 @@ public class SkinUtil {
                 SkinLayersModBase.LOGGER.error("Error while trying to grab a texture from the GPU.", ex);
             }
             */
-            settings.setInitialized(); // initialize as invalid
+            settings.setInitialized(true); // initialize as invalid
             SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation
                     + ". Potentially a conflict with another mod. (" + texture.getClass().getName() + ")");
             return null;
@@ -168,7 +168,7 @@ public class SkinUtil {
             return false;
         }
         settings.setupHeadLayers(SolidPixelWrapper.wrapBox(skin, 8, 8, 8, 32, 0, false, 0.6f));
-        settings.setInitialized();
+        settings.setInitialized(true);
         return true;
     }
 
