@@ -10,7 +10,7 @@ replacements:
 enabledFlags:
   - autopublish
   - publishFabric
-#  - publishForge
+  - publishForge
   - modrinth
   - curseforge
 rootProject:
@@ -18,5 +18,5 @@ rootProject:
 subProjects:
   3dSkinLayers-Fabric:
     template: "Fabric"
-#  3dSkinLayers-Forge:
-#    template: "Forge"
+  3dSkinLayers-Forge:
+    template: "Forge"
