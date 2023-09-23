@@ -45,6 +45,8 @@ public class SkullBlockEntityRendererMixin {
             lastSkull = (SkullSettings) skullBlockEntity;
             GameProfile gameProfile = skullBlockEntity.getOwnerProfile();
             SkinManager skinManager = Minecraft.getInstance().getSkinManager();
+            if (gameProfile == null)
+                return;
             ResourceLocation textureLocation = skinManager.getInsecureSkin(gameProfile).texture();
             if(textureLocation != lastSkull.getLastTexture()) {
                 lastSkull.setInitialized(false);
