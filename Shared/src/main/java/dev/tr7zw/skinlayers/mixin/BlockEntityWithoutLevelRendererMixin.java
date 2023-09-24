@@ -6,6 +6,7 @@ import static dev.tr7zw.skinlayers.SkullRendererCache.renderNext;
 
 import java.util.Map;
 
+import net.minecraft.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -58,7 +59,7 @@ public class BlockEntityWithoutLevelRendererMixin {
                         gameProfile = NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
                     } else if (compoundTag.contains("SkullOwner", 8)
                             && !StringUtils.isBlank(compoundTag.getString("SkullOwner"))) {
-                        gameProfile = new GameProfile(null, compoundTag.getString("SkullOwner"));
+                        gameProfile = new GameProfile(Util.NIL_UUID, compoundTag.getString("SkullOwner"));
                     }
                 }
                 if (gameProfile != null) {
