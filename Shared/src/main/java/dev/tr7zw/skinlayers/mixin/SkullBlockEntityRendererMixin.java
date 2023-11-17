@@ -72,9 +72,10 @@ public class SkullBlockEntityRendererMixin {
     private static void renderSkull(Direction direction, float f, float g, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, SkullModelBase skullModelBase, RenderType renderType,
             CallbackInfo ci) {
-        if (skullModelBase instanceof SkullModelAccessor) {
+        if (lastSkull != null && skullModelBase instanceof SkullModelAccessor) {
+            Mesh mesh = lastSkull.getHeadLayers();
             SkullModelAccessor accessor = (SkullModelAccessor) skullModelBase;
-            if (!renderNext) {
+            if (!renderNext || mesh == null) {
                 accessor.showHat(true);
                 lastSkull = null;
                 return;
@@ -91,10 +92,9 @@ public class SkullBlockEntityRendererMixin {
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             float voxelSize = SkinLayersModBase.config.skullVoxelSize;
             poseStack.scale(voxelSize, voxelSize, voxelSize);
-            Mesh mesh = lastSkull.getHeadLayers();
             mesh.setPosition(0, -0.25f, 0);
             mesh.setRotation(0, f * 0.017453292F, 0);
-            lastSkull.getHeadLayers().render(poseStack, multiBufferSource.getBuffer(renderType), i,
+            mesh.render(poseStack, multiBufferSource.getBuffer(renderType), i,
                     OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
             renderNext = false;
