@@ -20,9 +20,10 @@ jobs:
         with:
           cache-read-only: false
           gradle-home-cache-cleanup: true
-      - name: make gradle wrapper executable
-        if: ${{ runner.os != 'Windows' }}
-        run: chmod +x ./gradlecw
+# Already needs to be executable, so the dirty check is correct
+#      - name: make gradle wrapper executable
+#        if: ${{ runner.os != 'Windows' }}
+#        run: chmod +x ./gradlecw
       - name: build
         run: ./gradlecw build --parallel
       - name: capture build artifacts
