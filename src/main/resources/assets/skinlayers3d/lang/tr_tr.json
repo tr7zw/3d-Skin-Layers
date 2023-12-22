@@ -1,0 +1,20 @@
+{
+    "__comment__": "Turkish translation by @alpeerkaraca",
+    "text.skinlayers.title": "3D Görünüm Ayarları",
+    "text.skinlayers.enable.hat": "3D Şapka",
+    "text.skinlayers.enable.jacket": "3D Ceket",
+    "text.skinlayers.enable.leftsleeve": "3D Sol Kol",
+    "text.skinlayers.enable.rightsleeve": "3D Sağ Kol",
+    "text.skinlayers.enable.leftpants": "3D Sol Pantolon",
+    "text.skinlayers.enable.rightpants": "3D Sağ Pantolon",
+    "text.skinlayers.renderdistancelod": "Ayrıntı Mesafesi",
+    "text.skinlayers.basevoxelsize": "Voksel Boyutu",
+    "text.skinlayers.headvoxelsize": "Baş Voksel Boyutu",
+    "text.skinlayers.bodyvoxelheightsize": "Gövde Voksel Yüksekliği",
+    "text.skinlayers.bodyvoxelwidthsize": "Gövde Voksel Genişliği",
+    "text.skinlayers.skulls.enable": "3D Kafatası",
+    "text.skinlayers.skullsitems.enable": "3D Kafatası Eşyaları",
+    "text.skinlayers.skulls.voxelsize": "Kafatası Voksel Boyutu",
+    "text.skinlayers.reset": "Varsayılan",
+    "text.skinlayers.fastrender.enable": "Hızlı Renderle"
+}

@@ -40,4 +40,9 @@ logs/
 gradle/wrapper
 VersionShared
 UtilityCode
-logs/
+formatter.xml
+src/main/fabric-resources/fabric.mod.json
+src/main/forge-resources/META-INF/mods.toml
+src/main/neoforge-resources/META-INF/mods.toml
+**/src/main/java/dev/tr7zw/config/CustomConfigScreen.java
+**/src/main/java/dev/tr7zw/util/ComponentProvider.java

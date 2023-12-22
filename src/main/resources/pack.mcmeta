@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "Resources for ${mod_id}",
+    "pack_format": ${pack_format_number}
+  }
+}

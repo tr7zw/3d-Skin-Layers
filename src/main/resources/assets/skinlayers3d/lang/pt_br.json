@@ -1,0 +1,20 @@
+{
+    "text.skinlayers.title": "Configurações do 3D Skin Layer",
+    "text.skinlayers.enable.hat": "Chapéu 3D",
+    "text.skinlayers.enable.jacket": "Casaco 3D",
+    "text.skinlayers.enable.leftsleeve": "Manga Esquerda 3D",
+    "text.skinlayers.enable.rightsleeve": "Manga Direita 3D",
+    "text.skinlayers.enable.leftpants": "Perna Esquerda 3D",
+    "text.skinlayers.enable.rightpants": "Perna Direita 3D",
+    "text.skinlayers.renderdistancelod": "Distância do Nível de Detalhe",
+    "text.skinlayers.basevoxelsize": "Tamanho do Voxel",
+    "text.skinlayers.headvoxelsize": "Tamanho do Voxel na Cabeça",
+    "text.skinlayers.bodyvoxelheightsize": "Altura do Voxel do Corpo",
+    "text.skinlayers.bodyvoxelwidthsize": "Largura do Voxel do Tronco",
+    "text.skinlayers.skulls.enable": "Cabeças em 3D",
+    "text.skinlayers.skullsitems.enable": "Itens nas Cabeças em 3D",
+    "text.skinlayers.skulls.voxelsize": "Tamanho do Voxel nas Cabeças",
+    "text.skinlayers.reset": "Restaurar",
+    "text.skinlayers.fastrender.enable": "Renderização Rápida",
+    "text.skinlayers.firstperson.voxelsize": "Tamanho do Voxel em Primeira Pessoa"
+}

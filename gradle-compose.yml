@@ -1,9 +1,15 @@
 version: '0.0.2'
-source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20.2"
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
 replacements:
   name: "3d-Skin-Layers"
-  id: "3dskinlayers"
+  id: "skinlayers3d"
   version: "1.5.6"
+  description: "Renders the player skin layer in 3d"
+  homepageUrl: "https://modrinth.com/mod/3dskinlayers"
+  sourcesUrl: "https://github.com/tr7zw/3d-skin-layers"
+  issuesUrl: "https://github.com/tr7zw/3d-skin-layers/issues"
+  fabric_entrypoint: "dev.tr7zw.skinlayers.SkinLayersMod"
+  fabric_modmenu_entrypoint: "dev.tr7zw.skinlayers.SkinLayersModMenu"
   relocationpackage: "dev.tr7zw.skinlayers"
   modrinthid: zV5r3pPn
   curseforgeid: 521480
@@ -11,12 +17,18 @@ enabledFlags:
   - autopublish
   - publishFabric
   - publishForge
+  - publishNeo
   - modrinth
   - curseforge
+  - versionless
 rootProject:
   template: "."
 subProjects:
-  3dSkinLayers-Fabric:
-    template: "Fabric"
-  3dSkinLayers-Forge:
-    template: "Forge"
+  3dSkinLayers-Versionless:
+    template: "Versionless"
+    replacements:
+      dependencies: '
+      compileOnly "com.google.code.gson:gson:2.10.1"
+
+      compileOnly "org.apache.logging.log4j:log4j-core:2.20.0"
+      '
