@@ -15,7 +15,6 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
 //#elseif FORGE
 //$$	
 	//$$	import net.minecraftforge.fml.ModLoadingContext;
-	//$$	import net.minecraftforge.fml.common.Mod;
 	//$$	import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 	//$$	import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
     //$$    import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
@@ -36,20 +35,10 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
     //$$ import net.minecraftforge.fml.IExtensionPoint;
   //$$ import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
    //#endif 
-	//$$	@Mod("skinlayers3d")
   //$$ public class SkinLayersMod extends SkinLayersModBase {
   //$$
-  //$$      //Forge only
-  //$$      private boolean onServer = false;
   //$$      
   //$$     public SkinLayersMod() {
-  //$$          try {
-  //$$             Class clientClass = net.minecraft.client.Minecraft.class;
-  //$$         }catch(Throwable ex) {
-  //$$            System.out.println("3dSkinLayers Mod installed on a Server. Going to sleep.");
-  //$$            onServer = true;
-  //$$            return;
-  //$$        }
         //#if MC <= 11605
     	//$$         ModLoadingContext.get().registerExtensionPoint(
         //$$ ExtensionPoint.CONFIGGUIFACTORY,
@@ -76,32 +65,20 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
   //$$   }
   //$$
   //$$    private void setup(final FMLCommonSetupEvent event) {
-  //$$        if(onServer)return;
   //$$        onInitialize();
   //$$    }
   //#elseif NEOFORGE
   //$$  import net.neoforged.fml.IExtensionPoint;
   //$$  import net.neoforged.fml.ModLoadingContext;
-  //$$  import net.neoforged.fml.common.Mod;
   //$$  import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
   //$$  import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
   //$$  import net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory;
   //$$  import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
   //$$
-  //$$  @Mod("skinlayers3d")
   //$$  public class SkinLayersMod extends SkinLayersModBase {
   //$$
-  //$$     // Forge only
-  //$$      private boolean onServer = false;
   //$$
   //$$     public SkinLayersMod() {
-  //$$         try {
-  //$$             Class clientClass = net.minecraft.client.Minecraft.class;
-  //$$         } catch (Throwable ex) {
-  //$$             System.out.println("3dSkinLayers Mod installed on a Server. Going to sleep.");
-  //$$             onServer = true;
-  //$$             return;
-  //$$        }
   //$$        ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class,
   //$$                () -> new ConfigScreenFactory((mc, screen) -> {
   //$$                    return ConfigScreenProvider.createConfigScreen(screen);
@@ -114,8 +91,6 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
   //$$    }
   //$$
   //$$    private void setup(final FMLCommonSetupEvent event) {
-  //$$        if (onServer)
-  //$$            return;
   //$$       onInitialize();
   //$$    }
 //#endif
