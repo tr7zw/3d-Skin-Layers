@@ -13,6 +13,7 @@ replacements:
   relocationpackage: "dev.tr7zw.skinlayers"
   modrinthid: zV5r3pPn
   curseforgeid: 521480
+  versionlessname: "3dSkinLayers-Versionless"
 enabledFlags:
   - autopublish
   - publishFabric

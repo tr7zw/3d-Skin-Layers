@@ -81,7 +81,7 @@ public class ConfigScreenProvider {
                 //#else
                 //$$getOptions().addSmall(options.toArray(new Option[0]));
                 //#endif
-
+                // spotless:on
             }
 
             @Override
