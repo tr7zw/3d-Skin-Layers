@@ -46,3 +46,4 @@ src/main/forge-resources/META-INF/mods.toml
 src/main/neoforge-resources/META-INF/mods.toml
 **/src/main/java/dev/tr7zw/config/CustomConfigScreen.java
 **/src/main/java/dev/tr7zw/util/ComponentProvider.java
+src/main/resources/pack.mcmeta
