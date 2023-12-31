@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: '**/build/libs/*.jar'
+          path: 'versions/**/build/libs/*.jar'
 #      - name: Test Report
 #        uses: dorny/test-reporter@v1
 #        if: success() || failure()
