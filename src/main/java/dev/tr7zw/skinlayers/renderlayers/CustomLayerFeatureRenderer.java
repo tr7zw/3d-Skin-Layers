@@ -123,8 +123,16 @@ public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer
                 if (layer.mirrored) {
                     x *= -1;
                 }
-                matrixStack.scale(widthScaling, heightScaling, pixelScaling);
-                y = layer.shape.yOffsetMagicValue;
+                if (layer.shape == Shape.HEAD) {
+                    float voxelSize = SkinLayersModBase.config.headVoxelSize;
+                    matrixStack.translate(0, -0.25, 0);
+                    matrixStack.scale(voxelSize, voxelSize, voxelSize);
+                    matrixStack.translate(0, 0.25, 0);
+                    matrixStack.translate(0, -0.04, 0);
+                } else {
+                    matrixStack.scale(widthScaling, heightScaling, pixelScaling);
+                    y = layer.shape.yOffsetMagicValue;
+                }
 
                 mesh.setPosition(x, y, 0);
 
@@ -146,8 +154,9 @@ public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer
     }
 
     private enum Shape {
-        HEAD(0, new Dimensions(8, 8, 8)), BODY(-0.2f, new Dimensions(8, 12, 4)), LEGS(-0.2f, new Dimensions(4, 14, 4)),
-        ARMS(-0.1f, new Dimensions(4, 14, 4)), ARMS_SLIM(-0.1f, new Dimensions(3, 14, 4));
+        HEAD(0.0f, new Dimensions(8, 8, 8)), BODY(-0.2f, new Dimensions(8, 12, 4)),
+        LEGS(-0.2f, new Dimensions(4, 14, 4)), ARMS(-0.1f, new Dimensions(4, 14, 4)),
+        ARMS_SLIM(-0.1f, new Dimensions(3, 14, 4));
 
         private final float yOffsetMagicValue;
         @SuppressWarnings("unused")
