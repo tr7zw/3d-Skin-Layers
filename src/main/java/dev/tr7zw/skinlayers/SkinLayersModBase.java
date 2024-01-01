@@ -2,8 +2,6 @@ package dev.tr7zw.skinlayers;
 
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.versionless.ModBase;
-import dev.tr7zw.skinlayers.versionless.ModBase;
-import dev.tr7zw.skinlayers.versionless.ModBase;
 import net.minecraft.world.entity.player.Player;
 
 public abstract class SkinLayersModBase extends ModBase {
