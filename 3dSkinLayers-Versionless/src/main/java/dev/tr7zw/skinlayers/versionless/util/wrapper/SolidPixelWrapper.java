@@ -5,80 +5,19 @@ import java.util.Set;
 
 import dev.tr7zw.skinlayers.versionless.ModBase;
 import dev.tr7zw.skinlayers.versionless.util.Direction;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 public class SolidPixelWrapper {
 
-    @AllArgsConstructor
-    public static class UV {
-        int u;
-        int v;
-
-        public int u() {
-            return u;
-        }
-
-        public int v() {
-            return v;
-        }
+    public record UV(int u, int v) {
     }
 
-    @AllArgsConstructor
-    public static class Dimensions {
-        private final int width;
-        private final int height;
-        private final int depth;
-
-        public int width() {
-            return width;
-        }
-
-        public int height() {
-            return height;
-        }
-
-        public int depth() {
-            return depth;
-        }
+    public record Dimensions(int width, int height, int depth) {
     }
 
-    @AllArgsConstructor
-    public static class Position {
-        private final float x;
-        private final float y;
-        private final float z;
-
-        public float x() {
-            return x;
-        }
-
-        public float y() {
-            return y;
-        }
-
-        public float z() {
-            return z;
-        }
+    public record Position(float x, float y, float z) {
     }
 
-    @AllArgsConstructor
-    public static class VoxelPosition {
-        private final int x;
-        private final int y;
-        private final int z;
-
-        public int x() {
-            return x;
-        }
-
-        public int y() {
-            return y;
-        }
-
-        public int z() {
-            return z;
-        }
+    public record VoxelPosition(int x, int y, int z) {
     }
 
     private static final float pixelSize = 1f;

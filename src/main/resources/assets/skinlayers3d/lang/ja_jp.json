@@ -33,4 +33,4 @@
     "text.skinlayers.fastrender.enable.tooltip": "3Dモデルを可能な限り速くレンダリングする",
     "text.skinlayers.firstperson.voxelsize": "一人称のボクセルサイズ",
     "text.skinlayers.firstperson.voxelsize.tooltip": "一人称視点の腕に適用するボクセルのサイズ"
-  }
+}
