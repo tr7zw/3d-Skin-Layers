@@ -13,7 +13,7 @@
     },
     "license": "${license_name}",
     "icon": "icon.png",
-    "accessWidener" : "${mod_id}.accesswidener",
+    "accessWidener": "${mod_id}.accesswidener",
     "entrypoints": {
         "client": [
             "${fabric_entrypoint}"

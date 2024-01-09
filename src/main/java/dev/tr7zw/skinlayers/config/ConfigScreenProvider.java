@@ -87,6 +87,7 @@ public class ConfigScreenProvider {
             @Override
             public void save() {
                 SkinLayersModBase.instance.writeConfig();
+                SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
             }
 
             @Override
@@ -126,6 +127,7 @@ public class ConfigScreenProvider {
             public void reset() {
                 ModBase.config = new Config();
                 SkinLayersModBase.instance.writeConfig();
+                SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
             }
 
         };
