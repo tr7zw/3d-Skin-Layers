@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
 replacements:
   name: "3d-Skin-Layers"
   id: "skinlayers3d"
-  version: "1.6.1"
+  version: "1.6.2"
   description: "Renders the player skin layer in 3d"
   homepageUrl: "https://modrinth.com/mod/3dskinlayers"
   sourcesUrl: "https://github.com/tr7zw/3d-skin-layers"
