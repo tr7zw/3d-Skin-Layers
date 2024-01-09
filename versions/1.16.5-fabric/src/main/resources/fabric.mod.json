@@ -26,7 +26,8 @@
         "${mod_id}.mixins.json"
     ],
     "depends": {
-        "minecraft": "${minecraft_version_range_fabric}"
+        "minecraft": "${minecraft_version_range_fabric}",
+        "fabric-api": "*"
     },
     "breaks": {
         "tlskincape": "*"
