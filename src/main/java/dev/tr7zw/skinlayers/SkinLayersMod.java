@@ -12,88 +12,13 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
     }
 
     
-//#elseif FORGE
-//$$	
-	//$$	import net.minecraftforge.fml.ModLoadingContext;
-	//$$	import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-	//$$	import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-    //$$    import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
-    //$$    import dev.tr7zw.config.CustomConfigScreen;
-    //$$    import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
-  //$$
-    //#if MC <= 11605
-    //$$ import net.minecraftforge.fml.ExtensionPoint;
-    //$$ import net.minecraftforge.fml.network.FMLNetworkConstants;
-    //$$ import org.apache.commons.lang3.tuple.Pair;
-    //#elseif MC <= 11701
-	//$$	import net.minecraftforge.fml.IExtensionPoint;
-   //$$ import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
-    //#elseif MC <= 11802
-	//$$	import net.minecraftforge.fml.IExtensionPoint;
-   //$$ import net.minecraftforge.client.ConfigGuiHandler.ConfigGuiFactory;
-   //#else
-    //$$ import net.minecraftforge.fml.IExtensionPoint;
-  //$$ import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
-   //#endif 
+  //#else
+  //$$ import dev.tr7zw.util.ModLoaderUtil;
   //$$ public class SkinLayersMod extends SkinLayersModBase {
-  //$$
-  //$$      
-  //$$     public SkinLayersMod() {
-        //#if MC <= 11605
-    	//$$         ModLoadingContext.get().registerExtensionPoint(
-        //$$ ExtensionPoint.CONFIGGUIFACTORY,
-        //$$ () -> (mc, screen) -> ConfigScreenProvider.createConfigScreen(screen));
-    	//#elseif MC <= 11802
- 		//$$ ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class, () -> new ConfigGuiFactory((mc, screen) -> {
-    	//$$            return ConfigScreenProvider.createConfigScreen(screen);
-    	//$$        }));
-    	//#else
-    	//$$ ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
-    	//$$            return ConfigScreenProvider.createConfigScreen(screen);
-    	//$$        }));
-		//#endif 
-    //#if MC <= 11605
-    //$$ ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
-    //$$ () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
-    //#else
-  //$$        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-  //$$                () -> new IExtensionPoint.DisplayTest(
-  //$$                       () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
-  //$$                        (remote, isServer) -> true));
-    //#endif
-  //$$       FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-  //$$   }
-  //$$
-  //$$    private void setup(final FMLCommonSetupEvent event) {
-  //$$        onInitialize();
-  //$$    }
-  //#elseif NEOFORGE
-  //$$  import net.neoforged.fml.IExtensionPoint;
-  //$$  import net.neoforged.fml.ModLoadingContext;
-  //$$  import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-  //$$  import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
-  //$$  import net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory;
-  //$$  import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
-  //$$
-  //$$  public class SkinLayersMod extends SkinLayersModBase {
-  //$$
-  //$$
-  //$$     public SkinLayersMod() {
-  //$$        ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class,
-  //$$                () -> new ConfigScreenFactory((mc, screen) -> {
-  //$$                    return ConfigScreenProvider.createConfigScreen(screen);
-  //$$                }));
-  //$$        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-  //$$                () -> new IExtensionPoint.DisplayTest(
-  //$$                        () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
-  //$$                       (remote, isServer) -> true));
-  //$$        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-  //$$    }
-  //$$
-  //$$    private void setup(final FMLCommonSetupEvent event) {
-  //$$       onInitialize();
-  //$$    }
-//#endif
- // spotless:on
+  //$$ public SkinLayersMod() {
+  //$$ 	ModLoaderUtil.registerClientSetupListener(this::onInitialize);
+  //$$ }
+  //#endif
+  //spotless:on
 
 }

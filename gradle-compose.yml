@@ -9,7 +9,7 @@ replacements:
   sourcesUrl: "https://github.com/tr7zw/3d-skin-layers"
   issuesUrl: "https://github.com/tr7zw/3d-skin-layers/issues"
   fabric_entrypoint: "dev.tr7zw.skinlayers.SkinLayersMod"
-  fabric_modmenu_entrypoint: "dev.tr7zw.skinlayers.SkinLayersModMenu"
+  fabric_modmenu_entrypoint: "dev.tr7zw.skinlayers.config.SkinLayersModMenu"
   relocationpackage: "dev.tr7zw.skinlayers"
   modrinthid: zV5r3pPn
   curseforgeid: 521480

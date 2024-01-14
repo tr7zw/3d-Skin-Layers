@@ -1,10 +1,8 @@
 //#if FABRIC
-package dev.tr7zw.skinlayers;
+package dev.tr7zw.skinlayers.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-
-import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
 
 public class SkinLayersModMenu implements ModMenuApi {
 
