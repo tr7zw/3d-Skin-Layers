@@ -16,13 +16,12 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
+import dev.tr7zw.skinlayers.util.NMSWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
@@ -49,15 +48,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
             return;
         Item item = itemStack.getItem();
         if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
-            GameProfile gameProfile = null;
-            if (itemStack.hasTag()) {
-                CompoundTag compoundTag = itemStack.getTag();
-                if (compoundTag.contains("CustomModelData")) {
-                    return; // do not try to 3d-fy custom head models
-                }
-                if (compoundTag.contains("SkullOwner", 10))
-                    gameProfile = NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
-            }
+            GameProfile gameProfile = NMSWrapper.getGameProfile(itemStack);
             if (gameProfile != null) {
                 lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
                 if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {

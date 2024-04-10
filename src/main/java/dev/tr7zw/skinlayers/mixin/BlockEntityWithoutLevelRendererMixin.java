@@ -4,8 +4,6 @@ import static dev.tr7zw.skinlayers.SkullRendererCache.itemCache;
 import static dev.tr7zw.skinlayers.SkullRendererCache.lastSkull;
 import static dev.tr7zw.skinlayers.SkullRendererCache.renderNext;
 
-import net.minecraft.Util;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,10 +16,10 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
+import dev.tr7zw.skinlayers.util.NMSWrapper;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
+
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
@@ -56,19 +54,7 @@ public class BlockEntityWithoutLevelRendererMixin {
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof AbstractSkullBlock) {
-                GameProfile gameProfile = null;
-                if (itemStack.hasTag()) {
-                    CompoundTag compoundTag = itemStack.getTag();
-                    if (compoundTag.contains("CustomModelData")) {
-                        return; // do not try to 3d-fy custom head models
-                    }
-                    if (compoundTag.contains("SkullOwner", 10)) {
-                        gameProfile = NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
-                    } else if (compoundTag.contains("SkullOwner", 8)
-                            && !StringUtils.isBlank(compoundTag.getString("SkullOwner"))) {
-                        gameProfile = new GameProfile(Util.NIL_UUID, compoundTag.getString("SkullOwner"));
-                    }
-                }
+                GameProfile gameProfile = NMSWrapper.getGameProfile(itemStack);
                 if (gameProfile != null) {
                     lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
                     if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {

@@ -3,10 +3,8 @@ package dev.tr7zw.skinlayers.mixin;
 import static dev.tr7zw.skinlayers.SkullRendererCache.lastSkull;
 import static dev.tr7zw.skinlayers.SkullRendererCache.renderNext;
 
-import java.util.Map;
-
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -36,6 +34,8 @@ import net.minecraft.client.model.SkullModelBase;
 //#else
 //$$ import net.minecraft.world.level.block.SkullBlock;
 //$$ import net.minecraft.client.model.SkullModel;
+//$$ import org.spongepowered.asm.mixin.Shadow;
+//$$ import java.util.Map;
 //#endif
 // spotless:on
 
@@ -62,7 +62,15 @@ public class SkullBlockEntityRendererMixin {
                 (int) player.getZ()) < SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
-            GameProfile gameProfile = skullBlockEntity.getOwnerProfile();
+            GameProfile gameProfile = null;
+            // spotless:off 
+            //#if MC <= 12004
+            //$$ gameProfile = skullBlockEntity.getOwnerProfile();
+            //#else
+            if(skullBlockEntity.getOwnerProfile() != null) {
+                gameProfile = skullBlockEntity.getOwnerProfile().gameProfile();
+            }
+            //#endif
             if (gameProfile == null)
                 return;
             ResourceLocation textureLocation = NMSWrapper.getPlayerSkin(gameProfile);

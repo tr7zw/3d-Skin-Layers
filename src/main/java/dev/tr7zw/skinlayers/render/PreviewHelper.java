@@ -53,7 +53,13 @@ public class PreviewHelper {
             @Nullable Quaternionf cameraOrientation, LivingEntity entity) {
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate((double) x, (double) y, 50.0D);
-        guiGraphics.pose().mulPoseMatrix((new Matrix4f()).scaling((float) scale, (float) scale, (float) (-scale)));
+        // spotless:off 
+        //#if MC <= 12004
+        //$$ guiGraphics.pose().mulPoseMatrix((new Matrix4f()).scaling((float) scale, (float) scale, (float) (-scale)));
+        //#else
+        guiGraphics.pose().mulPose((new Matrix4f()).scaling((float) scale, (float) scale, (float) (-scale)));
+        //#endif
+        //spotless:on
         guiGraphics.pose().mulPose(pose);
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityrenderdispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
