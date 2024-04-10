@@ -97,6 +97,9 @@ public class NMSWrapper {
         //$     }
         //$ }
         //#else
+        if(itemStack.getComponents().has(DataComponents.CUSTOM_MODEL_DATA)) {
+            return null;
+        }
         if (itemStack.getComponents().has(DataComponents.PROFILE)) {
             ResolvableProfile resolvableProfile = (ResolvableProfile) itemStack.get(DataComponents.PROFILE);
             if (resolvableProfile != null && !resolvableProfile.isResolved()) {
