@@ -83,20 +83,7 @@ public class NMSWrapper {
 
     public static GameProfile getGameProfile(ItemStack itemStack) {
         // spotless:off 
-        //#if MC <= 12004
-        //$ if (itemStack.hasTag()) {
-        //$     CompoundTag compoundTag = itemStack.getTag();
-        //$     if (compoundTag.contains("CustomModelData")) {
-        //$         return null; // do not try to 3d-fy custom head models
-        //$     }
-        //$     if (compoundTag.contains("SkullOwner", 10)) {
-        //$         return NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
-        //$     } else if (compoundTag.contains("SkullOwner", 8)
-        //$             && !StringUtils.isBlank(compoundTag.getString("SkullOwner"))) {
-        //$         return new GameProfile(Util.NIL_UUID, compoundTag.getString("SkullOwner"));
-        //$     }
-        //$ }
-        //#else
+        //#if MC >= 12005
         if(itemStack.getComponents().has(DataComponents.CUSTOM_MODEL_DATA)) {
             return null;
         }
@@ -113,9 +100,23 @@ public class NMSWrapper {
                 return resolvableProfile.gameProfile();
             }
         }
+        return null;
+        //#else
+        //$$ if (itemStack.hasTag()) {
+        //$$     CompoundTag compoundTag = itemStack.getTag();
+        //$$     if (compoundTag.contains("CustomModelData")) {
+        //$$         return null; // do not try to 3d-fy custom head models
+        //$$     }
+        //$$     if (compoundTag.contains("SkullOwner", 10)) {
+        //$$         return NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
+        //$$     } else if (compoundTag.contains("SkullOwner", 8)
+        //$$             && !StringUtils.isBlank(compoundTag.getString("SkullOwner"))) {
+        //$$         return new GameProfile(Util.NIL_UUID, compoundTag.getString("SkullOwner"));
+        //$$     }
+        //$$ }
+        //$$ return null;
         //#endif
         //spotless:on
-        return null;
     }
 
 }
