@@ -115,6 +115,12 @@ public class SkullBlockEntityRendererMixin {
                 lastSkull = null;
                 return;
             }
+            Mesh mesh = lastSkull.getHeadLayers();
+            if (mesh == null) {
+                accessor.showHat(true);
+                lastSkull = null;
+                return;
+            }
             accessor.showHat(false);
 
             poseStack.pushPose();
@@ -127,7 +133,6 @@ public class SkullBlockEntityRendererMixin {
             poseStack.scale(-1.0F, -1.0F, 1.0F);
             float voxelSize = SkinLayersModBase.config.skullVoxelSize;
             poseStack.scale(voxelSize, voxelSize, voxelSize);
-            Mesh mesh = lastSkull.getHeadLayers();
             mesh.setPosition(0, -0.25f, 0);
             mesh.setRotation(0, f * 0.017453292F, 0);
             // spotless:off
