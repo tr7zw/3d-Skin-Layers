@@ -51,21 +51,14 @@ public abstract class PlayerRendererMixin
     //#endif
     // spotless:on
 
-    private boolean loaded = false;
-
-// Somehow doing this in 1.16.5 is a bit unpredictable, only late adding layer works well. Not sure why
-//    @Inject(method = "<init>*", at = @At("RETURN"))
-//    public void onCreate(CallbackInfo info) {
-//        this.addLayer(new CustomLayerFeatureRenderer(this));
-//    }
+   @Inject(method = "<init>", at = @At("RETURN"))
+   public void onCreate(CallbackInfo info) {
+       this.addLayer(new CustomLayerFeatureRenderer(this));
+   }
 
     @SuppressWarnings("resource")
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-        if (!loaded) {
-            this.addLayer(new CustomLayerFeatureRenderer(this));
-            loaded = true;
-        }
         if (Minecraft.getInstance().player == null || Minecraft.getInstance().player
                 .distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
