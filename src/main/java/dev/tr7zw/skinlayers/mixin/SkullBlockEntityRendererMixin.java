@@ -27,7 +27,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
+import net.minecraft.world.phys.Vec3;
 // spotless:off 
 //#if MC >= 11700
 import net.minecraft.client.model.SkullModelBase;
@@ -55,11 +57,11 @@ public class SkullBlockEntityRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
-        LocalPlayer player = Minecraft.getInstance().player;
+        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         if (!SkinLayersModBase.config.enableSkulls)
             return;
-        if (internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int) player.getX(), (int) player.getY(),
-                (int) player.getZ()) < SkinLayersModBase.config.renderDistanceLOD
+        if (internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int) camera.x(), (int) camera.y(),
+                (int) camera.z()) < SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
             GameProfile gameProfile = null;

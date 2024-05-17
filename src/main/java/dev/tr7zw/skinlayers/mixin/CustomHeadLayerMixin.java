@@ -39,7 +39,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
         if (!SkinLayersModBase.config.enableSkulls)
             return;
         if (Minecraft.getInstance().player != null && livingEntity
-                .distanceToSqr(Minecraft.getInstance().player) > SkinLayersModBase.config.renderDistanceLOD
+                .distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }

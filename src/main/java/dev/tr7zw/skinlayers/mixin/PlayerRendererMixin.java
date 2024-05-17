@@ -66,8 +66,8 @@ public abstract class PlayerRendererMixin
             this.addLayer(new CustomLayerFeatureRenderer(this));
             loaded = true;
         }
-        if (Minecraft.getInstance().player == null || Minecraft.getInstance().player
-                .distanceToSqr(abstractClientPlayer) > SkinLayersModBase.config.renderDistanceLOD
+        if (Minecraft.getInstance().player == null || abstractClientPlayer
+                .distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return;
         }
