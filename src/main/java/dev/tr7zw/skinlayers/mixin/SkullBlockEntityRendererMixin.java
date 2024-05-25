@@ -112,7 +112,7 @@ public class SkullBlockEntityRendererMixin {
     	// spotless:on
         if (skullModelBase instanceof SkullModelAccessor) {
             SkullModelAccessor accessor = (SkullModelAccessor) skullModelBase;
-            if (!renderNext) {
+            if (!renderNext || lastSkull == null) {
                 accessor.showHat(true);
                 lastSkull = null;
                 return;
