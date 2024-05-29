@@ -16,7 +16,7 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
-import dev.tr7zw.skinlayers.util.NMSWrapper;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 
@@ -54,7 +54,7 @@ public class BlockEntityWithoutLevelRendererMixin {
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof AbstractSkullBlock) {
-                GameProfile gameProfile = NMSWrapper.getGameProfile(itemStack);
+                GameProfile gameProfile = NMSHelper.getGameProfile(itemStack);
                 if (gameProfile != null) {
                     lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
                     if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {

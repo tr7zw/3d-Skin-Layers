@@ -14,7 +14,7 @@ import dev.tr7zw.skinlayers.accessor.HttpTextureAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.SkinLayersAPI;
-import dev.tr7zw.skinlayers.util.NMSWrapper;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -40,7 +40,7 @@ public class SkinUtil {
             }).build();
 
     private static NativeImage getSkinTexture(AbstractClientPlayer player) {
-        return getTexture(NMSWrapper.getPlayerSkin(player), null);
+        return getTexture(NMSHelper.getPlayerSkin(player), null);
     }
 
     private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
@@ -121,7 +121,7 @@ public class SkinUtil {
 
     public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
             boolean thinArms, PlayerModel<AbstractClientPlayer> model) {
-        ResourceLocation skinLocation = NMSWrapper.getPlayerSkin(abstractClientPlayerEntity);
+        ResourceLocation skinLocation = NMSHelper.getPlayerSkin(abstractClientPlayerEntity);
         if (skinLocation == null) {
             return false;// this *should* never happen, but just to be sure
         }
@@ -162,7 +162,7 @@ public class SkinUtil {
         if (gameprofile == null) {
             return false; // no gameprofile
         }
-        ResourceLocation playerSkin = NMSWrapper.getPlayerSkin(gameprofile);
+        ResourceLocation playerSkin = NMSHelper.getPlayerSkin(gameprofile);
         if (playerSkin == null) {
             return false; // no skin
         }

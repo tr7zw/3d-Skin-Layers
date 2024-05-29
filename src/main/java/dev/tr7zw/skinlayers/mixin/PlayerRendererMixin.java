@@ -13,14 +13,13 @@ import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.renderlayers.CustomLayerFeatureRenderer;
-import dev.tr7zw.skinlayers.util.NMSWrapper;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -29,7 +28,7 @@ import net.minecraft.world.entity.player.PlayerModelPart;
 //#if MC >= 11700
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 //#else
-//$$ 
+//$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 //#endif
 // spotless:on
 
@@ -66,9 +65,10 @@ public abstract class PlayerRendererMixin
             this.addLayer(new CustomLayerFeatureRenderer(this));
             loaded = true;
         }
-        if (Minecraft.getInstance().player == null || abstractClientPlayer
-                .distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-                        * SkinLayersModBase.config.renderDistanceLOD) {
+        if (Minecraft.getInstance().player == null
+                || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
+                        .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+                                * SkinLayersModBase.config.renderDistanceLOD) {
             return;
         }
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
@@ -128,7 +128,7 @@ public abstract class PlayerRendererMixin
         part.setPosition(x, y, 0);
         part.render(poseStack,
                 multiBufferSource
-                        .getBuffer(RenderType.entityTranslucent(NMSWrapper.getPlayerSkin(abstractClientPlayer))),
+                        .getBuffer(RenderType.entityTranslucent(NMSHelper.getPlayerSkin(abstractClientPlayer))),
                 i, OverlayTexture.NO_OVERLAY);
         part.setPosition(0, 0, 0);
         part.setRotation(0, 0, 0);

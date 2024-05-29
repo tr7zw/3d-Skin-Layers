@@ -75,8 +75,9 @@ public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer
         if (mc.level == null) {
             return; // in a menu or something and the model gets rendered
         }
-        if (player.distanceToSqr(mc.gameRenderer.getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-                * SkinLayersModBase.config.renderDistanceLOD)
+        if (player.distanceToSqr(
+                mc.gameRenderer.getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+                        * SkinLayersModBase.config.renderDistanceLOD)
             return;
 
         PlayerSettings settings = (PlayerSettings) player;

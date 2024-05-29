@@ -16,7 +16,7 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
-import dev.tr7zw.skinlayers.util.NMSWrapper;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
@@ -38,8 +38,8 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
             float g, float h, float j, float k, float l, CallbackInfo info) {
         if (!SkinLayersModBase.config.enableSkulls)
             return;
-        if (Minecraft.getInstance().player != null && livingEntity
-                .distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+        if (Minecraft.getInstance().player != null && livingEntity.distanceToSqr(Minecraft.getInstance().gameRenderer
+                .getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }
@@ -48,7 +48,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<
             return;
         Item item = itemStack.getItem();
         if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
-            GameProfile gameProfile = NMSWrapper.getGameProfile(itemStack);
+            GameProfile gameProfile = NMSHelper.getGameProfile(itemStack);
             if (gameProfile != null) {
                 lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
                 if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {

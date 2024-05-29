@@ -17,9 +17,8 @@ import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.accessor.SkullModelAccessor;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
-import dev.tr7zw.skinlayers.util.NMSWrapper;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
@@ -27,7 +26,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.phys.Vec3;
 // spotless:off 
@@ -75,7 +73,7 @@ public class SkullBlockEntityRendererMixin {
             //#endif
             if (gameProfile == null)
                 return;
-            ResourceLocation textureLocation = NMSWrapper.getPlayerSkin(gameProfile);
+            ResourceLocation textureLocation = NMSHelper.getPlayerSkin(gameProfile);
             if (textureLocation != lastSkull.getLastTexture()) {
                 lastSkull.setInitialized(false);
             }
