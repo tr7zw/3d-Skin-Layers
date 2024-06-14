@@ -86,7 +86,7 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     @Deprecated(forRemoval = true)
     public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
             int overlay, float red, float green, float blue, float alpha) {
-        var color = (convertFloatColorToInteger(alpha) & 0xFF) << 24| (convertFloatColorToInteger(red) & 0xFF) << 16
+        var color = (convertFloatColorToInteger(alpha) & 0xFF) << 24 | (convertFloatColorToInteger(red) & 0xFF) << 16
                 | (convertFloatColorToInteger(green) & 0xFF) << 8 | convertFloatColorToInteger(blue) & 0xFF;
 
         render(vanillaModel, poseStack, vertexConsumer, light, overlay, color);
@@ -102,8 +102,26 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         poseStack.pushPose();
         translateAndRotate(poseStack);
         compile(vanillaModel, poseStack.last(), vertexConsumer, light, overlay, color);
-        for (ModelPart modelPart : this.children.values())
+
+        // spotless:off
+        //#if MC < 12100
+        //$$ float r,g,b,a;
+        //$$ a = color >> 24 & 0xFF;
+        //$$ r = color >> 16 & 0xFF;
+        //$$ g = color >> 8 & 0xFF;
+        //$$ b = color & 0xFF;
+        //#endif
+        //spotless:on
+
+        for (ModelPart modelPart : this.children.values()) {
+            // spotless:off
+            //#if MC > 12100
             modelPart.render(poseStack, vertexConsumer, light, overlay, color);
+            //#else
+            //$$ modelPart.render(poseStack, vertexConsumer, light, overlay, r, g, b, a);
+            //#endif
+            //spotless:on
+        }
         poseStack.popPose();
     }
 
@@ -133,6 +151,17 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         // compacted Cubes
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
+
+        // spotless:off
+        //#if MC < 12100
+        //$$ float red,green,blue,alpha;
+        //$$ alpha = color >> 24 & 0xFF;
+        //$$ red = color >> 16 & 0xFF;
+        //$$ green = color >> 8 & 0xFF;
+        //$$ blue = color & 0xFF;
+        //#endif
+        //spotless:on
+
         for (int id = 0; id < polygonData.length; id += polyDataSize) {
             Vector3f vector3f = new Vector3f(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
             for (int o = 0; o < 4; o++) {
@@ -152,13 +181,21 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             //$$   for (int o = 0; o < 4; o++) {
             //$$      vector4f[o].transform(matrix4f);
     	    //#endif
-    	    //spotless:on
+            //#if MC >= 12100
                 vertexConsumer.addVertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z());
                 vertexConsumer.setColor(color);
                 vertexConsumer.setUv(polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4]);
                 vertexConsumer.setOverlay(overlay);
                 vertexConsumer.setLight(light);
                 vertexConsumer.setNormal(vector3f.x(), vector3f.y(), vector3f.z());
+            //#else
+            //$$ vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(),
+            //$$ red, green, blue, alpha,
+            //$$ polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4],
+            //$$ overlay, light,
+            //$$ vector3f.x(), vector3f.y(), vector3f.z());
+            //#endif
+            //spotless:on
             }
         }
 
@@ -166,8 +203,10 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         for (Cube cube : this.cubes) {
             transformer.transform(cube);
             // spotless:off
-            //#if MC >= 11700
+            //#if MC >= 12100
             cube.compile(pose, vertexConsumer, light, overlay, color);
+            //#elseif MC >= 11700
+              //$$ cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
             //#else
 			  //$$ for (ModelPart.Polygon polygon : cube.polygons) {
 	          //$$ 	Vector3f vector3f = polygon.normal.copy();
