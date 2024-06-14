@@ -115,7 +115,7 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
 
         for (ModelPart modelPart : this.children.values()) {
             // spotless:off
-            //#if MC > 12100
+            //#if MC >= 12100
             modelPart.render(poseStack, vertexConsumer, light, overlay, color);
             //#else
             //$$ modelPart.render(poseStack, vertexConsumer, light, overlay, r, g, b, a);
