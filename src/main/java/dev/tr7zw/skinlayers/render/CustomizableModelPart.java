@@ -106,9 +106,9 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         // spotless:off
         //#if MC < 12100
         //$$ float r,g,b,a;
-        //$$ a = color >> 24 & 0xFF;
-        //$$ r = color >> 16 & 0xFF;
-        //$$ g = color >> 8 & 0xFF;
+        //$$ a = (color >> 24) & 0xFF;
+        //$$ r = (color >> 16) & 0xFF;
+        //$$ g = (color >> 8) & 0xFF;
         //$$ b = color & 0xFF;
         //#endif
         //spotless:on
@@ -155,9 +155,9 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         // spotless:off
         //#if MC < 12100
         //$$ float red,green,blue,alpha;
-        //$$ alpha = color >> 24 & 0xFF;
-        //$$ red = color >> 16 & 0xFF;
-        //$$ green = color >> 8 & 0xFF;
+        //$$ alpha = (color >> 24) & 0xFF;
+        //$$ red = (color >> 16) & 0xFF;
+        //$$ green = (color >> 8) & 0xFF;
         //$$ blue = color & 0xFF;
         //#endif
         //spotless:on
