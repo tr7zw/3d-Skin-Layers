@@ -137,7 +137,7 @@ public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer
 
                 mesh.setPosition(x, y, 0);
 
-                mesh.render(layer.vanillaGetter.get(), matrixStack, vertices, light, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+                mesh.render(layer.vanillaGetter.get(), matrixStack, vertices, light, overlay, 0xFFFFFFFF);
                 matrixStack.popPose();
             }
         }
