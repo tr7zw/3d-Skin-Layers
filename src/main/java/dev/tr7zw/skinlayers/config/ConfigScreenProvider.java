@@ -28,14 +28,6 @@ public class ConfigScreenProvider {
     public static Screen createConfigScreen(Screen parent) {
         return new CustomConfigScreen(parent, "text.skinlayers.title") {
 
-            // spotless:off
-            //#if MC >= 12100
-            @Override
-            protected void addOptions() {
-            }
-            //#endif
-            //spotless:on
-
             @Override
             public void initialize() {
                 Config config = SkinLayersModBase.config;
