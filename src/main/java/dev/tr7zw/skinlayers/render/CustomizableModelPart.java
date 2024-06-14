@@ -76,15 +76,34 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         render(null, poseStack, vertexConsumer, i, j, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
+    private int convertFloatColorToInteger(float color) {
+        return color > 1F ? 255 : Math.round(color * 255F);
+    }
+
+    /**
+     * Kept for some mod (like ETF) shadowing the old render method to call
+     */
+    @Deprecated(forRemoval = true)
     public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
             int overlay, float red, float green, float blue, float alpha) {
+        var color = (convertFloatColorToInteger(alpha) & 0xFF) << 24| (convertFloatColorToInteger(red) & 0xFF) << 16
+                | (convertFloatColorToInteger(green) & 0xFF) << 8 | convertFloatColorToInteger(blue) & 0xFF;
+
+        render(vanillaModel, poseStack, vertexConsumer, light, overlay, color);
+    }
+
+    /**
+     * @param color Color, in ARGB format
+     */
+    public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
+            int overlay, int color) {
         if (!this.visible)
             return;
         poseStack.pushPose();
         translateAndRotate(poseStack);
-        compile(vanillaModel, poseStack.last(), vertexConsumer, light, overlay, red, green, blue, alpha);
+        compile(vanillaModel, poseStack.last(), vertexConsumer, light, overlay, color);
         for (ModelPart modelPart : this.children.values())
-            modelPart.render(poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+            modelPart.render(poseStack, vertexConsumer, light, overlay, color);
         poseStack.popPose();
     }
 
@@ -109,7 +128,7 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     private Vector4f vector4f[] = new Vector4f[] { new Vector4f(), new Vector4f(), new Vector4f(), new Vector4f() };
 
     private void compile(ModelPart vanillaModel, PoseStack.Pose pose, VertexConsumer vertexConsumer, int light,
-            int overlay, float red, float green, float blue, float alpha) {
+            int overlay, int color) {
         MeshTransformer transformer = SkinLayersAPI.getMeshTransformerProvider().prepareTransformer(vanillaModel);
         // compacted Cubes
         Matrix4f matrix4f = pose.pose();
@@ -134,9 +153,12 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             //$$      vector4f[o].transform(matrix4f);
     	    //#endif
     	    //spotless:on
-                vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(), red, green, blue, alpha,
-                        polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4], overlay, light,
-                        vector3f.x(), vector3f.y(), vector3f.z());
+                vertexConsumer.addVertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z());
+                vertexConsumer.setColor(color);
+                vertexConsumer.setUv(polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4]);
+                vertexConsumer.setOverlay(overlay);
+                vertexConsumer.setLight(light);
+                vertexConsumer.setNormal(vector3f.x(), vector3f.y(), vector3f.z());
             }
         }
 
@@ -145,7 +167,7 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             transformer.transform(cube);
             // spotless:off
             //#if MC >= 11700
-            cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
+            cube.compile(pose, vertexConsumer, light, overlay, color);
             //#else
 			  //$$ for (ModelPart.Polygon polygon : cube.polygons) {
 	          //$$ 	Vector3f vector3f = polygon.normal.copy();

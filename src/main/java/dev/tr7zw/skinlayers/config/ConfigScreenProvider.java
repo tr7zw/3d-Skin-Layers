@@ -29,6 +29,10 @@ public class ConfigScreenProvider {
         return new CustomConfigScreen(parent, "text.skinlayers.title") {
 
             @Override
+            protected void addOptions() {
+            }
+
+            @Override
             public void initialize() {
                 Config config = SkinLayersModBase.config;
                 List<Object> options = new ArrayList<>();
