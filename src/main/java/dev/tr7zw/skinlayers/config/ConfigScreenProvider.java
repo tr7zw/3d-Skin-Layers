@@ -71,6 +71,8 @@ public class ConfigScreenProvider {
                         }));
                 options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> config.fastRender,
                         (b) -> config.fastRender = b));
+                options.add(getOnOffOption("text.skinlayers.compatebilityMode.enable", () -> config.compatebilityMode,
+                        (b) -> config.compatebilityMode = b));
                 options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.2f, 0.001f,
                         () -> (double) config.firstPersonPixelScaling, (i) -> {
                             config.firstPersonPixelScaling = i.floatValue();

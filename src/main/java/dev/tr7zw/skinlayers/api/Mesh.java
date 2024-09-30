@@ -49,6 +49,10 @@ public interface Mesh {
         @Override
         public void copyFrom(ModelPart modelPart) {
         }
+
+        @Override
+        public void reset() {
+        }
     };
 
     public default void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay) {
@@ -59,7 +63,7 @@ public interface Mesh {
      * @param color The color, in ARGB format
      */
     public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
-                       int overlay, int color);
+            int overlay, int color);
 
     public void setPosition(float x, float y, float z);
 
@@ -74,6 +78,8 @@ public interface Mesh {
     //spotless:on
 
     public void copyFrom(ModelPart modelPart);
+    
+    public void reset();
 
     public void setVisible(boolean visible);
 

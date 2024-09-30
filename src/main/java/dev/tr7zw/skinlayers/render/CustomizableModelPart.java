@@ -126,7 +126,8 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     }
 
     public void translateAndRotate(PoseStack poseStack) {
-        poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
+        if(x != 0 || y != 0 || z != 0)
+            poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
         // spotless:off 
         //#if MC >= 11903
         if (this.xRot != 0.0F || this.yRot != 0.0F || this.zRot != 0.0F)
@@ -230,6 +231,16 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             //spotless:on
 
         }
+    }
+
+    @Override
+    public void reset() {
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.xRot = 0;
+        this.yRot = 0;
+        this.zRot = 0;
     }
 
 }
