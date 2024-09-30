@@ -16,7 +16,7 @@ public interface OffsetProvider {
     public final static OffsetProvider RIGHT_ARM = createVanilla(Shape.ARMS, true);
     public final static OffsetProvider RIGHT_ARM_SLIM = createVanilla(Shape.ARMS_SLIM, true);
     public final static OffsetProvider BODY = createVanilla(Shape.BODY, false);
-    
+
     private static OffsetProvider createVanilla(Shape shape, boolean mirrored) {
         return (stack, mesh) -> {
             float pixelScaling = SkinLayersModBase.config.baseVoxelSize;

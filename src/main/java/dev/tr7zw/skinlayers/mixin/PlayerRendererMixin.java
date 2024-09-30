@@ -68,7 +68,7 @@ public abstract class PlayerRendererMixin
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
         if (!loaded) {
             this.addLayer(new CustomLayerFeatureRenderer(this));
-            
+
             loaded = true;
         }
         if (Minecraft.getInstance().player == null
@@ -79,65 +79,76 @@ public abstract class PlayerRendererMixin
         }
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
+        // reset all injected layers
+        ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
         if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim, getModel())) {
-            // fall back to vanilla, disable all injected layers
-            ((ModelPartInjector)(Object)playerModel.head).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.body).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.leftArm).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.rightArm).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.leftLeg).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.rightLeg).setInjectedMesh(null, null);
-            return; 
+            // fall back to vanilla
+            return;
         }
-        if(SkinLayersModBase.config.compatebilityMode) {
+        if (SkinLayersModBase.config.compatibilityMode) {
             // Inject layers into the vanilla model
             ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
-            if (playerModel.hat.visible && SkinLayersModBase.config.enableHat && (itemStack == null || !CustomLayerFeatureRenderer.hideHeadLayers.contains(itemStack.getItem()))) {
-                ((ModelPartInjector)(Object)playerModel.head).setInjectedMesh(settings.getHeadMesh(), OffsetProvider.HEAD);
+            if (SkinLayersModBase.config.enableHat && (itemStack == null
+                    || !CustomLayerFeatureRenderer.hideHeadLayers.contains(itemStack.getItem()))) {
+                ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(),
+                        OffsetProvider.HEAD);
             }
-            if(playerModel.jacket.visible &&SkinLayersModBase.config.enableJacket) {
-                ((ModelPartInjector)(Object)playerModel.body).setInjectedMesh(settings.getTorsoMesh(), OffsetProvider.BODY);
+            if (SkinLayersModBase.config.enableJacket) {
+                ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(settings.getTorsoMesh(),
+                        OffsetProvider.BODY);
             }
-            if(playerModel.leftSleeve.visible && SkinLayersModBase.config.enableLeftSleeve) {
-                ((ModelPartInjector)(Object)playerModel.leftArm).setInjectedMesh(settings.getLeftArmMesh(), slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
+            if (SkinLayersModBase.config.enableLeftSleeve) {
+                ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(settings.getLeftArmMesh(),
+                        slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
             }
-            if(playerModel.rightSleeve.visible && SkinLayersModBase.config.enableRightSleeve) {
-                ((ModelPartInjector)(Object)playerModel.rightArm).setInjectedMesh(settings.getRightArmMesh(), slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
+            if (SkinLayersModBase.config.enableRightSleeve) {
+                ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(settings.getRightArmMesh(),
+                        slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
             }
-            if(playerModel.leftPants.visible && SkinLayersModBase.config.enableLeftPants) {
-                ((ModelPartInjector)(Object)playerModel.leftLeg).setInjectedMesh(settings.getLeftLegMesh(), OffsetProvider.LEFT_LEG);
+            if (SkinLayersModBase.config.enableLeftPants) {
+                ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(settings.getLeftLegMesh(),
+                        OffsetProvider.LEFT_LEG);
             }
-            if(playerModel.rightPants.visible && SkinLayersModBase.config.enableRightPants) {
-                ((ModelPartInjector)(Object)playerModel.rightLeg).setInjectedMesh(settings.getRightLegMesh(), OffsetProvider.RIGHT_LEG);
+            if (SkinLayersModBase.config.enableRightPants) {
+                ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(settings.getRightLegMesh(),
+                        OffsetProvider.RIGHT_LEG);
             }
         } else {
-            // reset all injected layers
-            ((ModelPartInjector)(Object)playerModel.head).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.body).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.leftArm).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.rightArm).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.leftLeg).setInjectedMesh(null, null);
-            ((ModelPartInjector)(Object)playerModel.rightLeg).setInjectedMesh(null, null);
+            // hiding vanilla layers when needed
+            playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
+            playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
+            playerModel.leftSleeve.visible = playerModel.leftSleeve.visible
+                    && !SkinLayersModBase.config.enableLeftSleeve;
+            playerModel.rightSleeve.visible = playerModel.rightSleeve.visible
+                    && !SkinLayersModBase.config.enableRightSleeve;
+            playerModel.leftPants.visible = playerModel.leftPants.visible && !SkinLayersModBase.config.enableLeftPants;
+            playerModel.rightPants.visible = playerModel.rightPants.visible
+                    && !SkinLayersModBase.config.enableRightPants;
         }
-        // hiding vanilla layers when needed
-        playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
-        playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
-        playerModel.leftSleeve.visible = playerModel.leftSleeve.visible && !SkinLayersModBase.config.enableLeftSleeve;
-        playerModel.rightSleeve.visible = playerModel.rightSleeve.visible
-                && !SkinLayersModBase.config.enableRightSleeve;
-        playerModel.leftPants.visible = playerModel.leftPants.visible && !SkinLayersModBase.config.enableLeftPants;
-        playerModel.rightPants.visible = playerModel.rightPants.visible && !SkinLayersModBase.config.enableRightPants;
     }
-    
+
     @Inject(method = "renderHand", at = @At("HEAD"))
     private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
-        ((ModelPartInjector)(Object)arm).setInjectedMesh(null, null);
+        if (SkinLayersModBase.config.compatibilityMode) {
+            // no need to do anything in this mode
+            return;
+        }
+        ((ModelPartInjector) (Object) arm).setInjectedMesh(null, null);
     }
-    
+
     @Inject(method = "renderHand", at = @At("RETURN"))
     private void renderHand(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
             AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
+        if (SkinLayersModBase.config.compatibilityMode) {
+            // no need to do anything in this mode
+            return;
+        }
         boolean rightSleeve = this.getModel().leftSleeve == sleeve ? false : true;
 
         if (rightSleeve ? !SkinLayersModBase.config.enableRightSleeve : !SkinLayersModBase.config.enableLeftSleeve)

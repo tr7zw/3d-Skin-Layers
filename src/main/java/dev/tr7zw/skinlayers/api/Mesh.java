@@ -65,6 +65,19 @@ public interface Mesh {
     public void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
             int overlay, int color);
 
+    public default void render(ModelPart vanillaModel, PoseStack poseStack, VertexConsumer vertexConsumer, int light,
+            int overlay, float red, float green, float blue, float alpha) {
+        int color = 0;
+        int a = (int) (alpha * 255) << 24;
+        int r = (int) (red * 255) << 16;
+        int g = (int) (green * 255) << 8;
+        int b = (int) (blue * 255);
+
+        // Combine them into a single int
+        color = a | r | g | b;
+        render(vanillaModel, poseStack, vertexConsumer, light, overlay, color);
+    }
+
     public void setPosition(float x, float y, float z);
 
     public void setRotation(float xRot, float yRot, float zRot);
@@ -78,7 +91,7 @@ public interface Mesh {
     //spotless:on
 
     public void copyFrom(ModelPart modelPart);
-    
+
     public void reset();
 
     public void setVisible(boolean visible);

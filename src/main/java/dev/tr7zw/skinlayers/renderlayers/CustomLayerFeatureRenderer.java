@@ -36,8 +36,8 @@ import net.minecraft.world.item.Items;
 public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
     private static final Minecraft mc = Minecraft.getInstance();
-    public static final Set<Item> hideHeadLayers = Sets.newHashSet(Items.ZOMBIE_HEAD, Items.CREEPER_HEAD, Items.DRAGON_HEAD,
-            Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
+    public static final Set<Item> hideHeadLayers = Sets.newHashSet(Items.ZOMBIE_HEAD, Items.CREEPER_HEAD,
+            Items.DRAGON_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL);
     private final List<Layer> bodyLayers = new ArrayList<>();
     private final boolean thinArms;
 
@@ -53,23 +53,25 @@ public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer
                     }
                     return SkinLayersModBase.config.enableHat;
                 }));
-        bodyLayers.add(new Layer(PlayerSettings::getLeftLegMesh, PlayerModelPart.LEFT_PANTS_LEG, OffsetProvider.LEFT_LEG,
-                () -> this.getParentModel().leftLeg, (player) -> SkinLayersModBase.config.enableLeftPants));
-        bodyLayers.add(new Layer(PlayerSettings::getRightLegMesh, PlayerModelPart.RIGHT_PANTS_LEG, OffsetProvider.RIGHT_LEG,
-                () -> this.getParentModel().rightLeg, (player) -> SkinLayersModBase.config.enableRightPants));
+        bodyLayers
+                .add(new Layer(PlayerSettings::getLeftLegMesh, PlayerModelPart.LEFT_PANTS_LEG, OffsetProvider.LEFT_LEG,
+                        () -> this.getParentModel().leftLeg, (player) -> SkinLayersModBase.config.enableLeftPants));
+        bodyLayers.add(
+                new Layer(PlayerSettings::getRightLegMesh, PlayerModelPart.RIGHT_PANTS_LEG, OffsetProvider.RIGHT_LEG,
+                        () -> this.getParentModel().rightLeg, (player) -> SkinLayersModBase.config.enableRightPants));
         bodyLayers.add(new Layer(PlayerSettings::getLeftArmMesh, PlayerModelPart.LEFT_SLEEVE,
                 thinArms ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM, () -> this.getParentModel().leftArm,
                 (player) -> SkinLayersModBase.config.enableLeftSleeve));
         bodyLayers.add(new Layer(PlayerSettings::getRightArmMesh, PlayerModelPart.RIGHT_SLEEVE,
-                thinArms ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM, () -> this.getParentModel().rightArm,
-                (player) -> SkinLayersModBase.config.enableRightSleeve));
+                thinArms ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM,
+                () -> this.getParentModel().rightArm, (player) -> SkinLayersModBase.config.enableRightSleeve));
         bodyLayers.add(new Layer(PlayerSettings::getTorsoMesh, PlayerModelPart.JACKET, OffsetProvider.BODY,
                 () -> this.getParentModel().body, (player) -> SkinLayersModBase.config.enableJacket));
     }
 
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, AbstractClientPlayer player,
             float f, float g, float h, float j, float k, float l) {
-        if (SkinLayersModBase.config.compatebilityMode || player.isInvisible()) {
+        if (SkinLayersModBase.config.compatibilityMode || player.isInvisible()) {
             return;
         }
         if (mc.level == null) {
@@ -125,7 +127,5 @@ public class CustomLayerFeatureRenderer extends RenderLayer<AbstractClientPlayer
         private final Supplier<ModelPart> vanillaGetter;
         private final Function<AbstractClientPlayer, Boolean> configGetter;
     }
-
-
 
 }

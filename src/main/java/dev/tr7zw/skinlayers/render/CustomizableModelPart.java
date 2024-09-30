@@ -126,7 +126,7 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     }
 
     public void translateAndRotate(PoseStack poseStack) {
-        if(x != 0 || y != 0 || z != 0)
+        if (x != 0 || y != 0 || z != 0)
             poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
         // spotless:off 
         //#if MC >= 11903

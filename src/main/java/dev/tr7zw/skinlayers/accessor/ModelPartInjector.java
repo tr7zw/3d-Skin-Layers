@@ -6,5 +6,5 @@ import dev.tr7zw.skinlayers.api.OffsetProvider;
 public interface ModelPartInjector {
 
     public void setInjectedMesh(Mesh mesh, OffsetProvider offsetProvider);
-    
+
 }

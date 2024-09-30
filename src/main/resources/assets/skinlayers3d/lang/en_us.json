@@ -32,5 +32,7 @@
     "text.skinlayers.fastrender.enable": "Fast Render",
     "text.skinlayers.fastrender.enable.tooltip": "Render the 3D models as fast as possible, this may cause some graphical glitches with transparency",
     "text.skinlayers.firstperson.voxelsize": "First Person Voxel Size",
-    "text.skinlayers.firstperson.voxelsize.tooltip": "The size of the voxels used for the player's hand in first person"
+    "text.skinlayers.firstperson.voxelsize.tooltip": "The size of the voxels used for the player's hand in first person",
+    "text.skinlayers.compatibilityMode.enable": "Compatibility Mode",
+    "text.skinlayers.compatibilityMode.enable.tooltip": "Alternative way to render the layers, might fix some compatibility issues with other mods"
 }
