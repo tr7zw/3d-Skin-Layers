@@ -49,15 +49,24 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     }
 
     // spotless:off
-  //#if MC >= 11700
+  //#if MC >= 12102
     public void loadPose(PartPose partPose) {
-        this.x = partPose.x;
-        this.y = partPose.y;
-        this.z = partPose.z;
-        this.xRot = partPose.xRot;
-        this.yRot = partPose.yRot;
-        this.zRot = partPose.zRot;
+        this.x = partPose.x();
+        this.y = partPose.y();
+        this.z = partPose.z();
+        this.xRot = partPose.xRot();
+        this.yRot = partPose.yRot();
+        this.zRot = partPose.zRot();
     }
+  //#elseif MC >= 11700
+  //$$  public void loadPose(PartPose partPose) {
+  //$$        this.x = partPose.x;
+  //$$        this.y = partPose.y;
+  //$$        this.z = partPose.z;
+  //$$        this.xRot = partPose.xRot;
+  //$$        this.yRot = partPose.yRot;
+  //$$        this.zRot = partPose.zRot;
+  //$$    }
   //#else
     //$$ public void loadPose(ModelPart partPose){copyFrom(partPose);}
   //#endif

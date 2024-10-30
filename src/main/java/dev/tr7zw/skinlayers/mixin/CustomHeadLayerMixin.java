@@ -22,7 +22,6 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -30,21 +29,40 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 
 @Mixin(CustomHeadLayer.class)
-public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel<T> & HeadedModel> {
+public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel & HeadedModel> {
 
+    // spotless:off 
+    //#if MC >= 12102
     @SuppressWarnings("resource")
     @Inject(method = "render", at = @At("HEAD"))
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
-            float g, float h, float j, float k, float l, CallbackInfo info) {
-        if (!SkinLayersModBase.config.enableSkulls)
-            return;
-        if (Minecraft.getInstance().player != null && livingEntity.distanceToSqr(Minecraft.getInstance().gameRenderer
-                .getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
+            net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState, float f,
+            float g, CallbackInfo info) {
+
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().gameRenderer
+                .getMainCamera().getPosition().distanceToSqr(livingEntityRenderState.x, livingEntityRenderState.y, livingEntityRenderState.z) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }
-        ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
-        if (itemStack.isEmpty())
+        setupHeadRendering(livingEntityRenderState.headItem);
+    }
+    //#else
+    //$$ @SuppressWarnings("resource")
+    //$$ @Inject(method = "render", at = @At("HEAD"))
+    //$$ public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f,
+    //$$          float g, float h, float j, float k, float l, CallbackInfo info) {
+    //$$      if (Minecraft.getInstance().player != null && livingEntity.distanceToSqr(Minecraft.getInstance().gameRenderer
+    //$$             .getMainCamera().getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+    //$$                      * SkinLayersModBase.config.renderDistanceLOD) {
+    //$$         return; // too far away
+    //$$      }
+    //$$      setupHeadRendering(livingEntity.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD));
+    //$$  }
+    //#endif
+    //spotless:on
+
+    private void setupHeadRendering(ItemStack itemStack) {
+        if (!SkinLayersModBase.config.enableSkulls || itemStack.isEmpty())
             return;
         Item item = itemStack.getItem();
         if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {

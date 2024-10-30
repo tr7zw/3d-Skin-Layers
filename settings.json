@@ -23,8 +23,11 @@
         "1.20.6-forge",
         "1.20.6-neoforge",
         "1.20.6-fabric",
-        "1.21-fabric",
         "1.21-forge",
-        "1.21-neoforge"
+        "1.21-neoforge",
+        "1.21-fabric",
+        "1.21.3-forge",
+        "1.21.3-neoforge",
+        "1.21.3-fabric"
     ]
 }

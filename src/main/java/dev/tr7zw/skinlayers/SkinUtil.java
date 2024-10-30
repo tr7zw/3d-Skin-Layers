@@ -16,7 +16,6 @@ import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.SkinLayersAPI;
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -66,7 +65,7 @@ public class SkinUtil {
             NativeImage cachedImage = cache.getIfPresent(texture);
             if (cachedImage != null) {
                 try {
-                    cachedImage.getPixelRGBA(0, 0); // check that it's allocated
+                    checkAllocation(cachedImage);
                     return cachedImage;
                 } catch (Exception ex) {
                     // got invalidated, remove from cache
@@ -90,10 +89,7 @@ public class SkinUtil {
                 try {
                     NativeImage img = ((DynamicTexture) texture).getPixels();
                     if (img != null) {
-                        img.getPixelRGBA(0, 0); // check that it's allocated
-                        // Do not cache dynamic textures. It's a O(1) call to get them, and the cache
-                        // would close them after 60 seconds
-                        // cache.put(texture, img);
+                        checkAllocation(img);
                         return img;
                     }
                 } catch (Exception ex) {
@@ -119,8 +115,18 @@ public class SkinUtil {
         }
     }
 
+    private static void checkAllocation(NativeImage image) throws Exception {
+        // spotless:off 
+        //#if MC >= 12102
+        image.getPixelsABGR(); // check that it's allocated
+        //#else
+        //$$ image.getPixelRGBA(0, 0); // check that it's allocated
+        //#endif
+        //spotless:on
+    }
+
     public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
-            boolean thinArms, PlayerModel<AbstractClientPlayer> model) {
+            boolean thinArms) {
         ResourceLocation skinLocation = NMSHelper.getPlayerSkin(abstractClientPlayerEntity);
         if (skinLocation == null) {
             return false;// this *should* never happen, but just to be sure

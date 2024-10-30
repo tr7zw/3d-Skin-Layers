@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
 
 @Mixin(PlayerModel.class)
-public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel<T> implements PlayerEntityModelAccessor {
+public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel implements PlayerEntityModelAccessor {
 
     // spotless:off 
 	//#if MC >= 11700
@@ -22,7 +22,7 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel<T> i
 	//$$	super(f);
 	//$$ }
     //#endif
-	//spotless:on
+    //spotless:on
 
     @Shadow
     private boolean slim;

@@ -6,8 +6,6 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -69,8 +67,17 @@ public class PreviewHelper {
         }
 
         entityrenderdispatcher.setRenderShadow(false);
-        RenderSystem.runAsFancy(() -> entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f,
-                guiGraphics.pose(), guiGraphics.bufferSource(), 15728880));
+        // spotless:off 
+        //#if MC >= 12102
+        guiGraphics.drawSpecial(consumer -> {
+            entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0f, 1.0f,
+                    guiGraphics.pose(), consumer, 15728880);
+        });
+        //#else
+        //$$ entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f,
+        //$$         guiGraphics.pose(), guiGraphics.bufferSource(), 15728880);
+        //#endif
+        //spotless:on
         guiGraphics.flush();
         entityrenderdispatcher.setRenderShadow(true);
         guiGraphics.pose().popPose();

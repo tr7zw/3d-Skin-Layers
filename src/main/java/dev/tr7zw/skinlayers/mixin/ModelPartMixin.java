@@ -19,7 +19,7 @@ public class ModelPartMixin implements ModelPartInjector {
 
     @Shadow
     boolean visible;
-    
+
     private Mesh injectedMesh = null;
     private OffsetProvider offsetProvider = null;
 
@@ -59,10 +59,10 @@ public class ModelPartMixin implements ModelPartInjector {
         injectedMesh = mesh;
         this.offsetProvider = offsetProvider;
     }
-    
+
     @Shadow
     public void translateAndRotate(PoseStack poseStack) {
-        
+
     }
 
 }
