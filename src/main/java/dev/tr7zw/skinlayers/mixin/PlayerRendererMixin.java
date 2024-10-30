@@ -211,11 +211,11 @@ public abstract class PlayerRendererMixin
 // spotless:on
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
+        ((ModelPartInjector) (Object) sleeve).setInjectedMesh(null, null);
         if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
             // fall back to vanilla
             return;
         }
-        ((ModelPartInjector) (Object) sleeve).setInjectedMesh(null, null);
         if (arm == getModel().leftSleeve) {
             if (SkinLayersModBase.config.enableLeftSleeve) {
                 ((ModelPartInjector) (Object) sleeve).setInjectedMesh(settings.getLeftArmMesh(),
