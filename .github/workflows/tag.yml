@@ -456,7 +456,9 @@ jobs:
           name: ${{github.ref_name}}-1.21(.1) - Forge
           version-type: beta
           files: 'versions/1.21-forge/build/libs/!(*-@(dev|sources|javadoc)).jar'
-          game-versions: 1.21.x
+          game-versions: |
+              1.21
+              1.21.1
       - name: Publish-1.21-forge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
@@ -465,7 +467,9 @@ jobs:
           loaders: forge
           name: ${{github.ref_name}}-1.21(.1) - Forge
           files: 'versions/1.21-forge/build/libs/!(*-@(dev|sources|javadoc)).jar'
-          game-versions: 1.21.x
+          game-versions: |
+              1.21
+              1.21.1
       - name: Publish-1.21-neoforge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
@@ -475,7 +479,9 @@ jobs:
           name: ${{github.ref_name}}-1.21(.1) - NeoForge
           version-type: beta
           files: 'versions/1.21-neoforge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
-          game-versions: 1.21.x
+          game-versions: |
+              1.21
+              1.21.1
       - name: Publish-1.21-neoforge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
@@ -484,7 +490,9 @@ jobs:
           loaders: neoforge
           name: ${{github.ref_name}}-1.21(.1) - NeoForge
           files: 'versions/1.21-neoforge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
-          game-versions: 1.21.x
+          game-versions: |
+              1.21
+              1.21.1
       - name: Publish-1.21-fabric-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
@@ -493,7 +501,9 @@ jobs:
           loaders: fabric
           name: ${{github.ref_name}}-1.21(.1) - Fabric
           files: 'versions/1.21-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
-          game-versions: 1.21.x
+          game-versions: |
+              1.21
+              1.21.1
       - name: Publish-1.21-fabric-Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
@@ -502,7 +512,9 @@ jobs:
           loaders: fabric
           name: ${{github.ref_name}}-1.21(.1) - Fabric
           files: 'versions/1.21-fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
-          game-versions: 1.21.x
+          game-versions: |
+              1.21
+              1.21.1
       - name: Publish-1.21.3-forge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.3.0
         with:
