@@ -30,9 +30,9 @@
     "text.skinlayers.skulls.voxelsize": "Kafatası Voksel Boyutu",
     "text.skinlayers.skulls.voxelsize.tooltip": "Oyuncu kafaları için kullanılan voksellerin boyutu (blok/eşya)",
     "text.skinlayers.reset": "Varsayılan",
-    "text.skinlayers.fastrender.enable": "Hızlı Renderla"
+    "text.skinlayers.fastrender.enable": "Hızlı Renderla",
     "text.skinlayers.fastrender.enable.tooltip": "3D modelleri olabildiğince hızlı renderla, bu saydamlıkla ilgili bazı grafiksel hatalara neden olabilir",
-    "text.skinlayers.firstperson.voxelsize": "First Person Voxel Size",
+    "text.skinlayers.firstperson.voxelsize": "Birinci Şahıs Voksel Boyutu",
     "text.skinlayers.firstperson.voxelsize.tooltip": "Birinci şahısta oyuncunun eli için kullanılan voksellerin boyutu",
     "text.skinlayers.compatibilityMode.enable": "Uyumluluk modu",
     "text.skinlayers.compatibilityMode.enable.tooltip": "Katmanları oluşturmanın alternatif yolu, diğer modlarla bazı uyumluluk sorunlarını çözebilir"
