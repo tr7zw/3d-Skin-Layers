@@ -34,5 +34,5 @@
     "text.skinlayers.firstperson.voxelsize": "第一人称体素大小",
     "text.skinlayers.firstperson.voxelsize.tooltip": "第一人称视角中玩家手部所使用的体素大小",
     "text.skinlayers.compatibilityMode.enable": "兼容模式",
-    "text.skinlayers.compatibilityMode.enable.tooltip": "替代渲染图层的方法，可能会修复与其他 mod 的一些兼容性问题"
+    "text.skinlayers.compatibilityMode.enable.tooltip": "替换渲染图层的方法，可能会修复一些其他模组的兼容性问题"
 }
