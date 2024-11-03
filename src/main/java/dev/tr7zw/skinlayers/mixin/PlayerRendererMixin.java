@@ -150,8 +150,8 @@ public abstract class PlayerRendererMixin
   //$$     if (SkinLayersModBase.config.compatibilityMode) {
   //$$         // Inject layers into the vanilla model
   //$$         ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
-  //$$         if (SkinLayersModBase.config.enableHat /*&& (itemStack == null
-  //$$                 || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))*/) {
+  //$$         if (SkinLayersModBase.config.enableHat && (itemStack == null
+  //$$                 || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))) {
   //$$            ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(),
   //$$                    OffsetProvider.HEAD);
   //$$        }
