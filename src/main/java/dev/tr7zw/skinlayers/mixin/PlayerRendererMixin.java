@@ -199,7 +199,7 @@ public abstract class PlayerRendererMixin
         // TODO
         AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;// hacky, but 1.21.2 happened
         ModelPart sleeve;
-        if (arm == getModel().leftSleeve) {
+        if (arm == getModel().leftArm) {
             sleeve = getModel().leftSleeve;
         } else {
             sleeve = getModel().rightSleeve;
@@ -216,7 +216,7 @@ public abstract class PlayerRendererMixin
             // fall back to vanilla
             return;
         }
-        if (arm == getModel().leftSleeve) {
+        if (arm == getModel().leftArm) {
             if (SkinLayersModBase.config.enableLeftSleeve) {
                 ((ModelPartInjector) (Object) sleeve).setInjectedMesh(settings.getLeftArmMesh(),
                         slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
