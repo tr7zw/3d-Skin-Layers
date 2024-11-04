@@ -1,0 +1,3 @@
+dependencies {
+    modCompileOnlyApi 'maven.modrinth:entity-model-features:TkjKemrg'
+}

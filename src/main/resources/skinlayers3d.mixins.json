@@ -14,7 +14,8 @@
         "BlockEntityWithoutLevelRendererMixin",
         "CustomHeadLayerMixin",
         "HttpTextureMixin",
-        "ModelPartMixin"
+        "ModelPartMixin",
+        "EMFModelPartMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -12,15 +12,19 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tr7zw.skinlayers.accessor.ModelPartInjector;
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.OffsetProvider;
+import lombok.Getter;
 import net.minecraft.client.model.geom.ModelPart;
 
 @Mixin(value = ModelPart.class, priority = 300)
 public class ModelPartMixin implements ModelPartInjector {
 
     @Shadow
+    @Getter
     boolean visible;
 
+    @Getter
     private Mesh injectedMesh = null;
+    @Getter
     private OffsetProvider offsetProvider = null;
 
     // spotless:off
@@ -63,6 +67,11 @@ public class ModelPartMixin implements ModelPartInjector {
     @Shadow
     public void translateAndRotate(PoseStack poseStack) {
 
+    }
+
+    @Override
+    public void prepareTranslateAndRotate(PoseStack poseStack) {
+        translateAndRotate(poseStack);
     }
 
 }
