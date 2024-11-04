@@ -38,6 +38,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(PlayerRenderer.class)
@@ -49,6 +50,8 @@ public abstract class PlayerRendererMixin
 //$$        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 //#endif
 // spotless:on
+
+    private boolean setupFirstpersonArms = false;
 
     // spotless:off 
 	//#if MC >= 11700
@@ -147,7 +150,8 @@ public abstract class PlayerRendererMixin
   //$$         // fall back to vanilla
   //$$         return;
   //$$     }
-  //$$     if (SkinLayersModBase.config.compatibilityMode) {
+  //$$     if (SkinLayersModBase.config.compatibilityMode || setupFirstpersonArms) {
+  //$$         setupFirstpersonArms = false;
   //$$         // Inject layers into the vanilla model
   //$$         ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
   //$$         if (SkinLayersModBase.config.enableHat && (itemStack == null
@@ -216,6 +220,7 @@ public abstract class PlayerRendererMixin
             // fall back to vanilla
             return;
         }
+        setupFirstpersonArms = true;
         if (arm == getModel().leftArm) {
             if (SkinLayersModBase.config.enableLeftSleeve) {
                 ((ModelPartInjector) (Object) sleeve).setInjectedMesh(settings.getLeftArmMesh(),

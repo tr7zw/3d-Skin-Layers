@@ -56,7 +56,7 @@ public class ModelPartMixin implements ModelPartInjector {
 
     @Override
     public void setInjectedMesh(Mesh mesh, OffsetProvider offsetProvider) {
-        injectedMesh = mesh;
+        this.injectedMesh = mesh;
         this.offsetProvider = offsetProvider;
     }
 
