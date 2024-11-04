@@ -73,12 +73,6 @@ public abstract class PlayerRendererMixin
   public void extractRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState playerRenderState,
           float f, CallbackInfo ci) {
       PlayerModel playerModel = this.getModel();
-      if (Minecraft.getInstance().player == null
-              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
-                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-                              * SkinLayersModBase.config.renderDistanceLOD) {
-          return;
-      }
       PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
       boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
       // reset all injected layers
@@ -88,6 +82,12 @@ public abstract class PlayerRendererMixin
       ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
       ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
       ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
+      if (Minecraft.getInstance().player == null
+              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
+                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+                              * SkinLayersModBase.config.renderDistanceLOD) {
+          return;
+      }
       if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
           // fall back to vanilla
           return;
@@ -127,15 +127,9 @@ public abstract class PlayerRendererMixin
   //$$    public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
   //$$       PlayerModel playerModel = this.getModel();
   //$$       if (!loaded) {
-   //$$           this.addLayer(new dev.tr7zw.skinlayers.renderlayers.CustomLayerFeatureRenderer(this));
+  //$$           this.addLayer(new dev.tr7zw.skinlayers.renderlayers.CustomLayerFeatureRenderer(this));
   //$$
   //$$          loaded = true;
-  //$$      }
-  //$$      if (Minecraft.getInstance().player == null
-  //$$              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
-  //$$                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-  //$$                             * SkinLayersModBase.config.renderDistanceLOD) {
-  //$$          return;
   //$$      }
   //$$     PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
   //$$      boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
@@ -146,6 +140,12 @@ public abstract class PlayerRendererMixin
   //$$     ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
   //$$     ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
   //$$     ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
+  //$$      if (Minecraft.getInstance().player == null
+  //$$              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
+  //$$                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+  //$$                             * SkinLayersModBase.config.renderDistanceLOD) {
+  //$$          return;
+  //$$      }
   //$$     if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
   //$$         // fall back to vanilla
   //$$         return;
