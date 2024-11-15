@@ -43,7 +43,7 @@ import net.minecraft.world.item.ItemStack;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin
-// spotless:off 
+        // spotless:off 
 //#if MC >= 12102
             extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
 //#else
@@ -196,7 +196,7 @@ public abstract class PlayerRendererMixin
   // spotless:on
 
     @Inject(method = "renderHand", at = @At("HEAD"))
-// spotless:off 
+    // spotless:off 
 //#if MC >= 12102
   private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
           ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
@@ -224,12 +224,12 @@ public abstract class PlayerRendererMixin
         if (arm == getModel().leftArm) {
             if (SkinLayersModBase.config.enableLeftSleeve) {
                 ((ModelPartInjector) (Object) sleeve).setInjectedMesh(settings.getLeftArmMesh(),
-                        slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
+                        slim ? OffsetProvider.FIRSTPERSON_LEFT_ARM_SLIM : OffsetProvider.FIRSTPERSON_LEFT_ARM);
             }
         } else {
             if (SkinLayersModBase.config.enableRightSleeve) {
                 ((ModelPartInjector) (Object) sleeve).setInjectedMesh(settings.getRightArmMesh(),
-                        slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
+                        slim ? OffsetProvider.FIRSTPERSON_RIGHT_ARM_SLIM : OffsetProvider.FIRSTPERSON_RIGHT_ARM);
             }
         }
     }
