@@ -16,17 +16,24 @@ import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
-import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.AbstractSkullBlock;
+
+//#if MC < 12104
+//$$import com.mojang.authlib.GameProfile;
+//$$import dev.tr7zw.skinlayers.SkinUtil;
+//$$import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
+//$$import dev.tr7zw.skinlayers.accessor.SkullSettings;
+//$$import dev.tr7zw.util.NMSHelper;
+//$$import net.minecraft.world.item.BlockItem;
+//$$import net.minecraft.world.item.Item;
+//$$import net.minecraft.world.item.ItemStack;
+//$$import net.minecraft.world.level.block.AbstractSkullBlock;
+//#endif
 
 @Mixin(CustomHeadLayer.class)
 public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel & HeadedModel> {
@@ -44,7 +51,18 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }
-        setupHeadRendering(livingEntityRenderState.headItem);
+        //#if MC >= 12104
+        if ((!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null) && livingEntityRenderState.wornHeadProfile.isResolved()) {
+            GameProfile gameProfile = livingEntityRenderState.wornHeadProfile.gameProfile();
+            lastSkull = (SkullSettings) itemCache.computeIfAbsent(gameProfile, it -> new ItemSettings());
+            if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
+                SkinUtil.setup3dLayers(gameProfile, lastSkull);
+            }
+            renderNext = lastSkull.getHeadLayers() != null;
+        }
+        //#else
+        //$$setupHeadRendering(livingEntityRenderState.headItem);
+        //#endif
     }
     //#else
     //$$ @SuppressWarnings("resource")
@@ -61,20 +79,22 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
     //#endif
     //spotless:on
 
-    private void setupHeadRendering(ItemStack itemStack) {
-        if (!SkinLayersModBase.config.enableSkulls || itemStack.isEmpty())
-            return;
-        Item item = itemStack.getItem();
-        if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
-            GameProfile gameProfile = NMSHelper.getGameProfile(itemStack);
-            if (gameProfile != null) {
-                lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
-                if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
-                    SkinUtil.setup3dLayers(gameProfile, lastSkull);
-                }
-                renderNext = lastSkull.getHeadLayers() != null;
-            }
-        }
-    }
+    //#if MC < 12104
+    //$$private void setupHeadRendering(ItemStack itemStack) {
+    //$$    if (!SkinLayersModBase.config.enableSkulls || itemStack.isEmpty())
+    //$$        return;
+    //$$    Item item = itemStack.getItem();
+    //$$    if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
+    //$$        GameProfile gameProfile = NMSHelper.getGameProfile(itemStack);
+    //$$        if (gameProfile != null) {
+    //$$            lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
+    //$$            if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
+    //$$                SkinUtil.setup3dLayers(gameProfile, lastSkull);
+    //$$            }
+    //$$            renderNext = lastSkull.getHeadLayers() != null;
+    //$$         }
+    //$$    }
+    //$$}
+    //#endif
 
 }

@@ -1,5 +1,5 @@
 version: '0.0.2'
-source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/dev1.21.4"
 replacements:
   name: "3d-Skin-Layers"
   id: "skinlayers3d"
