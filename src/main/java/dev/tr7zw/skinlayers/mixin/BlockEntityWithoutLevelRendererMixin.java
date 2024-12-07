@@ -33,7 +33,7 @@ public class BlockEntityWithoutLevelRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     public void render(ResolvableProfile resolvableProfile, ItemDisplayContext itemDisplayContext, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, int j, boolean bl, CallbackInfo ci) {
-        if (SkinLayersModBase.config.enableSkullsItems && resolvableProfile.isResolved()) {
+        if (SkinLayersModBase.config.enableSkullsItems && resolvableProfile != null && resolvableProfile.isResolved()) {
             GameProfile gameProfile = resolvableProfile.gameProfile();
             if (gameProfile != null) {
                 lastSkull = (SkullSettings) itemCache.computeIfAbsent(gameProfile, it -> new ItemSettings());
