@@ -32,5 +32,7 @@
     "text.skinlayers.fastrender.enable": "快速繪製",
     "text.skinlayers.fastrender.enable.tooltip": "以最快的速度繪製 3D 模型，這可能導致圖形的透明度錯誤",
     "text.skinlayers.firstperson.voxelsize": "第一人稱像素大小",
-    "text.skinlayers.firstperson.voxelsize.tooltip": "第一人稱下玩家手部所使用的像素大小"
+    "text.skinlayers.firstperson.voxelsize.tooltip": "第一人稱下玩家手部所使用的像素大小",
+    "text.skinlayers.compatibilityMode.enable": "相容模式",
+    "text.skinlayers.compatibilityMode.enable.tooltip": "繪製圖層的替代方法，可能會修復與其他模組的一些相容性問題"
 }
