@@ -52,7 +52,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
             return; // too far away
         }
         //#if MC >= 12104
-        if ((!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null) && livingEntityRenderState.wornHeadProfile.isResolved()) {
+        if ((!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null) && livingEntityRenderState.wornHeadProfile != null && livingEntityRenderState.wornHeadProfile.isResolved()) {
             GameProfile gameProfile = livingEntityRenderState.wornHeadProfile.gameProfile();
             lastSkull = (SkullSettings) itemCache.computeIfAbsent(gameProfile, it -> new ItemSettings());
             if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
