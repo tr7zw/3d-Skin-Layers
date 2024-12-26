@@ -44,7 +44,6 @@ public class SkinUtil {
 
     private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
         try {
-            // spotless:off
             //#if MC >= 11900
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
             if (optionalRes.isPresent()) {
@@ -55,7 +54,6 @@ public class SkinUtil {
             //$$        Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
             //$$        NativeImage skin = NativeImage.read(resource.getInputStream());
             //#endif 
-            // spotless:on
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
@@ -116,13 +114,11 @@ public class SkinUtil {
     }
 
     private static void checkAllocation(NativeImage image) throws Exception {
-        // spotless:off 
         //#if MC >= 12102
         image.getLuminanceOrAlpha(0,0); // check that it's allocated
         //#else
         //$$ image.getPixelRGBA(0, 0); // check that it's allocated
         //#endif
-        //spotless:on
     }
 
     public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,

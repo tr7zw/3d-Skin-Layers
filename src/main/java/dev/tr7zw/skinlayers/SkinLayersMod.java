@@ -1,6 +1,5 @@
 package dev.tr7zw.skinlayers;
 
-//spotless:off 
 //#if FABRIC
 import net.fabricmc.api.ClientModInitializer;
 
@@ -19,6 +18,5 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
   //$$ 	ModLoaderUtil.registerClientSetupListener(this::onInitialize);
   //$$ }
   //#endif
-  //spotless:on
 
 }

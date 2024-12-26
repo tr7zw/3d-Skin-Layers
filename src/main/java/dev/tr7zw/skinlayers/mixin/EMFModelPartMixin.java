@@ -17,7 +17,6 @@ import traben.entity_model_features.models.parts.EMFModelPart;
 @Mixin(EMFModelPart.class)
 public abstract class EMFModelPartMixin implements ModelPartInjector {
 
-    // spotless:off
     //#if MC >= 12100
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V", at = @At(value = "HEAD"), cancellable = true)
     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, int color,
@@ -46,7 +45,6 @@ public abstract class EMFModelPartMixin implements ModelPartInjector {
     //$$ }
     //$$ 
     //#endif
-    // spotless:on
 
 }
 //#else

@@ -14,7 +14,6 @@ import dev.tr7zw.skinlayers.versionless.render.CustomizableCube;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 
-//spotless:off
 //#if MC >= 11700
 import net.minecraft.client.model.geom.PartPose;
 //#endif
@@ -30,7 +29,6 @@ import org.joml.Vector4f;
 //$$ import com.mojang.math.Matrix3f;
 //$$ import com.mojang.math.Matrix4f;
 //#endif
-//spotless:on
 
 /**
  * Cut down copy of the Vanilla ModelPart to bypass Optifine/Sodium screwing
@@ -48,7 +46,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         this.children = map;
     }
 
-    // spotless:off
   //#if MC >= 12102
     public void loadPose(PartPose partPose) {
         this.x = partPose.x();
@@ -70,7 +67,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
   //#else
     //$$ public void loadPose(ModelPart partPose){copyFrom(partPose);}
   //#endif
-  //spotless:on
 
     public void copyFrom(ModelPart modelPart) {
         this.xRot = modelPart.xRot;
@@ -112,7 +108,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         translateAndRotate(poseStack);
         compile(vanillaModel, poseStack.last(), vertexConsumer, light, overlay, color);
 
-        // spotless:off
         //#if MC < 12100
         //$$ float r,g,b,a;
         //$$ a = ((color >> 24) & 0xFF) / 255F;
@@ -120,16 +115,13 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         //$$ g = ((color >> 8) & 0xFF) / 255F;
         //$$ b = (color & 0xFF) / 255F;
         //#endif
-        //spotless:on
 
         for (ModelPart modelPart : this.children.values()) {
-            // spotless:off
             //#if MC >= 12100
             modelPart.render(poseStack, vertexConsumer, light, overlay, color);
             //#else
             //$$ modelPart.render(poseStack, vertexConsumer, light, overlay, r, g, b, a);
             //#endif
-            //spotless:on
         }
         poseStack.popPose();
     }
@@ -137,7 +129,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     public void translateAndRotate(PoseStack poseStack) {
         if (x != 0 || y != 0 || z != 0)
             poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
-        // spotless:off 
         //#if MC >= 11903
         if (this.xRot != 0.0F || this.yRot != 0.0F || this.zRot != 0.0F)
             poseStack.mulPose((new Quaternionf()).rotationZYX(this.zRot, this.yRot, this.xRot));
@@ -162,7 +153,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
 
-        // spotless:off
         //#if MC < 12100
         //$$ float red,green,blue,alpha;
         //$$ alpha = ((color >> 24) & 0xFF) / 255F;
@@ -170,7 +160,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         //$$ green = ((color >> 8) & 0xFF) / 255F;
         //$$ blue = (color & 0xFF) / 255F;
         //#endif
-        //spotless:on
 
         for (int id = 0; id < polygonData.length; id += polyDataSize) {
             Vector3f vector3f = new Vector3f(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
@@ -181,7 +170,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             // optional transformations for bending layers
             transformer.transform(vector3f, vector4f);
 
-            // spotless:off 
             //#if MC >= 11903
             vector3f = matrix3f.transform(vector3f);
             for (int o = 0; o < 4; o++) {
@@ -205,14 +193,12 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             //$$ overlay, light,
             //$$ vector3f.x(), vector3f.y(), vector3f.z());
             //#endif
-            //spotless:on
             }
         }
 
         // other cubes
         for (Cube cube : this.cubes) {
             transformer.transform(cube);
-            // spotless:off
             //#if MC >= 12100
             cube.compile(pose, vertexConsumer, light, overlay, color);
             //#elseif MC >= 11700
@@ -237,7 +223,6 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
 	          //$$ 	}
 	          //$$ }
             //#endif
-            //spotless:on
 
         }
     }

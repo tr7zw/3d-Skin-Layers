@@ -38,7 +38,6 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(CustomHeadLayer.class)
 public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel & HeadedModel> {
 
-    // spotless:off 
     //#if MC >= 12102
     @SuppressWarnings("resource")
     @Inject(method = "render", at = @At("HEAD"))
@@ -77,7 +76,6 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
     //$$      setupHeadRendering(livingEntity.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD));
     //$$  }
     //#endif
-    //spotless:on
 
     //#if MC < 12104
     //$$private void setupHeadRendering(ItemStack itemStack) {

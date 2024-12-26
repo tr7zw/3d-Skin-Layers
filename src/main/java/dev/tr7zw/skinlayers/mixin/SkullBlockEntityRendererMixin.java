@@ -28,7 +28,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.phys.Vec3;
-// spotless:off 
 //#if MC >= 11700
 import net.minecraft.client.model.SkullModelBase;
 //#else
@@ -37,12 +36,10 @@ import net.minecraft.client.model.SkullModelBase;
 //$$ import org.spongepowered.asm.mixin.Shadow;
 //$$ import java.util.Map;
 //#endif
-// spotless:on
 
 @Mixin(SkullBlockRenderer.class)
 public class SkullBlockEntityRendererMixin {
 
-    // spotless:off 
 	//#if MC <= 11605
 	//$$ @Shadow
 	//$$ private static Map<net.minecraft.world.level.block.SkullBlock.Type, SkullModel> MODEL_BY_TYPE;
@@ -63,7 +60,6 @@ public class SkullBlockEntityRendererMixin {
                         * SkinLayersModBase.config.renderDistanceLOD) {
             lastSkull = (SkullSettings) skullBlockEntity;
             GameProfile gameProfile = null;
-            // spotless:off 
             //#if MC <= 12004
             //$$ gameProfile = skullBlockEntity.getOwnerProfile();
             //#else
@@ -96,7 +92,6 @@ public class SkullBlockEntityRendererMixin {
     }
 
     @Inject(method = "renderSkull", at = @At("HEAD"))
-    // spotless:off 
     //#if MC >= 11700
     private static void renderSkull(Direction direction, float f, float g, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, SkullModelBase skullModelBase, RenderType renderType,
@@ -135,7 +130,6 @@ public class SkullBlockEntityRendererMixin {
             poseStack.scale(voxelSize, voxelSize, voxelSize);
             mesh.setPosition(0, -0.25f, 0);
             mesh.setRotation(0, f * 0.017453292F, 0);
-            // spotless:off
             //#if MC <= 11605
             //$$ lastSkull.getHeadLayers().render(poseStack, multiBufferSource.getBuffer(getRenderType(type, gameProfile)), i,
             //$$ OverlayTexture.NO_OVERLAY);
@@ -143,7 +137,6 @@ public class SkullBlockEntityRendererMixin {
             lastSkull.getHeadLayers().render(poseStack, multiBufferSource.getBuffer(renderType), i,
                     OverlayTexture.NO_OVERLAY);
             //#endif
-            //spotless:on
             poseStack.popPose();
             renderNext = false;
             lastSkull = null;

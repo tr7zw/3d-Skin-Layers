@@ -27,7 +27,6 @@ public class ModelPartMixin implements ModelPartInjector {
     @Getter
     private OffsetProvider offsetProvider = null;
 
-    // spotless:off
     //#if MC >= 12100
     @Inject(method = "Lnet/minecraft/client/model/geom/ModelPart;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V", at = @At(value = "HEAD"), cancellable = true)
     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, int color,
@@ -56,7 +55,6 @@ public class ModelPartMixin implements ModelPartInjector {
     //$$ }
     //$$ 
     //#endif
-    // spotless:on
 
     @Override
     public void setInjectedMesh(Mesh mesh, OffsetProvider offsetProvider) {

@@ -18,7 +18,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 
-// spotless:off 
 //#if MC >= 12102
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#else
@@ -33,7 +32,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 //#else
 //$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 //#endif
-// spotless:on
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -43,17 +41,14 @@ import net.minecraft.world.item.ItemStack;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin
-        // spotless:off 
 //#if MC >= 12102
             extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
 //#else
 //$$        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 //#endif
-// spotless:on
 
     private boolean setupFirstpersonArms = false;
 
-    // spotless:off 
 	//#if MC >= 11700
     public PlayerRendererMixin(Context context, PlayerModel entityModel, float f) {
         super(context, entityModel, f);
@@ -65,9 +60,7 @@ public abstract class PlayerRendererMixin
     //$$ 	// TODO Auto-generated constructor stub
     //$$ }
     //#endif
-    // spotless:on
 
-    // spotless:off 
   //#if MC >= 12102
   @Inject(method = "extractRenderState", at = @At("RETURN"))
   public void extractRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState playerRenderState,
@@ -193,10 +186,8 @@ public abstract class PlayerRendererMixin
   //$$     }
   //$$  }
   //#endif
-  // spotless:on
 
     @Inject(method = "renderHand", at = @At("HEAD"))
-    // spotless:off 
 //#if MC >= 12102
   private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
           ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
@@ -212,7 +203,6 @@ public abstract class PlayerRendererMixin
 //$$    private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
 //$$            AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
 //#endif
-// spotless:on
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
         ((ModelPartInjector) (Object) sleeve).setInjectedMesh(null, null);

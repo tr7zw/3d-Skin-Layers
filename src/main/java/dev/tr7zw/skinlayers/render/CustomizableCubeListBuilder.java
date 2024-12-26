@@ -8,11 +8,9 @@ import dev.tr7zw.skinlayers.versionless.render.CustomizableCube;
 import dev.tr7zw.skinlayers.versionless.util.Direction;
 import dev.tr7zw.skinlayers.versionless.util.wrapper.ModelBuilder;
 import net.minecraft.client.model.geom.ModelPart.Cube;
-// spotless:off 
 //#if MC >= 11700
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 //#endif
-// spotless:on
 
 public class CustomizableCubeListBuilder implements ModelBuilder {
 
@@ -58,7 +56,6 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
     @Override
     public ModelBuilder addVanillaBox(float x, float y, float z, float width, float height, float depth) {
         int textureSize = 64;
-        // spotless:off 
         //#if MC <= 11605
         //$$         this.vanillaCubes.add(new Cube(u, v, x, y, z, width, height, depth, 0, 0, 0,
         //$$              this.mirror, textureSize, textureSize));
@@ -67,7 +64,6 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
         cubeList.texOffs(u, v).addBox(x, y, z, width, height, depth);
         this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureSize, textureSize));
         //#endif
-        // spotless:on
         return this;
     }
 

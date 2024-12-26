@@ -4,11 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.geom.ModelPart;
-// spotless:off
 //#if MC >= 11700
 import net.minecraft.client.model.geom.PartPose;
 //#endif
-//spotless:on
 
 public interface Mesh {
 
@@ -32,13 +30,11 @@ public interface Mesh {
         }
 
         @Override
-        // spotless:off
         //#if MC >= 11700
         public void loadPose(PartPose partPose) {
         //#else
           //$$ public void loadPose(ModelPart partPose) {
         //#endif
-        //spotless:on
         }
 
         @Override
@@ -82,13 +78,11 @@ public interface Mesh {
 
     public void setRotation(float xRot, float yRot, float zRot);
 
-    // spotless:off
     //#if MC >= 11700
     public void loadPose(PartPose partPose);
     //#else
       //$$ public void loadPose(ModelPart partPose);
     //#endif
-    //spotless:on
 
     public void copyFrom(ModelPart modelPart);
 

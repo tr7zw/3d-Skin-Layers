@@ -51,13 +51,11 @@ public class PreviewHelper {
             @Nullable Quaternionf cameraOrientation, LivingEntity entity) {
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate((double) x, (double) y, 50.0D);
-        // spotless:off 
         //#if MC <= 12004
         //$$ guiGraphics.pose().mulPoseMatrix((new Matrix4f()).scaling((float) scale, (float) scale, (float) (-scale)));
         //#else
         guiGraphics.pose().mulPose((new Matrix4f()).scaling((float) scale, (float) scale, (float) (-scale)));
         //#endif
-        //spotless:on
         guiGraphics.pose().mulPose(pose);
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityrenderdispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
@@ -67,7 +65,6 @@ public class PreviewHelper {
         }
 
         entityrenderdispatcher.setRenderShadow(false);
-        // spotless:off 
         //#if MC >= 12102
         guiGraphics.drawSpecial(consumer -> {
             entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0f, 1.0f,
@@ -77,7 +74,6 @@ public class PreviewHelper {
         //$$ entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f,
         //$$         guiGraphics.pose(), guiGraphics.bufferSource(), 15728880);
         //#endif
-        //spotless:on
         guiGraphics.flush();
         entityrenderdispatcher.setRenderShadow(true);
         guiGraphics.pose().popPose();

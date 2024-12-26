@@ -9,7 +9,6 @@ import dev.tr7zw.skinlayers.versionless.ModBase;
 import dev.tr7zw.skinlayers.versionless.config.Config;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-//spotless:off 
 //#if MC <= 11904
 //$$ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 //$$ import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,7 +20,6 @@ import net.minecraft.client.OptionInstance;
 //#else
 //$$ import net.minecraft.client.Option;
 //#endif
-//spotless:on
 
 public class ConfigScreenProvider {
 
@@ -77,13 +75,11 @@ public class ConfigScreenProvider {
                         () -> (double) config.firstPersonPixelScaling, (i) -> {
                             config.firstPersonPixelScaling = i.floatValue();
                         }));
-                // spotless:off
                 //#if MC >= 11900
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
                 //#else
                 //$$getOptions().addSmall(options.toArray(new Option[0]));
                 //#endif
-                // spotless:on
             }
 
             @Override
@@ -93,7 +89,6 @@ public class ConfigScreenProvider {
             }
 
             @Override
-            // spotless:off 
             //#if MC >= 12001
             public void render(GuiGraphics guiGraphics, int xMouse, int yMouse, float f) {
                 super.render(guiGraphics, xMouse, yMouse, f);
@@ -101,7 +96,6 @@ public class ConfigScreenProvider {
             //$$ public void render(PoseStack poseStack, int xMouse, int yMouse, float f) {
             //$$    super.render(poseStack, xMouse, yMouse, f);
             //#endif
-            // spotless:on
                 if (this.minecraft.level != null) {
                     int x = minecraft.getWindow().getGuiScaledWidth() / 2;
                     int y = minecraft.getWindow().getGuiScaledHeight() - 45;
@@ -110,7 +104,6 @@ public class ConfigScreenProvider {
                     float lookY = y - 80 - yMouse;
                     // Prevent the model from clipping into the back of the gui^^
                     lookY = Math.min(lookY, 10);
-                    // spotless:off 
                     //#if MC >= 12001
                     PreviewHelper.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, size, lookX, lookY,
                             this.minecraft.player);
@@ -121,7 +114,6 @@ public class ConfigScreenProvider {
                     //$$ InventoryScreen.renderEntityInInventory(x, y, size, lookX, lookY,
                     //$$ this.minecraft.player);
                     //#endif
-                    // spotless:on
                 }
             }
 

@@ -12,7 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(PlayerModel.class)
 public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel implements PlayerEntityModelAccessor {
 
-    // spotless:off 
 	//#if MC >= 11700
     public PlayerModelMixin(ModelPart modelPart) {
         super(modelPart);
@@ -22,7 +21,6 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
 	//$$	super(f);
 	//$$ }
     //#endif
-    //spotless:on
 
     @Shadow
     private boolean slim;
