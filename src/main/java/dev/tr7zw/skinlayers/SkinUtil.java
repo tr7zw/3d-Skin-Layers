@@ -118,7 +118,7 @@ public class SkinUtil {
     private static void checkAllocation(NativeImage image) throws Exception {
         // spotless:off 
         //#if MC >= 12102
-        image.getPixelsABGR(); // check that it's allocated
+        image.getLuminanceOrAlpha(0,0); // check that it's allocated
         //#else
         //$$ image.getPixelRGBA(0, 0); // check that it's allocated
         //#endif
