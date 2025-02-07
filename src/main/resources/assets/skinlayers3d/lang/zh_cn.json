@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.skinlayers3d": "将玩家的皮肤渲染为 3D 效果",
     "text.skinlayers.title": "3D 皮肤层设置",
     "text.skinlayers.enable.hat": "3D 帽子",
     "text.skinlayers.enable.hat.tooltip": "将玩家的帽子层渲染为 3D 模型",
