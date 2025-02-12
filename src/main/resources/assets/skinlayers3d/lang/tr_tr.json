@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.skinlayers3d": "Oyuncunun kostüm katmanlarını 3d renderlar",
     "text.skinlayers.title": "3D Görünüm Ayarları",
     "text.skinlayers.enable.hat": "3D Şapka",
     "text.skinlayers.enable.hat.tooltip": "Oyuncunun şapka katmanını 3D model olarak renderla",
