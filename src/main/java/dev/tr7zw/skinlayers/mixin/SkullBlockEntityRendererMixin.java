@@ -102,42 +102,19 @@ public class SkullBlockEntityRendererMixin {
     	//$$ PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
     	//$$ SkullModel skullModelBase = (SkullModel) MODEL_BY_TYPE.get(type);
     	//#endif
-    	// spotless:on
-        if (skullModelBase instanceof SkullModelAccessor) {
-            SkullModelAccessor accessor = (SkullModelAccessor) skullModelBase;
+        if (skullModelBase instanceof SkullModelAccessor accessor) {
             if (!renderNext || lastSkull == null) {
-                accessor.showHat(true);
+                accessor.injectHatMesh(null);
                 lastSkull = null;
                 return;
             }
             Mesh mesh = lastSkull.getHeadLayers();
             if (mesh == null) {
-                accessor.showHat(true);
+                accessor.injectHatMesh(null);
                 lastSkull = null;
                 return;
             }
-            accessor.showHat(false);
-
-            poseStack.pushPose();
-            if (direction == null) {
-                poseStack.translate(0.5D, 0.0D, 0.5D);
-            } else {
-                float h = 0.25F;
-                poseStack.translate((0.5F - direction.getStepX() * h), h, (0.5F - direction.getStepZ() * h));
-            }
-            poseStack.scale(-1.0F, -1.0F, 1.0F);
-            float voxelSize = SkinLayersModBase.config.skullVoxelSize;
-            poseStack.scale(voxelSize, voxelSize, voxelSize);
-            mesh.setPosition(0, -0.25f, 0);
-            mesh.setRotation(0, f * 0.017453292F, 0);
-            //#if MC <= 11605
-            //$$ lastSkull.getHeadLayers().render(poseStack, multiBufferSource.getBuffer(getRenderType(type, gameProfile)), i,
-            //$$ OverlayTexture.NO_OVERLAY);
-            //#else
-            lastSkull.getHeadLayers().render(poseStack, multiBufferSource.getBuffer(renderType), i,
-                    OverlayTexture.NO_OVERLAY);
-            //#endif
-            poseStack.popPose();
+            accessor.injectHatMesh(mesh);
             renderNext = false;
             lastSkull = null;
         }

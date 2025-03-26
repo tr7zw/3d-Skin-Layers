@@ -3,7 +3,10 @@ package dev.tr7zw.skinlayers.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import dev.tr7zw.skinlayers.accessor.ModelPartInjector;
 import dev.tr7zw.skinlayers.accessor.SkullModelAccessor;
+import dev.tr7zw.skinlayers.api.Mesh;
+import dev.tr7zw.skinlayers.api.OffsetProvider;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelPart;
 
@@ -24,18 +27,16 @@ public class SkullModelMixin implements SkullModelAccessor {
   //#endif
 
     @Override
-    public void showHat(boolean val) {
+    public void injectHatMesh(Mesh mesh) {
         //#if MC >= 11700
         head.getAllParts().forEach(part -> {
-            if (part != head) { // is the hat, not the head
-                part.visible = val;
+            if (part != head && (Object) part instanceof ModelPartInjector inj) { // is the hat, not the head
+                inj.setInjectedMesh(mesh, OffsetProvider.SKULL);
             }
         });
-	    //#else
-        //$$ hat.visible = val;
-	    //#endif
-	    //spotless:on
-
+        //#else
+        //$$ ((ModelPartInjector)(Object)hat).setInjectedMesh(mesh, OffsetProvider.SKULL);
+        //#endif
     }
 
 }

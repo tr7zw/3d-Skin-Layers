@@ -1,7 +1,9 @@
 package dev.tr7zw.skinlayers.accessor;
 
-public interface SkullModelAccessor {
+import dev.tr7zw.skinlayers.api.Mesh;
 
-    public void showHat(boolean val);
+public interface SkullModelAccessor {
+    
+    public void injectHatMesh(Mesh mesh);
 
 }
