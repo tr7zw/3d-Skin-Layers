@@ -67,8 +67,7 @@ public class PreviewHelper {
         entityrenderdispatcher.setRenderShadow(false);
         //#if MC >= 12102
         guiGraphics.drawSpecial(consumer -> {
-            entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0f, 1.0f,
-                    guiGraphics.pose(), consumer, 15728880);
+            entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0f, 1.0f, guiGraphics.pose(), consumer, 15728880);
         });
         //#else
         //$$ entityrenderdispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f,

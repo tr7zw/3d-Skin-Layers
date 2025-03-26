@@ -45,13 +45,16 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState, float f,
             float g, CallbackInfo info) {
 
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().gameRenderer
-                .getMainCamera().getPosition().distanceToSqr(livingEntityRenderState.x, livingEntityRenderState.y, livingEntityRenderState.z) > SkinLayersModBase.config.renderDistanceLOD
-                        * SkinLayersModBase.config.renderDistanceLOD) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()
+                .distanceToSqr(livingEntityRenderState.x, livingEntityRenderState.y,
+                        livingEntityRenderState.z) > SkinLayersModBase.config.renderDistanceLOD
+                                * SkinLayersModBase.config.renderDistanceLOD) {
             return; // too far away
         }
         //#if MC >= 12104
-        if ((!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null) && livingEntityRenderState.wornHeadProfile != null && livingEntityRenderState.wornHeadProfile.isResolved()) {
+        if ((!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null)
+                && livingEntityRenderState.wornHeadProfile != null
+                && livingEntityRenderState.wornHeadProfile.isResolved()) {
             GameProfile gameProfile = livingEntityRenderState.wornHeadProfile.gameProfile();
             lastSkull = (SkullSettings) itemCache.computeIfAbsent(gameProfile, it -> new ItemSettings());
             if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {

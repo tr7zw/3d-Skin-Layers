@@ -10,13 +10,12 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
         this.onInitialize();
     }
 
-    
-  //#else
-  //$$ import dev.tr7zw.util.ModLoaderUtil;
-  //$$ public class SkinLayersMod extends SkinLayersModBase {
-  //$$ public SkinLayersMod() {
-  //$$ 	ModLoaderUtil.registerClientSetupListener(this::onInitialize);
-  //$$ }
-  //#endif
+    //#else
+    //$$ import dev.tr7zw.util.ModLoaderUtil;
+    //$$ public class SkinLayersMod extends SkinLayersModBase {
+    //$$ public SkinLayersMod() {
+    //$$ 	ModLoaderUtil.registerClientSetupListener(this::onInitialize);
+    //$$ }
+    //#endif
 
 }

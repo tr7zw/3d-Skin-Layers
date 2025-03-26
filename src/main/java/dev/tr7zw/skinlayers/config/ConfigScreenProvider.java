@@ -92,10 +92,10 @@ public class ConfigScreenProvider {
             //#if MC >= 12001
             public void render(GuiGraphics guiGraphics, int xMouse, int yMouse, float f) {
                 super.render(guiGraphics, xMouse, yMouse, f);
-            //#else
-            //$$ public void render(PoseStack poseStack, int xMouse, int yMouse, float f) {
-            //$$    super.render(poseStack, xMouse, yMouse, f);
-            //#endif
+                //#else
+                //$$ public void render(PoseStack poseStack, int xMouse, int yMouse, float f) {
+                //$$    super.render(poseStack, xMouse, yMouse, f);
+                //#endif
                 if (this.minecraft.level != null) {
                     int x = minecraft.getWindow().getGuiScaledWidth() / 2;
                     int y = minecraft.getWindow().getGuiScaledHeight() - 45;

@@ -20,11 +20,11 @@ import net.minecraft.client.model.geom.ModelPart;
 public class SkullModelMixin implements SkullModelAccessor {
 
     @Shadow
-  //#if MC >= 11700
+    //#if MC >= 11700
     private ModelPart head;
-  //#else
-  //$$ private ModelPart hat;
-  //#endif
+    //#else
+    //$$ private ModelPart hat;
+    //#endif
 
     @Override
     public void injectHatMesh(Mesh mesh) {

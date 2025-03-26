@@ -40,18 +40,22 @@ import net.minecraft.client.model.SkullModelBase;
 @Mixin(SkullBlockRenderer.class)
 public class SkullBlockEntityRendererMixin {
 
-	//#if MC <= 11605
-	//$$ @Shadow
-	//$$ private static Map<net.minecraft.world.level.block.SkullBlock.Type, SkullModel> MODEL_BY_TYPE;
-	//$$ @Shadow
-	//$$ 	private static RenderType getRenderType(net.minecraft.world.level.block.SkullBlock.Type type,
-	//$$  GameProfile gameProfile) {return null;}
-	//#endif
-	
+    //#if MC <= 11605
+    //$$ @Shadow
+    //$$ private static Map<net.minecraft.world.level.block.SkullBlock.Type, SkullModel> MODEL_BY_TYPE;
+    //$$ @Shadow
+    //$$ 	private static RenderType getRenderType(net.minecraft.world.level.block.SkullBlock.Type type,
+    //$$  GameProfile gameProfile) {return null;}
+    //#endif
+
     @SuppressWarnings("resource")
     @Inject(method = "render", at = @At("HEAD"))
     public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
-            MultiBufferSource multiBufferSource, int i, int j, CallbackInfo info) {
+            MultiBufferSource multiBufferSource, int i, int j,
+            //#if MC >= 12105
+            Vec3 vec3,
+            //#endif
+            CallbackInfo info) {
         Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         if (!SkinLayersModBase.config.enableSkulls)
             return;
@@ -63,7 +67,7 @@ public class SkullBlockEntityRendererMixin {
             //#if MC <= 12004
             //$$ gameProfile = skullBlockEntity.getOwnerProfile();
             //#else
-            if(skullBlockEntity.getOwnerProfile() != null) {
+            if (skullBlockEntity.getOwnerProfile() != null) {
                 gameProfile = skullBlockEntity.getOwnerProfile().gameProfile();
             }
             //#endif
@@ -76,7 +80,7 @@ public class SkullBlockEntityRendererMixin {
             if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
                 lastSkull.setInitialized(true); // do this first, so if anything goes horribly wrong, it doesn't happen
                                                 // next
-                // frame again
+                                                // frame again
                 lastSkull.setLastTexture(textureLocation);
                 SkinUtil.setup3dLayers(gameProfile, lastSkull);
             }
@@ -96,12 +100,12 @@ public class SkullBlockEntityRendererMixin {
     private static void renderSkull(Direction direction, float f, float g, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, SkullModelBase skullModelBase, RenderType renderType,
             CallbackInfo ci) {
-    	//#else
-    	//$$ private static void renderSkull(Direction direction, float f,
-    	//$$ net.minecraft.world.level.block.SkullBlock.Type type, GameProfile gameProfile, float g,
-    	//$$ PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-    	//$$ SkullModel skullModelBase = (SkullModel) MODEL_BY_TYPE.get(type);
-    	//#endif
+        //#else
+        //$$ private static void renderSkull(Direction direction, float f,
+        //$$ net.minecraft.world.level.block.SkullBlock.Type type, GameProfile gameProfile, float g,
+        //$$ PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        //$$ SkullModel skullModelBase = (SkullModel) MODEL_BY_TYPE.get(type);
+        //#endif
         if (skullModelBase instanceof SkullModelAccessor accessor) {
             if (!renderNext || lastSkull == null) {
                 accessor.injectHatMesh(null);

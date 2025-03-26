@@ -41,15 +41,15 @@ import net.minecraft.world.item.ItemStack;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin
-//#if MC >= 12102
-            extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
-//#else
-//$$        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-//#endif
+        //#if MC >= 12102
+        extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
+    //#else
+    //$$        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+    //#endif
 
     private boolean setupFirstpersonArms = false;
 
-	//#if MC >= 11700
+    //#if MC >= 11700
     public PlayerRendererMixin(Context context, PlayerModel entityModel, float f) {
         super(context, entityModel, f);
     }
@@ -61,136 +61,136 @@ public abstract class PlayerRendererMixin
     //$$ }
     //#endif
 
-  //#if MC >= 12102
-  @Inject(method = "extractRenderState", at = @At("RETURN"))
-  public void extractRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState playerRenderState,
-          float f, CallbackInfo ci) {
-      PlayerModel playerModel = this.getModel();
-      PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-      boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
-      // reset all injected layers
-      ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(null, null);
-      ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(null, null);
-      ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(null, null);
-      ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
-      ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
-      ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
-      if (Minecraft.getInstance().player == null
-              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
-                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-                              * SkinLayersModBase.config.renderDistanceLOD) {
-          return;
-      }
-      if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
-          // fall back to vanilla
-          return;
-      }
-      // Inject layers into the vanilla model
-      ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
-      if (SkinLayersModBase.config.enableHat
-              && (itemStack == null || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))) {
-          ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(), OffsetProvider.HEAD);
-      }
-      if (SkinLayersModBase.config.enableJacket) {
-          ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(settings.getTorsoMesh(),
-                  OffsetProvider.BODY);
-      }
-      if (SkinLayersModBase.config.enableLeftSleeve) {
-          ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(settings.getLeftArmMesh(),
-                  slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
-      }
-      if (SkinLayersModBase.config.enableRightSleeve) {
-          ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(settings.getRightArmMesh(),
-                  slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
-      }
-      if (SkinLayersModBase.config.enableLeftPants) {
-          ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(settings.getLeftLegMesh(),
-                  OffsetProvider.LEFT_LEG);
-      }
-      if (SkinLayersModBase.config.enableRightPants) {
-          ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(settings.getRightLegMesh(),
-                  OffsetProvider.RIGHT_LEG);
-      }
-  }
-//#else
-  //$$  private boolean loaded = false;
-  //$$  
-  //$$    @SuppressWarnings("resource")
-  //$$    @Inject(method = "setModelProperties", at = @At("RETURN"))
-  //$$    public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
-  //$$       PlayerModel playerModel = this.getModel();
-  //$$       if (!loaded) {
-  //$$           this.addLayer(new dev.tr7zw.skinlayers.renderlayers.CustomLayerFeatureRenderer(this));
-  //$$
-  //$$          loaded = true;
-  //$$      }
-  //$$     PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-  //$$      boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
-  //$$     // reset all injected layers
-  //$$      ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(null, null);
-  //$$     ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(null, null);
-  //$$      ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(null, null);
-  //$$     ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
-  //$$     ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
-  //$$     ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
-  //$$      if (Minecraft.getInstance().player == null
-  //$$              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
-  //$$                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-  //$$                             * SkinLayersModBase.config.renderDistanceLOD) {
-  //$$          return;
-  //$$      }
-  //$$     if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
-  //$$         // fall back to vanilla
-  //$$         return;
-  //$$     }
-  //$$     if (SkinLayersModBase.config.compatibilityMode || setupFirstpersonArms) {
-  //$$         setupFirstpersonArms = false;
-  //$$         // Inject layers into the vanilla model
-  //$$         ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
-  //$$         if (SkinLayersModBase.config.enableHat && (itemStack == null
-  //$$                 || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))) {
-  //$$            ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(),
-  //$$                    OffsetProvider.HEAD);
-  //$$        }
-  //$$         if (SkinLayersModBase.config.enableJacket) {
-  //$$            ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(settings.getTorsoMesh(),
-  //$$                    OffsetProvider.BODY);
-  //$$         }
-  //$$         if (SkinLayersModBase.config.enableLeftSleeve) {
-  //$$             ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(settings.getLeftArmMesh(),
-  //$$                    slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
-  //$$        }
-  //$$        if (SkinLayersModBase.config.enableRightSleeve) {
-  //$$            ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(settings.getRightArmMesh(),
-  //$$                    slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
-  //$$        }
-  //$$         if (SkinLayersModBase.config.enableLeftPants) {
-  //$$            ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(settings.getLeftLegMesh(),
-  //$$                     OffsetProvider.LEFT_LEG);
-  //$$        }
-  //$$        if (SkinLayersModBase.config.enableRightPants) {
-  //$$            ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(settings.getRightLegMesh(),
-  //$$                    OffsetProvider.RIGHT_LEG);
-  //$$        }
-  //$$    } else {
-  //$$        // hiding vanilla layers when needed
-  //$$        playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
-  //$$         playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
-  //$$         playerModel.leftSleeve.visible = playerModel.leftSleeve.visible
-  //$$                 && !SkinLayersModBase.config.enableLeftSleeve;
-  //$$         playerModel.rightSleeve.visible = playerModel.rightSleeve.visible
-  //$$                 && !SkinLayersModBase.config.enableRightSleeve;
-  //$$         playerModel.leftPants.visible = playerModel.leftPants.visible && !SkinLayersModBase.config.enableLeftPants;
-  //$$         playerModel.rightPants.visible = playerModel.rightPants.visible
-  //$$                 && !SkinLayersModBase.config.enableRightPants;
-  //$$     }
-  //$$  }
-  //#endif
+    //#if MC >= 12102
+    @Inject(method = "extractRenderState", at = @At("RETURN"))
+    public void extractRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState playerRenderState,
+            float f, CallbackInfo ci) {
+        PlayerModel playerModel = this.getModel();
+        PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
+        boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
+        // reset all injected layers
+        ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
+        ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
+        if (Minecraft.getInstance().player == null
+                || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
+                        .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+                                * SkinLayersModBase.config.renderDistanceLOD) {
+            return;
+        }
+        if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
+            // fall back to vanilla
+            return;
+        }
+        // Inject layers into the vanilla model
+        ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
+        if (SkinLayersModBase.config.enableHat
+                && (itemStack == null || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))) {
+            ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(), OffsetProvider.HEAD);
+        }
+        if (SkinLayersModBase.config.enableJacket) {
+            ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(settings.getTorsoMesh(),
+                    OffsetProvider.BODY);
+        }
+        if (SkinLayersModBase.config.enableLeftSleeve) {
+            ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(settings.getLeftArmMesh(),
+                    slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
+        }
+        if (SkinLayersModBase.config.enableRightSleeve) {
+            ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(settings.getRightArmMesh(),
+                    slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
+        }
+        if (SkinLayersModBase.config.enableLeftPants) {
+            ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(settings.getLeftLegMesh(),
+                    OffsetProvider.LEFT_LEG);
+        }
+        if (SkinLayersModBase.config.enableRightPants) {
+            ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(settings.getRightLegMesh(),
+                    OffsetProvider.RIGHT_LEG);
+        }
+    }
+    //#else
+    //$$  private boolean loaded = false;
+    //$$  
+    //$$    @SuppressWarnings("resource")
+    //$$    @Inject(method = "setModelProperties", at = @At("RETURN"))
+    //$$    public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
+    //$$       PlayerModel playerModel = this.getModel();
+    //$$       if (!loaded) {
+    //$$           this.addLayer(new dev.tr7zw.skinlayers.renderlayers.CustomLayerFeatureRenderer(this));
+    //$$
+    //$$          loaded = true;
+    //$$      }
+    //$$     PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
+    //$$      boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
+    //$$     // reset all injected layers
+    //$$      ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(null, null);
+    //$$     ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(null, null);
+    //$$      ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(null, null);
+    //$$     ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
+    //$$     ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
+    //$$     ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
+    //$$      if (Minecraft.getInstance().player == null
+    //$$              || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
+    //$$                      .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
+    //$$                             * SkinLayersModBase.config.renderDistanceLOD) {
+    //$$          return;
+    //$$      }
+    //$$     if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
+    //$$         // fall back to vanilla
+    //$$         return;
+    //$$     }
+    //$$     if (SkinLayersModBase.config.compatibilityMode || setupFirstpersonArms) {
+    //$$         setupFirstpersonArms = false;
+    //$$         // Inject layers into the vanilla model
+    //$$         ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
+    //$$         if (SkinLayersModBase.config.enableHat && (itemStack == null
+    //$$                 || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))) {
+    //$$            ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(),
+    //$$                    OffsetProvider.HEAD);
+    //$$        }
+    //$$         if (SkinLayersModBase.config.enableJacket) {
+    //$$            ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(settings.getTorsoMesh(),
+    //$$                    OffsetProvider.BODY);
+    //$$         }
+    //$$         if (SkinLayersModBase.config.enableLeftSleeve) {
+    //$$             ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(settings.getLeftArmMesh(),
+    //$$                    slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
+    //$$        }
+    //$$        if (SkinLayersModBase.config.enableRightSleeve) {
+    //$$            ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(settings.getRightArmMesh(),
+    //$$                    slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
+    //$$        }
+    //$$         if (SkinLayersModBase.config.enableLeftPants) {
+    //$$            ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(settings.getLeftLegMesh(),
+    //$$                     OffsetProvider.LEFT_LEG);
+    //$$        }
+    //$$        if (SkinLayersModBase.config.enableRightPants) {
+    //$$            ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(settings.getRightLegMesh(),
+    //$$                    OffsetProvider.RIGHT_LEG);
+    //$$        }
+    //$$    } else {
+    //$$        // hiding vanilla layers when needed
+    //$$        playerModel.hat.visible = playerModel.hat.visible && !SkinLayersModBase.config.enableHat;
+    //$$         playerModel.jacket.visible = playerModel.jacket.visible && !SkinLayersModBase.config.enableJacket;
+    //$$         playerModel.leftSleeve.visible = playerModel.leftSleeve.visible
+    //$$                 && !SkinLayersModBase.config.enableLeftSleeve;
+    //$$         playerModel.rightSleeve.visible = playerModel.rightSleeve.visible
+    //$$                 && !SkinLayersModBase.config.enableRightSleeve;
+    //$$         playerModel.leftPants.visible = playerModel.leftPants.visible && !SkinLayersModBase.config.enableLeftPants;
+    //$$         playerModel.rightPants.visible = playerModel.rightPants.visible
+    //$$                 && !SkinLayersModBase.config.enableRightPants;
+    //$$     }
+    //$$  }
+    //#endif
 
     @Inject(method = "renderHand", at = @At("HEAD"))
-//#if MC >= 12102
-  private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-          ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
+    //#if MC >= 12102
+    private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
+            ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
         // TODO
         AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;// hacky, but 1.21.2 happened
         ModelPart sleeve;
@@ -199,10 +199,10 @@ public abstract class PlayerRendererMixin
         } else {
             sleeve = getModel().rightSleeve;
         }
-//#else
-//$$    private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-//$$            AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
-//#endif
+        //#else
+        //$$    private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
+        //$$            AbstractClientPlayer abstractClientPlayer, ModelPart arm, ModelPart sleeve, CallbackInfo info) {
+        //#endif
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
         ((ModelPartInjector) (Object) sleeve).setInjectedMesh(null, null);

@@ -12,14 +12,14 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(PlayerModel.class)
 public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel implements PlayerEntityModelAccessor {
 
-	//#if MC >= 11700
+    //#if MC >= 11700
     public PlayerModelMixin(ModelPart modelPart) {
         super(modelPart);
     }
     //#else
     //$$ public PlayerModelMixin(float f) {
-	//$$	super(f);
-	//$$ }
+    //$$	super(f);
+    //$$ }
     //#endif
 
     @Shadow

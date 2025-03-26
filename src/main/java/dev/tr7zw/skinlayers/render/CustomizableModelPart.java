@@ -46,7 +46,7 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         this.children = map;
     }
 
-  //#if MC >= 12102
+    //#if MC >= 12102
     public void loadPose(PartPose partPose) {
         this.x = partPose.x();
         this.y = partPose.y();
@@ -55,18 +55,18 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         this.yRot = partPose.yRot();
         this.zRot = partPose.zRot();
     }
-  //#elseif MC >= 11700
-  //$$  public void loadPose(PartPose partPose) {
-  //$$        this.x = partPose.x;
-  //$$        this.y = partPose.y;
-  //$$        this.z = partPose.z;
-  //$$        this.xRot = partPose.xRot;
-  //$$        this.yRot = partPose.yRot;
-  //$$        this.zRot = partPose.zRot;
-  //$$    }
-  //#else
+    //#elseif MC >= 11700
+    //$$  public void loadPose(PartPose partPose) {
+    //$$        this.x = partPose.x;
+    //$$        this.y = partPose.y;
+    //$$        this.z = partPose.z;
+    //$$        this.xRot = partPose.xRot;
+    //$$        this.yRot = partPose.yRot;
+    //$$        this.zRot = partPose.zRot;
+    //$$    }
+    //#else
     //$$ public void loadPose(ModelPart partPose){copyFrom(partPose);}
-  //#endif
+    //#endif
 
     public void copyFrom(ModelPart modelPart) {
         this.xRot = modelPart.xRot;
@@ -132,15 +132,15 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         //#if MC >= 11903
         if (this.xRot != 0.0F || this.yRot != 0.0F || this.zRot != 0.0F)
             poseStack.mulPose((new Quaternionf()).rotationZYX(this.zRot, this.yRot, this.xRot));
-	    //#else
+        //#else
         //$$ if (this.zRot != 0.0F)
         //$$     poseStack.mulPose(Vector3f.ZP.rotation(this.zRot));
         //$$  if (this.yRot != 0.0F)
         //$$       poseStack.mulPose(Vector3f.YP.rotation(this.yRot));
         //$$   if (this.xRot != 0.0F)
         //$$      poseStack.mulPose(Vector3f.XP.rotation(this.xRot));
-	    //#endif
-	    //spotless:on
+        //#endif
+        //spotless:on
     }
 
     // render constants to reduce allocations
@@ -174,25 +174,25 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             vector3f = matrix3f.transform(vector3f);
             for (int o = 0; o < 4; o++) {
                 matrix4f.transform(vector4f[o]);
-    	    //#else
-            //$$    vector3f.transform(matrix3f);
-            //$$   for (int o = 0; o < 4; o++) {
-            //$$      vector4f[o].transform(matrix4f);
-    	    //#endif
-            //#if MC >= 12100
+                //#else
+                //$$    vector3f.transform(matrix3f);
+                //$$   for (int o = 0; o < 4; o++) {
+                //$$      vector4f[o].transform(matrix4f);
+                //#endif
+                //#if MC >= 12100
                 vertexConsumer.addVertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z());
                 vertexConsumer.setColor(color);
                 vertexConsumer.setUv(polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4]);
                 vertexConsumer.setOverlay(overlay);
                 vertexConsumer.setLight(light);
                 vertexConsumer.setNormal(vector3f.x(), vector3f.y(), vector3f.z());
-            //#else
-            //$$ vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(),
-            //$$ red, green, blue, alpha,
-            //$$ polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4],
-            //$$ overlay, light,
-            //$$ vector3f.x(), vector3f.y(), vector3f.z());
-            //#endif
+                //#else
+                //$$ vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(),
+                //$$ red, green, blue, alpha,
+                //$$ polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4],
+                //$$ overlay, light,
+                //$$ vector3f.x(), vector3f.y(), vector3f.z());
+                //#endif
             }
         }
 
@@ -202,26 +202,26 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             //#if MC >= 12100
             cube.compile(pose, vertexConsumer, light, overlay, color);
             //#elseif MC >= 11700
-              //$$ cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
+            //$$ cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
             //#else
-			  //$$ for (ModelPart.Polygon polygon : cube.polygons) {
-	          //$$ 	Vector3f vector3f = polygon.normal.copy();
-	          //$$ 	vector3f.transform(matrix3f);
-	          //$$ 	float l = vector3f.x();
-	          //$$ 	float m = vector3f.y();
-	          //$$ 	float n = vector3f.z();
-	          //$$ 
-	          //$$ 	for (int o = 0; o < 4; ++o) {
-	          //$$ 		ModelPart.Vertex vertex = polygon.vertices[o];
-	          //$$ 		float p = vertex.pos.x() / 16.0F;
-	          //$$ 		float q = vertex.pos.y() / 16.0F;
-	          //$$ 		float r = vertex.pos.z() / 16.0F;
-	          //$$ 		Vector4f vector4f = new Vector4f(p, q, r, 1.0F);
-	          //$$ 		vector4f.transform(matrix4f);
-        	  //$$		vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u, vertex.v, overlay,
-              //$$	       light, l, m, n);
-	          //$$ 	}
-	          //$$ }
+            //$$ for (ModelPart.Polygon polygon : cube.polygons) {
+            //$$ 	Vector3f vector3f = polygon.normal.copy();
+            //$$ 	vector3f.transform(matrix3f);
+            //$$ 	float l = vector3f.x();
+            //$$ 	float m = vector3f.y();
+            //$$ 	float n = vector3f.z();
+            //$$ 
+            //$$ 	for (int o = 0; o < 4; ++o) {
+            //$$ 		ModelPart.Vertex vertex = polygon.vertices[o];
+            //$$ 		float p = vertex.pos.x() / 16.0F;
+            //$$ 		float q = vertex.pos.y() / 16.0F;
+            //$$ 		float r = vertex.pos.z() / 16.0F;
+            //$$ 		Vector4f vector4f = new Vector4f(p, q, r, 1.0F);
+            //$$ 		vector4f.transform(matrix4f);
+            //$$		vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u, vertex.v, overlay,
+            //$$	       light, l, m, n);
+            //$$ 	}
+            //$$ }
             //#endif
 
         }

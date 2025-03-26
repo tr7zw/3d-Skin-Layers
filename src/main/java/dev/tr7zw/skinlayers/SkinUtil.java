@@ -49,11 +49,11 @@ public class SkinUtil {
             if (optionalRes.isPresent()) {
                 Resource resource = optionalRes.get();
                 NativeImage skin = NativeImage.read(resource.open());
-            //#else
-            //$$    if(Minecraft.getInstance().getResourceManager().hasResource(resourceLocation)) {
-            //$$        Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
-            //$$        NativeImage skin = NativeImage.read(resource.getInputStream());
-            //#endif 
+                //#else
+                //$$    if(Minecraft.getInstance().getResourceManager().hasResource(resourceLocation)) {
+                //$$        Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
+                //$$        NativeImage skin = NativeImage.read(resource.getInputStream());
+                //#endif 
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
@@ -115,7 +115,7 @@ public class SkinUtil {
 
     private static void checkAllocation(NativeImage image) throws Exception {
         //#if MC >= 12102
-        image.getLuminanceOrAlpha(0,0); // check that it's allocated
+        image.getLuminanceOrAlpha(0, 0); // check that it's allocated
         //#else
         //$$ image.getPixelRGBA(0, 0); // check that it's allocated
         //#endif

@@ -32,9 +32,9 @@ public interface Mesh {
         @Override
         //#if MC >= 11700
         public void loadPose(PartPose partPose) {
-        //#else
-          //$$ public void loadPose(ModelPart partPose) {
-        //#endif
+            //#else
+            //$$ public void loadPose(ModelPart partPose) {
+            //#endif
         }
 
         @Override
@@ -81,7 +81,7 @@ public interface Mesh {
     //#if MC >= 11700
     public void loadPose(PartPose partPose);
     //#else
-      //$$ public void loadPose(ModelPart partPose);
+    //$$ public void loadPose(ModelPart partPose);
     //#endif
 
     public void copyFrom(ModelPart modelPart);
