@@ -1,0 +1,19 @@
+{
+    "text.skinlayers.title": "Nastavení 3D Skin Layer",
+    "text.skinlayers.enable.hat": "3D pokrývka hlavy",
+    "text.skinlayers.enable.jacket": "3D bunda",
+    "text.skinlayers.enable.leftsleeve": "3D levý rukáv",
+    "text.skinlayers.enable.rightsleeve": "3D pravý rukáv",
+    "text.skinlayers.enable.leftpants": "3D levá nohavice",
+    "text.skinlayers.enable.rightpants": "3D pravá nohavice",
+    "text.skinlayers.renderdistancelod": "Vzdálenost detailů",
+    "text.skinlayers.basevoxelsize": "Velikost voxelů",
+    "text.skinlayers.headvoxelsize": "Velikost voxelů hlavy",
+    "text.skinlayers.bodyvoxelheightsize": "Výška voxelů hrudi",
+    "text.skinlayers.bodyvoxelwidthsize": "Šířka voxelů hrudi",
+    "text.skinlayers.skulls.enable": "3D lebky",
+    "text.skinlayers.skullsitems.enable": "3D itemy lebek",
+    "text.skinlayers.skulls.voxelsize": "Velikost voxelů lebek",
+    "text.skinlayers.reset": "Výchozí",
+    "text.skinlayers.fastrender.enable": "Rychlé vykreslování"
+}

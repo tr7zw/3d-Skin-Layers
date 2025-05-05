@@ -37,10 +37,10 @@ Since this mod is purely visual and fully clientside, it doesn't have to be inst
 
 Make sure you pick the correct File depending on Forge/Fabric!
 
-- [1.19.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A73407) 
-- [1.18.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A73250) 
-- [1.17.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A73242) 
-- [1.16.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A70886) 
+- [1.19.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A73407)
+- [1.18.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A73250)
+- [1.17.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A73242)
+- [1.16.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A70886)
 - [1.15.x ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A68722)
 - [1.12.2 ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=2020709689%3A6756)
 - [1.8.9/8 ⬇️](https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d/files/all?filter-status=1&filter-game-version=1738749986%3A4)

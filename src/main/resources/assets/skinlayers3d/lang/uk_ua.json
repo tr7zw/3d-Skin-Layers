@@ -1,0 +1,19 @@
+{
+    "text.skinlayers.title": "Параметри 3D Skin Layers",
+    "text.skinlayers.enable.hat": "3D-капелюх",
+    "text.skinlayers.enable.jacket": "3D-куртка",
+    "text.skinlayers.enable.leftsleeve": "3D-лівий рукав",
+    "text.skinlayers.enable.rightsleeve": "3D-правий рукав",
+    "text.skinlayers.enable.leftpants": "3D-ліва штанина",
+    "text.skinlayers.enable.rightpants": "3D-права штанина",
+    "text.skinlayers.renderdistancelod": "Відст. зменш. деталізації",
+    "text.skinlayers.basevoxelsize": "Розмір вокселя",
+    "text.skinlayers.headvoxelsize": "Розмір вокселя голови",
+    "text.skinlayers.bodyvoxelheightsize": "Висота вокселя тіла",
+    "text.skinlayers.bodyvoxelwidthsize": "Ширина вокселя тіла",
+    "text.skinlayers.skulls.enable": "3D-черепи",
+    "text.skinlayers.skullsitems.enable": "3D-предмети черепів",
+    "text.skinlayers.skulls.voxelsize": "Розмір вокселя черепа",
+    "text.skinlayers.reset": "Скинути",
+    "text.skinlayers.fastrender.enable": "Швидкий рендер"
+}
