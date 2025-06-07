@@ -7,7 +7,7 @@ import com.google.common.collect.Sets;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.config.ConfigScreenProvider;
 import dev.tr7zw.skinlayers.versionless.ModBase;
-import dev.tr7zw.util.ModLoaderUtil;
+import dev.tr7zw.transition.loader.ModLoaderUtil;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;

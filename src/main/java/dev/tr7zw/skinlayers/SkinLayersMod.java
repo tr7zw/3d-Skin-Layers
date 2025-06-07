@@ -11,7 +11,7 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
     }
 
     //#else
-    //$$ import dev.tr7zw.util.ModLoaderUtil;
+    //$$ import dev.tr7zw.transition.loader.ModLoaderUtil;
     //$$ public class SkinLayersMod extends SkinLayersModBase {
     //$$ public SkinLayersMod() {
     //$$ 	ModLoaderUtil.registerClientSetupListener(this::onInitialize);

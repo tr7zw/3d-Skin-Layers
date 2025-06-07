@@ -1,5 +1,6 @@
 package dev.tr7zw.skinlayers.mixin;
 
+import static dev.tr7zw.skinlayers.SkullRendererCache.itemCache;
 import static dev.tr7zw.skinlayers.SkullRendererCache.lastSkull;
 import static dev.tr7zw.skinlayers.SkullRendererCache.renderNext;
 
@@ -8,16 +9,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
+import dev.tr7zw.skinlayers.SkullRendererCache;
+import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullModelAccessor;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.PlayerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -73,7 +77,7 @@ public class SkullBlockEntityRendererMixin {
             //#endif
             if (gameProfile == null)
                 return;
-            ResourceLocation textureLocation = NMSHelper.getPlayerSkin(gameProfile);
+            ResourceLocation textureLocation = PlayerUtil.getPlayerSkin(gameProfile);
             if (textureLocation != lastSkull.getLastTexture()) {
                 lastSkull.setInitialized(false);
             }

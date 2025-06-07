@@ -3,128 +3,163 @@ package dev.tr7zw.skinlayers.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.versionless.ModBase;
 import dev.tr7zw.skinlayers.versionless.config.Config;
-import net.minecraft.client.gui.GuiGraphics;
+import dev.tr7zw.transition.mc.ComponentProvider;
+import dev.tr7zw.trender.gui.client.AbstractConfigScreen;
+import dev.tr7zw.trender.gui.client.BackgroundPainter;
+import dev.tr7zw.trender.gui.widget.WButton;
+import dev.tr7zw.trender.gui.widget.WGridPanel;
+import dev.tr7zw.trender.gui.widget.WPlayerPreview;
+import dev.tr7zw.trender.gui.widget.WTabPanel;
+import dev.tr7zw.trender.gui.widget.data.Insets;
+import dev.tr7zw.trender.gui.widget.icon.ItemIcon;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-//#if MC <= 11904
-//$$ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-//$$ import com.mojang.blaze3d.vertex.PoseStack;
-//#else
-import dev.tr7zw.skinlayers.render.PreviewHelper;
-//#endif
-//#if MC >= 11900
-import net.minecraft.client.OptionInstance;
-//#else
-//$$ import net.minecraft.client.Option;
-//#endif
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.world.item.Items;
 
 public class ConfigScreenProvider {
 
     public static Screen createConfigScreen(Screen parent) {
-        return new CustomConfigScreen(parent, "text.skinlayers.title") {
+        return new CustomConfigScreen(parent).createScreen();
+    }
 
-            @Override
-            public void initialize() {
-                Config config = SkinLayersModBase.config;
-                List<Object> options = new ArrayList<>();
-                options.add(getOnOffOption("text.skinlayers.enable.hat", () -> config.enableHat,
-                        (b) -> config.enableHat = b));
-                options.add(getOnOffOption("text.skinlayers.enable.jacket", () -> config.enableJacket,
-                        (b) -> config.enableJacket = b));
-                options.add(getOnOffOption("text.skinlayers.enable.leftsleeve", () -> config.enableLeftSleeve,
-                        (b) -> config.enableLeftSleeve = b));
-                options.add(getOnOffOption("text.skinlayers.enable.rightsleeve", () -> config.enableRightSleeve,
-                        (b) -> config.enableRightSleeve = b));
-                options.add(getOnOffOption("text.skinlayers.enable.leftpants", () -> config.enableLeftPants,
-                        (b) -> config.enableLeftPants = b));
-                options.add(getOnOffOption("text.skinlayers.enable.rightpants", () -> config.enableRightPants,
-                        (b) -> config.enableRightPants = b));
-                options.add(getIntOption("text.skinlayers.renderdistancelod", 5, 40, () -> config.renderDistanceLOD,
-                        (i) -> config.renderDistanceLOD = i));
-                options.add(getDoubleOption("text.skinlayers.basevoxelsize", 1.001f, 1.4f, 0.001f,
-                        () -> (double) config.baseVoxelSize, (i) -> {
-                            config.baseVoxelSize = i.floatValue();
-                            SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
-                        }));
-                options.add(getDoubleOption("text.skinlayers.headvoxelsize", 1.001f, 1.25f, 0.001f,
-                        () -> (double) config.headVoxelSize, (i) -> {
-                            config.headVoxelSize = i.floatValue();
-                            SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
-                        }));
-                options.add(getDoubleOption("text.skinlayers.bodyvoxelwidthsize", 1.001f, 1.4f, 0.001f,
-                        () -> (double) config.bodyVoxelWidthSize, (i) -> {
-                            config.bodyVoxelWidthSize = i.floatValue();
-                            SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
-                        }));
-                options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> config.enableSkulls,
-                        (b) -> config.enableSkulls = b));
-                options.add(getOnOffOption("text.skinlayers.skullsitems.enable", () -> config.enableSkullsItems,
-                        (b) -> config.enableSkullsItems = b));
-                options.add(getDoubleOption("text.skinlayers.skulls.voxelsize", 1.001f, 1.2f, 0.001f,
-                        () -> (double) config.skullVoxelSize, (i) -> {
-                            config.skullVoxelSize = i.floatValue();
-                        }));
-                options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> config.fastRender,
-                        (b) -> config.fastRender = b));
-                options.add(getOnOffOption("text.skinlayers.compatibilityMode.enable", () -> config.compatibilityMode,
-                        (b) -> config.compatibilityMode = b));
-                options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.3f, 0.001f,
-                        () -> (double) config.firstPersonPixelScaling, (i) -> {
-                            config.firstPersonPixelScaling = i.floatValue();
-                        }));
-                //#if MC >= 11900
-                getOptions().addSmall(options.toArray(new OptionInstance[0]));
-                //#else
-                //$$getOptions().addSmall(options.toArray(new Option[0]));
-                //#endif
-            }
+    private static class CustomConfigScreen extends AbstractConfigScreen {
 
-            @Override
-            public void save() {
-                SkinLayersModBase.instance.writeConfig();
-                SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
-            }
+        public CustomConfigScreen(Screen previous) {
+            super(ComponentProvider.translatable("text.skinlayers.title"), previous);
 
-            @Override
-            //#if MC >= 12001
-            public void render(GuiGraphics guiGraphics, int xMouse, int yMouse, float f) {
-                super.render(guiGraphics, xMouse, yMouse, f);
-                //#else
-                //$$ public void render(PoseStack poseStack, int xMouse, int yMouse, float f) {
-                //$$    super.render(poseStack, xMouse, yMouse, f);
-                //#endif
-                if (this.minecraft.level != null) {
-                    int x = minecraft.getWindow().getGuiScaledWidth() / 2;
-                    int y = minecraft.getWindow().getGuiScaledHeight() - 45;
-                    int size = (int) (40f * (minecraft.getWindow().getGuiScaledHeight() / 200f));
-                    float lookX = x - xMouse;
-                    float lookY = y - 80 - yMouse;
-                    // Prevent the model from clipping into the back of the gui^^
-                    lookY = Math.min(lookY, 10);
-                    //#if MC >= 12001
-                    PreviewHelper.renderEntityInInventoryFollowsMouse(guiGraphics, x, y, size, lookX, lookY,
-                            this.minecraft.player);
-                    //#elseif MC >= 11904
-                    //$$ InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, x, y, size, lookX, lookY,
-                    //$$        this.minecraft.player);
-                    //#else
-                    //$$ InventoryScreen.renderEntityInInventory(x, y, size, lookX, lookY,
-                    //$$ this.minecraft.player);
-                    //#endif
-                }
-            }
+            WGridPanel root = new WGridPanel(8);
+            root.setInsets(Insets.ROOT_PANEL);
+            setRootPanel(root);
 
-            @Override
-            public void reset() {
-                ModBase.config = new Config();
-                SkinLayersModBase.instance.writeConfig();
-                SkinLayersModBase.instance.refreshLayers(this.minecraft.player);
-            }
+            WTabPanel wTabPanel = new WTabPanel();
 
-        };
+            WGridPanel playerSettings = new WGridPanel();
+            playerSettings.setInsets(new Insets(2, 4));
+
+            // options page
+            List<OptionInstance> options = new ArrayList<>();
+            options.add(getOnOffOption("text.skinlayers.enable.hat", () -> SkinLayersModBase.config.enableHat,
+                    (b) -> SkinLayersModBase.config.enableHat = b));
+            options.add(getOnOffOption("text.skinlayers.enable.jacket", () -> SkinLayersModBase.config.enableJacket,
+                    (b) -> SkinLayersModBase.config.enableJacket = b));
+            options.add(
+                    getOnOffOption("text.skinlayers.enable.leftsleeve", () -> SkinLayersModBase.config.enableLeftSleeve,
+                            (b) -> SkinLayersModBase.config.enableLeftSleeve = b));
+            options.add(getOnOffOption("text.skinlayers.enable.rightsleeve",
+                    () -> SkinLayersModBase.config.enableRightSleeve,
+                    (b) -> SkinLayersModBase.config.enableRightSleeve = b));
+            options.add(
+                    getOnOffOption("text.skinlayers.enable.leftpants", () -> SkinLayersModBase.config.enableLeftPants,
+                            (b) -> SkinLayersModBase.config.enableLeftPants = b));
+            options.add(
+                    getOnOffOption("text.skinlayers.enable.rightpants", () -> SkinLayersModBase.config.enableRightPants,
+                            (b) -> SkinLayersModBase.config.enableRightPants = b));
+            options.add(getIntOption("text.skinlayers.renderdistancelod", 5, 40,
+                    () -> SkinLayersModBase.config.renderDistanceLOD,
+                    (i) -> SkinLayersModBase.config.renderDistanceLOD = i));
+            options.add(getDoubleOption("text.skinlayers.basevoxelsize", 1.001f, 1.4f, 0.001f,
+                    () -> SkinLayersModBase.config.baseVoxelSize, (i) -> {
+                        SkinLayersModBase.config.baseVoxelSize = (float) i;
+                        SkinLayersModBase.instance.refreshLayers(Minecraft.getInstance().player);
+                    }));
+            options.add(getDoubleOption("text.skinlayers.headvoxelsize", 1.001f, 1.25f, 0.001f,
+                    () -> (double) SkinLayersModBase.config.headVoxelSize, (i) -> {
+                        SkinLayersModBase.config.headVoxelSize = (float) i;
+                        SkinLayersModBase.instance.refreshLayers(Minecraft.getInstance().player);
+                    }));
+            options.add(getDoubleOption("text.skinlayers.bodyvoxelwidthsize", 1.001f, 1.4f, 0.001f,
+                    () -> (double) SkinLayersModBase.config.bodyVoxelWidthSize, (i) -> {
+                        SkinLayersModBase.config.bodyVoxelWidthSize = (float) i;
+                        SkinLayersModBase.instance.refreshLayers(Minecraft.getInstance().player);
+                    }));
+
+            var optionList = createOptionList(options);
+            optionList.setGap(-1);
+            //            optionList.setSize(14 * 20, 9 * 20);
+
+            playerSettings.add(optionList, 0, 0, 12, 9);
+
+            var playerPreview = new WPlayerPreview();
+            playerPreview.setShowBackground(true);
+            playerSettings.add(playerPreview, 13, 2);
+
+            wTabPanel.add(playerSettings,
+                    b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.player")).icon(new ItemIcon(Items.VILLAGER_SPAWN_EGG)));
+
+            // Player Heads
+            options = new ArrayList<>();
+            options.add(getOnOffOption("text.skinlayers.skulls.enable", () -> SkinLayersModBase.config.enableSkulls,
+                    (b) -> SkinLayersModBase.config.enableSkulls = b));
+            options.add(getOnOffOption("text.skinlayers.skullsitems.enable",
+                    () -> SkinLayersModBase.config.enableSkullsItems,
+                    (b) -> SkinLayersModBase.config.enableSkullsItems = b));
+            options.add(getDoubleOption("text.skinlayers.skulls.voxelsize", 1.001f, 1.2f, 0.001f,
+                    () -> (double) SkinLayersModBase.config.skullVoxelSize, (i) -> {
+                        SkinLayersModBase.config.skullVoxelSize = (float) i;
+                    }));
+            optionList = createOptionList(options);
+            optionList.setGap(-1);
+
+            wTabPanel.add(optionList,
+                    b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.heads")).icon(new ItemIcon(Items.PLAYER_HEAD)));
+
+            // Other Settings
+            options = new ArrayList<>();
+            options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> SkinLayersModBase.config.fastRender,
+                    (b) -> SkinLayersModBase.config.fastRender = b));
+            //#if MC < 12102
+            //$$ options.add(getOnOffOption("text.skinlayers.compatibilityMode.enable",
+            //$$        () -> SkinLayersModBase.config.compatibilityMode,
+            //$$        (b) -> SkinLayersModBase.config.compatibilityMode = b));
+            //#endif
+            options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.3f, 0.001f,
+                    () -> (double) SkinLayersModBase.config.firstPersonPixelScaling, (i) -> {
+                        SkinLayersModBase.config.firstPersonPixelScaling = (float) i;
+                    }));
+            optionList = createOptionList(options);
+            optionList.setGap(-1);
+
+            wTabPanel.add(optionList,
+                    b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.other")).icon(new ItemIcon(Items.COMMAND_BLOCK)));
+
+            WButton doneButton = new WButton(CommonComponents.GUI_DONE);
+            doneButton.setOnClick(() -> {
+                save();
+                Minecraft.getInstance().setScreen(previous);
+            });
+            root.add(doneButton, 0, 26, 6, 2);
+
+            wTabPanel.layout();
+            root.add(wTabPanel, 0, 1);
+
+            WButton resetButton = new WButton(ComponentProvider.translatable("controls.reset"));
+            resetButton.setOnClick(() -> {
+                reset();
+                root.layout();
+            });
+            root.add(resetButton, 23, 26, 6, 2);
+
+            root.setBackgroundPainter(BackgroundPainter.VANILLA);
+
+            root.validate(this);
+            root.setHost(this);
+        }
+
+        @Override
+        public void reset() {
+            ModBase.config = new Config();
+        }
+
+        @Override
+        public void save() {
+            SkinLayersModBase.instance.writeConfig();
+            SkinLayersModBase.instance.refreshLayers(Minecraft.getInstance().player);
+        }
+
     }
 
 }

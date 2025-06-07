@@ -14,7 +14,7 @@ import dev.tr7zw.skinlayers.accessor.HttpTextureAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.SkinLayersAPI;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.PlayerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
@@ -39,7 +39,7 @@ public class SkinUtil {
             }).build();
 
     private static NativeImage getSkinTexture(AbstractClientPlayer player) {
-        return getTexture(NMSHelper.getPlayerSkin(player), null);
+        return getTexture(PlayerUtil.getPlayerSkin(player), null);
     }
 
     private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
@@ -123,7 +123,7 @@ public class SkinUtil {
 
     public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
             boolean thinArms) {
-        ResourceLocation skinLocation = NMSHelper.getPlayerSkin(abstractClientPlayerEntity);
+        ResourceLocation skinLocation = PlayerUtil.getPlayerSkin(abstractClientPlayerEntity);
         if (skinLocation == null) {
             return false;// this *should* never happen, but just to be sure
         }
@@ -164,7 +164,20 @@ public class SkinUtil {
         if (gameprofile == null) {
             return false; // no gameprofile
         }
-        ResourceLocation playerSkin = NMSHelper.getPlayerSkin(gameprofile);
+        ResourceLocation playerSkin = PlayerUtil.getPlayerSkin(gameprofile);
+        if (playerSkin == null) {
+            return false; // no skin
+        }
+        NativeImage skin = SkinUtil.getTexture(playerSkin, settings);
+        if (skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) {
+            return false;
+        }
+        settings.setupHeadLayers(SkinLayersAPI.getMeshHelper().create3DMesh(skin, 8, 8, 8, 32, 0, false, 0.6f));
+        settings.setInitialized(true);
+        return true;
+    }
+
+    public static boolean setup3dLayers(ResourceLocation playerSkin, SkullSettings settings) {
         if (playerSkin == null) {
             return false; // no skin
         }
