@@ -28,7 +28,7 @@ import net.minecraft.world.entity.LivingEntity;
 //$$import dev.tr7zw.skinlayers.SkinUtil;
 //$$import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 //$$import dev.tr7zw.skinlayers.accessor.SkullSettings;
-//$$import dev.tr7zw.util.NMSHelper;
+//$$import dev.tr7zw.transition.mc.ItemUtil;
 //$$import net.minecraft.world.item.BlockItem;
 //$$import net.minecraft.world.item.Item;
 //$$import net.minecraft.world.item.ItemStack;
@@ -86,7 +86,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
     //$$        return;
     //$$    Item item = itemStack.getItem();
     //$$    if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
-    //$$        GameProfile gameProfile = NMSHelper.getGameProfile(itemStack);
+    //$$        GameProfile gameProfile = ItemUtil.getGameProfile(itemStack);
     //$$        if (gameProfile != null) {
     //$$            lastSkull = (SkullSettings) itemCache.computeIfAbsent(itemStack, it -> new ItemSettings());
     //$$            if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {

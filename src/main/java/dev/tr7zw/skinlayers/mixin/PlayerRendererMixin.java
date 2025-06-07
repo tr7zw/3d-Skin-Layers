@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 //#if MC >= 12102
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#else
-//$$import dev.tr7zw.util.NMSHelper;
 //$$import net.minecraft.client.renderer.RenderType;
 //$$import net.minecraft.client.renderer.texture.OverlayTexture;
 //$$import net.minecraft.world.entity.player.PlayerModelPart;
