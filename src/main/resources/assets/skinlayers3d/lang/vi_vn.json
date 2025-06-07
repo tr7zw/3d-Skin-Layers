@@ -1,6 +1,9 @@
 {
     "modmenu.descriptionTranslation.skinlayers3d": "Kết xuất lớp da người chơi ở dạng 3D",
     "text.skinlayers.title": "Cài Đặt Lớp Da 3D",
+      "text.skinlayers.tab.player": "Người chơi",
+      "text.skinlayers.tab.heads": "Đầu người chơi",
+      "text.skinlayers.tab.other": "Cài đặt khác",
     "text.skinlayers.enable.hat": "Mũ 3D",
     "text.skinlayers.enable.hat.tooltip": "Kết xuất lớp mũ của người chơi dưới dạng mô hình 3D",
     "text.skinlayers.enable.jacket": "Áo Khoác 3D",
