@@ -4,11 +4,14 @@
 //$$import net.minecraftforge.api.distmarker.Dist;
 //$$import net.minecraftforge.fml.DistExecutor;
 //$$import net.minecraftforge.fml.common.Mod;
+//$$import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+//$$import dev.tr7zw.transition.loader.ModLoaderUtil;
 //$$
 //$$@Mod("skinlayers3d")
 //$$public class SkinLayersBootstrap {
 //$$
-//$$	public SkinLayersBootstrap() {
+//$$	public SkinLayersBootstrap(FMLJavaModLoadingContext context) {
+//$$        ModLoaderUtil.setModLoadingContext(context);
 //$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> SkinLayersMod::new);
 //$$	}
 //$$	

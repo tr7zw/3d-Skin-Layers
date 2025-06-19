@@ -1,6 +1,5 @@
 {
     "versions": [
-        "1.16.5-forge",
         "1.16.5-fabric",
         "1.18.2-forge",
         "1.18.2-fabric",
@@ -31,6 +30,8 @@
         "1.21.5-forge",
         "1.21.5-neoforge",
         "1.21.5-fabric",
+        "1.21.6-forge",
+        "1.21.6-neoforge",
         "1.21.6-fabric"
     ]
 }

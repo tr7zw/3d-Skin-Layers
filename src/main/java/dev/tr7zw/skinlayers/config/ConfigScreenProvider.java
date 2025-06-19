@@ -87,8 +87,8 @@ public class ConfigScreenProvider {
             playerPreview.setShowBackground(true);
             playerSettings.add(playerPreview, 13, 2);
 
-            wTabPanel.add(playerSettings,
-                    b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.player")).icon(new ItemIcon(Items.VILLAGER_SPAWN_EGG)));
+            wTabPanel.add(playerSettings, b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.player"))
+                    .icon(new ItemIcon(Items.VILLAGER_SPAWN_EGG)));
 
             // Player Heads
             options = new ArrayList<>();
@@ -104,8 +104,8 @@ public class ConfigScreenProvider {
             optionList = createOptionList(options);
             optionList.setGap(-1);
 
-            wTabPanel.add(optionList,
-                    b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.heads")).icon(new ItemIcon(Items.PLAYER_HEAD)));
+            wTabPanel.add(optionList, b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.heads"))
+                    .icon(new ItemIcon(Items.PLAYER_HEAD)));
 
             // Other Settings
             options = new ArrayList<>();
@@ -123,8 +123,8 @@ public class ConfigScreenProvider {
             optionList = createOptionList(options);
             optionList.setGap(-1);
 
-            wTabPanel.add(optionList,
-                    b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.other")).icon(new ItemIcon(Items.COMMAND_BLOCK)));
+            wTabPanel.add(optionList, b -> b.title(ComponentProvider.translatable("text.skinlayers.tab.other"))
+                    .icon(new ItemIcon(Items.COMMAND_BLOCK)));
 
             WButton doneButton = new WButton(CommonComponents.GUI_DONE);
             doneButton.setOnClick(() -> {

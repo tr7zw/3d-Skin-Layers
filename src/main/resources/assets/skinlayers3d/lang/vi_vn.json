@@ -1,9 +1,9 @@
 {
     "modmenu.descriptionTranslation.skinlayers3d": "Kết xuất lớp da người chơi ở dạng 3D",
     "text.skinlayers.title": "Cài Đặt Lớp Da 3D",
-      "text.skinlayers.tab.player": "Người chơi",
-      "text.skinlayers.tab.heads": "Đầu người chơi",
-      "text.skinlayers.tab.other": "Cài đặt khác",
+    "text.skinlayers.tab.player": "Người chơi",
+    "text.skinlayers.tab.heads": "Đầu người chơi",
+    "text.skinlayers.tab.other": "Cài đặt khác",
     "text.skinlayers.enable.hat": "Mũ 3D",
     "text.skinlayers.enable.hat.tooltip": "Kết xuất lớp mũ của người chơi dưới dạng mô hình 3D",
     "text.skinlayers.enable.jacket": "Áo Khoác 3D",
@@ -39,4 +39,4 @@
     "text.skinlayers.firstperson.voxelsize.tooltip": "Kích thước của các voxel được sử dụng cho tay người chơi ở góc nhìn thứ nhất",
     "text.skinlayers.compatibilityMode.enable": "Chế Độ Tương Thích",
     "text.skinlayers.compatibilityMode.enable.tooltip": "Cách kết xuất các lớp thay thế, có thể khắc phục một số vấn đề tương thích với các mod khác"
-  }
+}
