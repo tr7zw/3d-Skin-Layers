@@ -21,12 +21,15 @@
 //$$
 //$$import net.neoforged.fml.common.Mod;
 //$$import net.neoforged.fml.loading.FMLEnvironment;
+//$$import dev.tr7zw.transition.loader.ModLoaderEventUtil;
 //$$
 //$$@Mod("skinlayers3d")
 //$$public class SkinLayersBootstrap {
 //$$
 //$$	public SkinLayersBootstrap() {
-//$$		if (FMLEnvironment.dist.isClient()) new SkinLayersMod();
+//$$            if (FMLEnvironment.dist.isClient()){
+//$$                    ModLoaderEventUtil.registerClientSetupListener(() -> new SkinLayersMod());
+//$$            }
 //$$	}
 //$$	
 //$$}
