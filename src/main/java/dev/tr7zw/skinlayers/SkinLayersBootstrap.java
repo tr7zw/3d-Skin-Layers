@@ -12,7 +12,7 @@
 //$$
 //$$	public SkinLayersBootstrap(FMLJavaModLoadingContext context) {
 //$$        ModLoaderUtil.setModLoadingContext(context);
-//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> new SkinLayersMod().onInitialize());
+//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new SkinLayersMod().onInitialize());
 //$$	}
 //$$	
 //$$}
