@@ -21,7 +21,7 @@ public class Config {
     public float skullVoxelSize = 1.1f;
 
     public boolean fastRender = true;
-    public boolean compatibilityMode = false;
+    public boolean compatibilityMode = true;
 
     public float firstPersonPixelScaling = 1.1f;
 
