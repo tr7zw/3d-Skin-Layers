@@ -12,7 +12,7 @@
 //$$
 //$$	public SkinLayersBootstrap(FMLJavaModLoadingContext context) {
 //$$        ModLoaderUtil.setModLoadingContext(context);
-//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> SkinLayersMod::new);
+//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> new SkinLayersMod().onInitialize());
 //$$	}
 //$$	
 //$$}
@@ -28,7 +28,7 @@
 //$$
 //$$	public SkinLayersBootstrap() {
 //$$            if (FMLEnvironment.dist.isClient()){
-//$$                    ModLoaderEventUtil.registerClientSetupListener(() -> new SkinLayersMod());
+//$$                    ModLoaderEventUtil.registerClientSetupListener(() -> new SkinLayersMod().onInitialize());
 //$$            }
 //$$	}
 //$$	
