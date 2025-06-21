@@ -1,6 +1,9 @@
 {
     "modmenu.descriptionTranslation.skinlayers3d": "Renderiza la capa de la skin del jugador en 3D",
     "text.skinlayers.title": "Configuración de Capas 3D de la Skin",
+    "text.skinlayers.tab.player": "Jugadores",
+    "text.skinlayers.tab.heads": "Cabezas de jugadores",
+    "text.skinlayers.tab.other": "Otros ajustes",
     "text.skinlayers.enable.hat": "Sombrero 3D",
     "text.skinlayers.enable.hat.tooltip": "Renderizar la capa del sombrero del jugador como un modelo 3D",
     "text.skinlayers.enable.jacket": "Campera 3D",
