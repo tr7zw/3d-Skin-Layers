@@ -1,6 +1,9 @@
 {
     "modmenu.descriptionTranslation.skinlayers3d": "Oyuncunun kostüm katmanlarını 3d renderlar",
     "text.skinlayers.title": "3D Görünüm Ayarları",
+    "text.skinlayers.tab.player": "Oyuncular",
+    "text.skinlayers.tab.heads": "Oyuncu Kafaları",
+    "text.skinlayers.tab.other": "Diğer Ayarlar",
     "text.skinlayers.enable.hat": "3D Şapka",
     "text.skinlayers.enable.hat.tooltip": "Oyuncunun şapka katmanını 3D model olarak renderla",
     "text.skinlayers.enable.jacket": "3D Ceket",
