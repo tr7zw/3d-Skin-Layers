@@ -15,7 +15,8 @@
         "CustomHeadLayerMixin",
         "HttpTextureMixin",
         "ModelPartMixin",
-        "EMFModelPartMixin"
+        "EMFModelPartMixin",
+        "NativeImageMixin"
     ],
     "injectors": {
         "defaultRequire": 1

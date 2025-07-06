@@ -11,6 +11,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import dev.tr7zw.skinlayers.accessor.HttpTextureAccessor;
+import dev.tr7zw.skinlayers.accessor.NativeImageAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.SkinLayersAPI;
@@ -61,20 +62,18 @@ public class SkinUtil {
                 return null;
             }
             NativeImage cachedImage = cache.getIfPresent(texture);
-            if (cachedImage != null) {
-                try {
-                    checkAllocation(cachedImage);
-                    return cachedImage;
-                } catch (Exception ex) {
-                    // got invalidated, remove from cache
-                    cache.invalidate(texture);
-                }
+            if (cachedImage != null && (Object) cachedImage instanceof NativeImageAccessor ac
+                    && ac.skinlayers$isAllocated()) {
+                return cachedImage;
+            } else {
+                // got invalidated, remove from cache
+                cache.invalidate(texture);
             }
             if (texture instanceof HttpTextureAccessor) {
                 HttpTextureAccessor httpTexture = (HttpTextureAccessor) texture;
                 try {
                     NativeImage img = httpTexture.getImage();
-                    if (img != null) {
+                    if (img != null && (Object) img instanceof NativeImageAccessor ac && ac.skinlayers$isAllocated()) {
                         cache.put(texture, img);
                         return img;
                     }
@@ -86,8 +85,7 @@ public class SkinUtil {
             if (texture instanceof DynamicTexture) {
                 try {
                     NativeImage img = ((DynamicTexture) texture).getPixels();
-                    if (img != null) {
-                        checkAllocation(img);
+                    if (img != null && (Object) img instanceof NativeImageAccessor ac && ac.skinlayers$isAllocated()) {
                         return img;
                     }
                 } catch (Exception ex) {
@@ -111,14 +109,6 @@ public class SkinUtil {
             SkinLayersModBase.LOGGER.error("Error while resolving a skin texture.", ex);
             return null;
         }
-    }
-
-    private static void checkAllocation(NativeImage image) throws Exception {
-        //#if MC >= 12102
-        image.getLuminanceOrAlpha(0, 0); // check that it's allocated
-        //#else
-        //$$ image.getPixelRGBA(0, 0); // check that it's allocated
-        //#endif
     }
 
     public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
