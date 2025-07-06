@@ -12,7 +12,6 @@
 
 <img src="https://tr7zw.github.io/uikit/headlines/large/About.png" alt="About" style="margin: 5px 10px;">
 
-
 **Replaces the normally flat second layer of player skins with a fully 3D-modeled version.**  
 The mod automatically switches back to vanilla-style 2D rendering when players are more than 12 blocks away, helping maintain high framerates. It also supports transparent elements - perfect for glasses, visors, or other cosmetic details!
 
@@ -25,12 +24,14 @@ Since this mod is purely visual and entirely client-side, **it doesn't need to b
 Give your player skin the depth it deserves—with style and performance in mind.
 
 ### 3D Extruded Skin Layer
+
 - Replaces the flat second skin layer with a full 3D model
 - Adds visual depth to cosmetic details like jackets, sleeves, or hats
 - Fully supports transparency for glasses, visors, etc.
 - Also applies to player head items
 
 ### Performance-Aware Rendering
+
 - Automatically switches to vanilla 2D rendering beyond 12 blocks
 - Maintains FPS even in multiplayer or crowded areas
 - Fully client-side and requires no server installation
@@ -45,24 +46,23 @@ Give your player skin the depth it deserves—with style and performance in mind
 
 <br>![Compatibility & Dependancys](https://tr7zw.github.io/uikit/headlines/medium/Compatibility%20&%20Dependancys.png)
 
-| Minecraft    | Loader                 | Status          | Version  | Note                                                 |
-| ------------ | ---------------------- | --------------- | -------- | ---------------------------------------------------- |
+|  Minecraft   |         Loader         |     Status      | Version  |                         Note                         |
+|--------------|------------------------|-----------------|----------|------------------------------------------------------|
 | 1.16.5+      | Fabric/Forge*/NeoForge | ✅ Supported     | Latest   |                                                      |
-| *1.16.5      | Forge                  | ⚠️ Unsupported   | Outdated | Unsupported, until it gets support for JarInJar mods |
+| *1.16.5      | Forge                  | ⚠️ Unsupported  | Outdated | Unsupported, until it gets support for JarInJar mods |
 | 1.12.2/1.8.9 | Forge                  | ❌ Not supported | Outdated | Might get new updates at some point                  |
 
-| Mod                       | Status            | Note                                                                                      |
-| ------------------------- | ----------------- | ----------------------------------------------------------------------------------------- |
-| Essential                 | ✅ Supported       |                                                                                           |
-| Shoulder Surfing Reloaded | ✅ Supported       |                                                                                           |
-| Player Animator           | ✅ Supported       | This means mods that use it like Better Combat and Emotecraft                             |
+|            Mod            |       Status       |                                           Note                                            |
+|---------------------------|--------------------|-------------------------------------------------------------------------------------------|
+| Essential                 | ✅ Supported        |                                                                                           |
+| Shoulder Surfing Reloaded | ✅ Supported        |                                                                                           |
+| Player Animator           | ✅ Supported        | This means mods that use it like Better Combat and Emotecraft                             |
 | CustomSkinLoader          | ⚠️ Partial support | Requires [this](https://modrinth.com/mod/skinlayers3d-customskinloader-bridge) helper mod |
-| Lunar Client              | ❌ Not supported   | Will never get support!                                                                   |
+| Lunar Client              | ❌ Not supported    | Will never get support!                                                                   |
 
 <br>![Divider](https://tr7zw.github.io/uikit/divider_faded/Divider_03.png)
 
 <br>![Screenshots / Media](https://tr7zw.github.io/uikit/headlines/medium/Screenshots%20Media.png)
-
 
 ![Stage View](https://raw.githubusercontent.com/tr7zw/3d-Skin-Layers/1.19/img/MC_NU_HEADER.png)
 
@@ -111,9 +111,9 @@ Please buy the game, illegal copies of the game are not supported.
 
 <br>![Credits & license](https://tr7zw.github.io/uikit/headlines/medium/Credits%20&%20License.png)
 
-👤 Thanks to the awesome translators and contributors on Github! 
+👤 Thanks to the awesome translators and contributors on Github!
 <a href="https://github.com/tr7zw/3d-Skin-Layers/graphs/contributors">
-  <img src="https://tr7zw.github.io/uikit/links/underlined/more_details.png" style="vertical-align: middle;" alt="Link">
+<img src="https://tr7zw.github.io/uikit/links/underlined/more_details.png" style="vertical-align: middle;" alt="Link">
 </a> <br><br>
 📄 License: tr7zw Protective License <br>
 Feel free to use this mod in your Modrinth/Curseforge hosted modpacks without asking for permission. Do not redistribute the jar files anywhere else!

@@ -14,6 +14,9 @@
 //$$        ModLoaderUtil.setModLoadingContext(context);
 //$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new SkinLayersMod().onInitialize());
 //$$	}
+//$$    public SkinLayersBootstrap() {
+//$$        this(FMLJavaModLoadingContext.get());
+//$$    }
 //$$	
 //$$}
 //#elseif NEOFORGE
