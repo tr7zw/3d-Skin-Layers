@@ -35,7 +35,7 @@ public class ModelPartMixin implements ModelPartInjector {
             poseStack.pushPose();
             translateAndRotate(poseStack);
             offsetProvider.applyOffset(poseStack, injectedMesh);
-            injectedMesh.render(null, poseStack, vertexConsumer, light, overlay, color);
+            injectedMesh.render((ModelPart) (Object) this, poseStack, vertexConsumer, light, overlay, color);
             poseStack.popPose();
             ci.cancel();
         }
@@ -48,7 +48,7 @@ public class ModelPartMixin implements ModelPartInjector {
     //$$         poseStack.pushPose();
     //$$         translateAndRotate(poseStack);
     //$$         offsetProvider.applyOffset(poseStack, injectedMesh);
-    //$$         injectedMesh.render(null, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+    //$$         injectedMesh.render((ModelPart)(Object)this, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
     //$$         poseStack.popPose();
     //$$         ci.cancel();
     //$$     }
