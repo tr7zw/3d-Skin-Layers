@@ -1,6 +1,9 @@
 {
     "modmenu.descriptionTranslation.skinlayers3d": "将玩家的皮肤渲染为3D效果",
     "text.skinlayers.title": "3D皮肤层设置",
+    "text.skinlayers.tab.player": "玩家",
+    "text.skinlayers.tab.heads": "玩家的头",
+    "text.skinlayers.tab.other": "其他设置",
     "text.skinlayers.enable.hat": "3D帽子",
     "text.skinlayers.enable.hat.tooltip": "将玩家的帽子层渲染为3D模型",
     "text.skinlayers.enable.jacket": "3D外套",
