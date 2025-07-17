@@ -9,6 +9,7 @@ public class NMSWrapper {
 
     public static class WrappedNativeImage implements TextureData {
 
+        private static final int SOLID_THRESHOLD = 230;
         private final NativeImage natImage;
 
         public WrappedNativeImage(NativeImage natImage) {
@@ -17,12 +18,18 @@ public class NMSWrapper {
 
         @Override
         public boolean isPresent(UV onTextureUV) {
-            return natImage.getLuminanceOrAlpha(onTextureUV.u(), onTextureUV.v()) != 0;
+            byte unsignedAlpha = natImage.getLuminanceOrAlpha(onTextureUV.u(), onTextureUV.v());
+            int alpha = unsignedAlpha & 0xFF; // convert to int [0, 255]
+
+            return alpha > (0xFF - SOLID_THRESHOLD);
         }
 
         @Override
         public boolean isSolid(UV onTextureUV) {
-            return natImage.getLuminanceOrAlpha(onTextureUV.u(), onTextureUV.v()) == -1;
+            byte unsignedAlpha = natImage.getLuminanceOrAlpha(onTextureUV.u(), onTextureUV.v());
+            int alpha = unsignedAlpha & 0xFF; // convert to int [0, 255]
+
+            return alpha > SOLID_THRESHOLD;
         }
 
     }
