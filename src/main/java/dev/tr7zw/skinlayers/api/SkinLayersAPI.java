@@ -40,13 +40,20 @@ public class SkinLayersAPI {
 
         @Override
         public Mesh create3DMesh(NativeImage natImage, int width, int height, int depth, int textureU, int textureV,
-                boolean topPivot, float rotationOffset) {
+                boolean topPivot, float rotationOffset, boolean mirror) {
             CustomizableCubeListBuilder builder = new CustomizableCubeListBuilder();
+            builder.mirror(mirror);
             if (SolidPixelWrapper.wrapBox(builder, new WrappedNativeImage(natImage), width, height, depth, textureU,
                     textureV, topPivot, rotationOffset) != null) {
                 return new CustomizableModelPart(builder.getVanillaCubes(), builder.getCubes(), Collections.emptyMap());
             }
             return Mesh.EMPTY;
+        }
+
+        @Override
+        public Mesh create3DMesh(NativeImage natImage, int width, int height, int depth, int textureU, int textureV,
+                boolean topPivot, float rotationOffset) {
+            return create3DMesh(natImage, width, height, depth, textureU, textureV, topPivot, rotationOffset, false);
         }
 
     }

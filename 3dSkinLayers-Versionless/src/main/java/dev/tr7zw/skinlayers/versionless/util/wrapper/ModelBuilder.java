@@ -4,6 +4,8 @@ import dev.tr7zw.skinlayers.versionless.util.Direction;
 
 public interface ModelBuilder {
 
+    ModelBuilder textureSize(int width, int height);
+
     ModelBuilder uv(int u, int v);
 
     ModelBuilder mirror(boolean bl);

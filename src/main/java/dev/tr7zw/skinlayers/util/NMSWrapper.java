@@ -25,6 +25,16 @@ public class NMSWrapper {
             return natImage.getLuminanceOrAlpha(onTextureUV.u(), onTextureUV.v()) == -1;
         }
 
+        @Override
+        public int getWidth() {
+            return natImage.getWidth();
+        }
+
+        @Override
+        public int getHeight() {
+            return natImage.getHeight();
+        }
+
     }
 
 }

@@ -19,9 +19,17 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
     private int u;
     private int v;
     private boolean mirror;
+    private int textureWidth = 64;
+    private int textureHeight = 64;
 
     public static ModelBuilder create() {
         return new CustomizableCubeListBuilder();
+    }
+
+    public ModelBuilder textureSize(int width, int height) {
+        this.textureWidth = width;
+        this.textureHeight = height;
+        return this;
     }
 
     @Override
@@ -47,22 +55,23 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
 
     @Override
     public ModelBuilder addBox(float x, float y, float z, float pixelSize, Direction[] hide, Direction[][] corners) {
-        int textureSize = 64;
-        this.cubes.add(new CustomizableCube(this.u, this.v, x, y, z, pixelSize, pixelSize, pixelSize, 0, 0, 0,
-                this.mirror, textureSize, textureSize, hide, corners));
+        this.cubes.add(new CustomizableCube(this.u, this.v, (mirror ? -1 : 1) * x, y, z, pixelSize, pixelSize,
+                pixelSize, 0, 0, 0, this.mirror, textureWidth, textureHeight, hide, corners));
         return this;
     }
 
     @Override
     public ModelBuilder addVanillaBox(float x, float y, float z, float width, float height, float depth) {
-        int textureSize = 64;
+        if (mirror) {
+            x = -1; // FIXME: Why
+        }
         //#if MC <= 11605
         //$$         this.vanillaCubes.add(new Cube(u, v, x, y, z, width, height, depth, 0, 0, 0,
-        //$$              this.mirror, textureSize, textureSize));
+        //$$              this.mirror, textureWidth, textureHeight));
         //#else
         CubeListBuilder cubeList = CubeListBuilder.create();
-        cubeList.texOffs(u, v).addBox(x, y, z, width, height, depth);
-        this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureSize, textureSize));
+        cubeList.texOffs(u, v).mirror(mirror).addBox(x, y, z, width, height, depth);
+        this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureWidth, textureHeight));
         //#endif
         return this;
     }

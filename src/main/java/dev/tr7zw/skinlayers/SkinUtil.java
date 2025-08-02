@@ -43,7 +43,7 @@ public class SkinUtil {
         return getTexture(PlayerUtil.getPlayerSkin(player), null);
     }
 
-    private static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
+    public static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
         try {
             //#if MC >= 11900
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
@@ -101,7 +101,9 @@ public class SkinUtil {
              * SkinLayersModBase.LOGGER.
              * error("Error while trying to grab a texture from the GPU.", ex); }
              */
-            settings.setInitialized(true); // initialize as invalid
+            if (settings != null) {
+                settings.setInitialized(false); // initialize as invalid
+            }
             SkinLayersModBase.LOGGER.warn("Unable to handle skin " + resourceLocation
                     + ". Potentially a conflict with another mod. (" + texture.getClass().getName() + ")");
             return null;

@@ -28,6 +28,7 @@ public class SolidPixelWrapper {
      **/
     public static ModelBuilder wrapBox(ModelBuilder builder, TextureData natImage, int width, int height, int depth,
             int textureU, int textureV, boolean topPivot, float rotationOffset) {
+        builder.textureSize(natImage.getWidth(), natImage.getHeight());
         float staticXOffset = -width / 2f;
         float staticYOffset = topPivot ? +rotationOffset : -height + rotationOffset;
         float staticZOffset = -depth / 2f;
