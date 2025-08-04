@@ -1,5 +1,7 @@
 package dev.tr7zw.skinlayers.mixin;
 
+import java.util.Map;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,6 +23,10 @@ public class ModelPartMixin implements ModelPartInjector {
     @Shadow
     @Getter
     boolean visible;
+    //#if MC >= 11700
+    @Shadow
+    private Map<String, ModelPart> children;
+    //#endif
 
     @Getter
     private Mesh injectedMesh = null;
@@ -51,7 +57,20 @@ public class ModelPartMixin implements ModelPartInjector {
     //$$         injectedMesh.render((ModelPart)(Object)this, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
     //$$         poseStack.popPose();
     //$$         ci.cancel();
+    //$$         return;
     //$$     }
+    //#if MC >= 11700
+    //$$        if(visible && dev.tr7zw.skinlayers.util.SodiumWorkaround.IS_SODIUM_WORKAROUND_NEEDED && (children.containsKey("head") || children.containsKey("hat"))) {
+    //$$                poseStack.pushPose();
+    //$$                 translateAndRotate(poseStack);
+    //$$                 compile(poseStack.last(), vertexConsumer, light, overlay, red, green, blue, alpha);
+    //$$                 for(java.util.Map.Entry<String, ModelPart> child : this.children.entrySet()) {
+    //$$                        child.getValue().render(poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+    //$$                 }       
+    //$$                 poseStack.popPose();
+    //$$                 ci.cancel();
+    //$$        }
+    //#endif
     //$$ }
     //$$ 
     //#endif
@@ -62,10 +81,18 @@ public class ModelPartMixin implements ModelPartInjector {
         this.offsetProvider = offsetProvider;
     }
 
+
     @Shadow
     public void translateAndRotate(PoseStack poseStack) {
 
     }
+
+    //#if MC >= 11700
+    @Shadow
+    public void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
+            float red, float green, float blue, float alpha) {
+    }
+    //#endif
 
     @Override
     public void prepareTranslateAndRotate(PoseStack poseStack) {
