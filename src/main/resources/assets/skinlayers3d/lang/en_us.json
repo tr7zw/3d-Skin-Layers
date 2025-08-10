@@ -38,5 +38,7 @@
     "text.skinlayers.firstperson.voxelsize": "First Person Voxel Size",
     "text.skinlayers.firstperson.voxelsize.tooltip": "The size of the voxels used for the player's hand in first person",
     "text.skinlayers.compatibilityMode.enable": "Compatibility Mode",
-    "text.skinlayers.compatibilityMode.enable.tooltip": "Alternative way to render the layers, might fix some compatibility issues with other mods"
+    "text.skinlayers.compatibilityMode.enable.tooltip": "Alternative way to render the layers, might fix some compatibility issues with other mods",
+    "text.skinlayers.irisCompatibilityMode.enable": "Iris Compatibility Mode",
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Alternative way to render the layers, fixes weird shadows/colors when using Iris shaders. Only turn this setting on when needed. Will break the corner connections."
 }

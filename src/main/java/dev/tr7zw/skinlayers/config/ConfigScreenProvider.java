@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.SkullRendererCache;
 import dev.tr7zw.skinlayers.versionless.ModBase;
 import dev.tr7zw.skinlayers.versionless.config.Config;
 import dev.tr7zw.transition.mc.ComponentProvider;
@@ -116,6 +117,11 @@ public class ConfigScreenProvider {
             //$$        () -> SkinLayersModBase.config.compatibilityMode,
             //$$        (b) -> SkinLayersModBase.config.compatibilityMode = b));
             //#endif
+            //#if MC >= 12000
+            options.add(getOnOffOption("text.skinlayers.irisCompatibilityMode.enable",
+                    () -> SkinLayersModBase.config.irisCompatibilityMode,
+                    (b) -> SkinLayersModBase.config.irisCompatibilityMode = b));
+            //#endif
             options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.3f, 0.001f,
                     () -> (double) SkinLayersModBase.config.firstPersonPixelScaling, (i) -> {
                         SkinLayersModBase.config.firstPersonPixelScaling = (float) i;
@@ -158,6 +164,7 @@ public class ConfigScreenProvider {
         public void save() {
             SkinLayersModBase.instance.writeConfig();
             SkinLayersModBase.instance.refreshLayers(Minecraft.getInstance().player);
+            SkullRendererCache.clearCache();
         }
 
     }

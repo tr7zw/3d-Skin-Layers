@@ -81,17 +81,16 @@ public class ModelPartMixin implements ModelPartInjector {
         this.offsetProvider = offsetProvider;
     }
 
-
     @Shadow
     public void translateAndRotate(PoseStack poseStack) {
 
     }
 
-    //#if MC >= 11700
-    @Shadow
-    public void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
-            float red, float green, float blue, float alpha) {
-    }
+    //#if MC >= 11700 && MC < 12100
+    //$$ @Shadow
+    //$$ public void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
+    //$$        float red, float green, float blue, float alpha) {
+    //$$}
     //#endif
 
     @Override

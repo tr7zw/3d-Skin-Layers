@@ -60,4 +60,8 @@ public class SkullRendererCache {
 
     }
 
+    public static void clearCache() {
+        itemCache.clear();
+    }
+
 }
