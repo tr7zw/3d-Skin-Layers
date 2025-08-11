@@ -65,10 +65,10 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
         } else {
             //#if MC >= 12000
             // Hacky workaround for Iris compatibility
-            for (Direction dir : Direction.values()) {
+            dir: for (Direction dir : Direction.values()) {
                 for (Direction hideDir : hide) {
                     if (hideDir == dir) {
-                        continue;
+                        continue dir;
                     }
                 }
                 int uO = this.u;
@@ -90,16 +90,23 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
                     vO -= pixelSize;
                     break;
                 case WEST:
-                    uO -= pixelSize * 2;
+
                     vO -= pixelSize;
                     break;
                 case EAST:
+                    uO -= pixelSize * 2;
                     vO -= pixelSize;
                     break;
                 }
                 CubeListBuilder cubeList = CubeListBuilder.create();
+                int ordinal = dir.ordinal();
+                if (ordinal == 4) {
+                    ordinal = 5;
+                } else if (ordinal == 5) {
+                    ordinal = 4;
+                }
                 cubeList.texOffs(uO, vO).mirror(mirror).addBox(x, y, z, pixelSize, pixelSize, pixelSize,
-                        new HashSet<>(Arrays.asList(net.minecraft.core.Direction.values()[dir.ordinal()])));
+                        new HashSet<>(Arrays.asList(net.minecraft.core.Direction.values()[ordinal])));
                 this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureWidth, textureHeight));
             }
             //#else
