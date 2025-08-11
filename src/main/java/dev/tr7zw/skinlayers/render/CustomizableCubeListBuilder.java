@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.util.*;
 import dev.tr7zw.skinlayers.versionless.render.CustomizableCube;
 import dev.tr7zw.skinlayers.versionless.util.Direction;
 import dev.tr7zw.skinlayers.versionless.util.wrapper.ModelBuilder;
@@ -99,14 +100,16 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
                     break;
                 }
                 CubeListBuilder cubeList = CubeListBuilder.create();
-                int ordinal = dir.ordinal();
-                if (ordinal == 4) {
-                    ordinal = 5;
-                } else if (ordinal == 5) {
-                    ordinal = 4;
-                }
+                var mcDir = switch(dir) {
+                    case UP: yield net.minecraft.core.Direction.UP;
+                    case DOWN: yield net.minecraft.core.Direction.DOWN;
+                    case NORTH: yield net.minecraft.core.Direction.NORTH;
+                    case EAST: yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.WEST : net.minecraft.core.Direction.EAST;
+                    case WEST: yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.EAST : net.minecraft.core.Direction.WEST;
+                    case SOUTH: yield net.minecraft.core.Direction.SOUTH;
+                };
                 cubeList.texOffs(uO, vO).mirror(mirror).addBox(x, y, z, pixelSize, pixelSize, pixelSize,
-                        new HashSet<>(Arrays.asList(net.minecraft.core.Direction.values()[ordinal])));
+                        new HashSet<>(Arrays.asList(mcDir)));
                 this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureWidth, textureHeight));
             }
             //#else
