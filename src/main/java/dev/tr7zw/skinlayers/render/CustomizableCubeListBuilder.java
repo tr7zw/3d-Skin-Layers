@@ -100,13 +100,21 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
                     break;
                 }
                 CubeListBuilder cubeList = CubeListBuilder.create();
-                var mcDir = switch(dir) {
-                    case UP: yield net.minecraft.core.Direction.UP;
-                    case DOWN: yield net.minecraft.core.Direction.DOWN;
-                    case NORTH: yield net.minecraft.core.Direction.NORTH;
-                    case EAST: yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.WEST : net.minecraft.core.Direction.EAST;
-                    case WEST: yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.EAST : net.minecraft.core.Direction.WEST;
-                    case SOUTH: yield net.minecraft.core.Direction.SOUTH;
+                var mcDir = switch (dir) {
+                case UP:
+                    yield net.minecraft.core.Direction.UP;
+                case DOWN:
+                    yield net.minecraft.core.Direction.DOWN;
+                case NORTH:
+                    yield net.minecraft.core.Direction.NORTH;
+                case EAST:
+                    yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.WEST
+                            : net.minecraft.core.Direction.EAST;
+                case WEST:
+                    yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.EAST
+                            : net.minecraft.core.Direction.WEST;
+                case SOUTH:
+                    yield net.minecraft.core.Direction.SOUTH;
                 };
                 cubeList.texOffs(uO, vO).mirror(mirror).addBox(x, y, z, pixelSize, pixelSize, pixelSize,
                         new HashSet<>(Arrays.asList(mcDir)));
