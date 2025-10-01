@@ -2,9 +2,13 @@ package dev.tr7zw.skinlayers.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.skinlayers.accessor.ModelPartInjector;
 import dev.tr7zw.skinlayers.accessor.SkullModelAccessor;
+import dev.tr7zw.skinlayers.accessor.SkullModelStateAccessor;
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.OffsetProvider;
 import net.minecraft.client.model.SkullModel;
@@ -38,5 +42,19 @@ public class SkullModelMixin implements SkullModelAccessor {
         //$$ ((ModelPartInjector)(Object)hat).setInjectedMesh(mesh, OffsetProvider.SKULL);
         //#endif
     }
+
+    //#if MC >= 12109
+    @Inject(method = "setupAnim", at = @At("HEAD"))
+    public void setupAnim(net.minecraft.client.model.SkullModelBase.State state, CallbackInfo ci) {
+        if (state instanceof SkullModelStateAccessor accessor) {
+            if (accessor.getSkullSettings() != null) {
+                injectHatMesh(accessor.getSkullSettings().getMesh());
+                return;
+            }
+        }
+        // Otherwise clear it
+        injectHatMesh(null);
+    }
+    //#endif
 
 }

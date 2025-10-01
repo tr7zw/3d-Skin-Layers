@@ -17,7 +17,6 @@ import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.SkinLayersAPI;
 import dev.tr7zw.transition.mc.PlayerUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.ResourceLocation;
@@ -39,11 +38,10 @@ public class SkinUtil {
                 }
             }).build();
 
-    private static NativeImage getSkinTexture(AbstractClientPlayer player) {
-        return getTexture(PlayerUtil.getPlayerSkin(player), null);
-    }
-
     public static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
+        if (resourceLocation == null) {
+            return null;
+        }
         try {
             //#if MC >= 11900
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
@@ -113,8 +111,13 @@ public class SkinUtil {
         }
     }
 
-    public static boolean setup3dLayers(AbstractClientPlayer abstractClientPlayerEntity, PlayerSettings settings,
-            boolean thinArms) {
+    public static boolean setup3dLayers(
+            //#if MC >= 12109
+            net.minecraft.world.entity.Avatar abstractClientPlayerEntity,
+            //#else
+            //$$net.minecraft.client.player.AbstractClientPlayer abstractClientPlayerEntity,
+            //#endif
+            PlayerSettings settings, boolean thinArms) {
         ResourceLocation skinLocation = PlayerUtil.getPlayerSkin(abstractClientPlayerEntity);
         if (skinLocation == null) {
             return false;// this *should* never happen, but just to be sure
@@ -128,7 +131,7 @@ public class SkinUtil {
         }
         // Starting here should only run in case the skin has changed by getting
         // loaded/another mod changed the skin
-        NativeImage skin = SkinUtil.getSkinTexture(abstractClientPlayerEntity);
+        NativeImage skin = getTexture(skinLocation, null);
         if (skin == null || skin.getWidth() != 64 || skin.getHeight() != 64) { // Skin is null or not a 64x64 skin, hd
                                                                                // skins won't work
             settings.setCurrentSkin(skinLocation);

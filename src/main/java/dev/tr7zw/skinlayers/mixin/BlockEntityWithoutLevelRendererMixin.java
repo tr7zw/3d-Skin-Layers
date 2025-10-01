@@ -39,7 +39,11 @@ import net.minecraft.world.item.ItemStack;
 public class BlockEntityWithoutLevelRendererMixin {
     @Inject(method = "extractArgument", at = @At("HEAD"))
     public void extractArgument(ItemStack itemStack,
-            CallbackInfoReturnable<net.minecraft.client.renderer.special.PlayerHeadSpecialRenderer.PlayerHeadRenderInfo> cir) {
+            //#if MC >= 12109
+            CallbackInfoReturnable<net.minecraft.client.renderer.PlayerSkinRenderCache.RenderInfo> cir) {
+        //#else
+        //$$CallbackInfoReturnable<net.minecraft.client.renderer.special.PlayerHeadSpecialRenderer.PlayerHeadRenderInfo> cir) {
+        //#endif
         var profile = ItemUtil.getGameProfile(itemStack);
         if (profile != null) {
             lastSkull = (SkullSettings) itemCache.computeIfAbsent(profile, it -> new ItemSettings());

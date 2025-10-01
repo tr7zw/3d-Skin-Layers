@@ -16,7 +16,8 @@
         "HttpTextureMixin",
         "ModelPartMixin",
         "EMFModelPartMixin",
-        "NativeImageMixin"
+        "NativeImageMixin",
+        "SkullModelStateMixin"
     ],
     "injectors": {
         "defaultRequire": 1

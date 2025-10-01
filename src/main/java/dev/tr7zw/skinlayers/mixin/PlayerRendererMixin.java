@@ -17,9 +17,10 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-
-//#if MC >= 12102
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+//#if MC >= 12109
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+//#elseif MC >= 12102
+//$$import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#else
 //$$import net.minecraft.client.renderer.RenderType;
 //$$import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -32,16 +33,26 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 //$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 //#endif
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+//#if MC >= 12109
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
+//#else
+//$$import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+//#endif
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
 
-@Mixin(PlayerRenderer.class)
+//#if MC >= 12109
+@Mixin(AvatarRenderer.class)
+//#else
+//$$@Mixin(PlayerRenderer.class)
+//#endif
 public abstract class PlayerRendererMixin
         //#if MC >= 12102
-        extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
+        extends LivingEntityRenderer<AbstractClientPlayer, AvatarRenderState, PlayerModel> {
+    //#elseif MC >= 12102
+    //$$extends LivingEntityRenderer<AbstractClientPlayer, PlayerRenderState, PlayerModel> {
     //#else
     //$$        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     //#endif
@@ -56,61 +67,11 @@ public abstract class PlayerRendererMixin
     //$$  public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher,
     //$$ 		PlayerModel<AbstractClientPlayer> entityModel, float f) {
     //$$ 	super(entityRenderDispatcher, entityModel, f);
-    //$$ 	// TODO Auto-generated constructor stub
     //$$ }
     //#endif
 
     //#if MC >= 12102
-    @Inject(method = "extractRenderState", at = @At("RETURN"))
-    public void extractRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState playerRenderState,
-            float f, CallbackInfo ci) {
-        PlayerModel playerModel = this.getModel();
-        PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
-        boolean slim = ((PlayerEntityModelAccessor) getModel()).hasThinArms();
-        // reset all injected layers
-        ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(null, null);
-        ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(null, null);
-        ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(null, null);
-        ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(null, null);
-        ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(null, null);
-        ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(null, null);
-        if (Minecraft.getInstance().player == null
-                || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
-                        .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-                                * SkinLayersModBase.config.renderDistanceLOD) {
-            return;
-        }
-        if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {
-            // fall back to vanilla
-            return;
-        }
-        // Inject layers into the vanilla model
-        ItemStack itemStack = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD);
-        if (SkinLayersModBase.config.enableHat
-                && (itemStack == null || !SkinLayersModBase.hideHeadLayers.contains(itemStack.getItem()))) {
-            ((ModelPartInjector) (Object) playerModel.hat).setInjectedMesh(settings.getHeadMesh(), OffsetProvider.HEAD);
-        }
-        if (SkinLayersModBase.config.enableJacket) {
-            ((ModelPartInjector) (Object) playerModel.jacket).setInjectedMesh(settings.getTorsoMesh(),
-                    OffsetProvider.BODY);
-        }
-        if (SkinLayersModBase.config.enableLeftSleeve) {
-            ((ModelPartInjector) (Object) playerModel.leftSleeve).setInjectedMesh(settings.getLeftArmMesh(),
-                    slim ? OffsetProvider.LEFT_ARM_SLIM : OffsetProvider.LEFT_ARM);
-        }
-        if (SkinLayersModBase.config.enableRightSleeve) {
-            ((ModelPartInjector) (Object) playerModel.rightSleeve).setInjectedMesh(settings.getRightArmMesh(),
-                    slim ? OffsetProvider.RIGHT_ARM_SLIM : OffsetProvider.RIGHT_ARM);
-        }
-        if (SkinLayersModBase.config.enableLeftPants) {
-            ((ModelPartInjector) (Object) playerModel.leftPants).setInjectedMesh(settings.getLeftLegMesh(),
-                    OffsetProvider.LEFT_LEG);
-        }
-        if (SkinLayersModBase.config.enableRightPants) {
-            ((ModelPartInjector) (Object) playerModel.rightPants).setInjectedMesh(settings.getRightLegMesh(),
-                    OffsetProvider.RIGHT_LEG);
-        }
-    }
+    // Moved to PlayerModelMixin
     //#else
     //$$  private boolean loaded = false;
     //$$  
@@ -188,8 +149,13 @@ public abstract class PlayerRendererMixin
 
     @Inject(method = "renderHand", at = @At("HEAD"))
     //#if MC >= 12102
-    private void renderHandStart(PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-            ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
+    private void renderHandStart(PoseStack poseStack,
+            //#if MC >= 12109
+            net.minecraft.client.renderer.SubmitNodeCollector multiBufferSource,
+            //#else
+            //$$MultiBufferSource multiBufferSource,
+            //#endif
+            int i, ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
         // TODO
         AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;// hacky, but 1.21.2 happened
         ModelPart sleeve;
