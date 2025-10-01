@@ -38,5 +38,7 @@
     "text.skinlayers.firstperson.voxelsize": "Tamaño de Vóxel en Primera Persona",
     "text.skinlayers.firstperson.voxelsize.tooltip": "Tamaño de los vóxeles usados para la mano del jugador en vista de primera persona",
     "text.skinlayers.compatibilityMode.enable": "Modo de Compatibilidad",
-    "text.skinlayers.compatibilityMode.enable.tooltip": "Método alternativo para renderizar las capas, puede solucionar problemas de compatibilidad con otros mods"
+    "text.skinlayers.compatibilityMode.enable.tooltip": "Método alternativo para renderizar las capas, puede solucionar problemas de compatibilidad con otros mods",
+    "text.skinlayers.irisCompatibilityMode.enable": "Modo de compatibilidad con Iris",
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Método alternativo para renderizar las capas. Corrige sombras o colores extraños al usar shaders Iris. Activá esta opción solo si es necesario. Puede romper las conexiones en las esquinas."
 }
