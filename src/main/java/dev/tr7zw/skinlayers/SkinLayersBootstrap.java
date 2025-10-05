@@ -25,12 +25,17 @@
 //$$import net.neoforged.fml.common.Mod;
 //$$import net.neoforged.fml.loading.FMLEnvironment;
 //$$import dev.tr7zw.transition.loader.ModLoaderEventUtil;
+//$$import net.neoforged.api.distmarker.Dist;
 //$$
 //$$@Mod("skinlayers3d")
 //$$public class SkinLayersBootstrap {
 //$$
 //$$	public SkinLayersBootstrap() {
-//$$            if (FMLEnvironment.dist.isClient()){
+//#if MC < 12109
+//$$        if(FMLEnvironment.dist == Dist.CLIENT) {
+//#else
+//$$        if(FMLEnvironment.getDist() == Dist.CLIENT) {
+//#endif
 //$$                    ModLoaderEventUtil.registerClientSetupListener(() -> new SkinLayersMod().onInitialize());
 //$$            }
 //$$	}
