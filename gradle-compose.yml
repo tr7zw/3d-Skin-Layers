@@ -23,6 +23,7 @@ enabledFlags:
   - curseforge
   - versionless
   - includeLibs
+  - mixinextras
   - addTRenderLib
   - addTRansitionLib
 rootProject:

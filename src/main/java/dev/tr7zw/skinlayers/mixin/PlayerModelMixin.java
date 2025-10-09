@@ -1,5 +1,6 @@
 package dev.tr7zw.skinlayers.mixin;
 
+import lombok.Setter;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,6 +48,9 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
     @Shadow
     private boolean slim;
 
+    @Setter
+    private boolean ignored;
+
     @Override
     public boolean hasThinArms() {
         return slim;
@@ -58,6 +62,8 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
     public void setupAnim(net.minecraft.client.renderer.entity.state.AvatarRenderState playerRenderState,
             CallbackInfo ci) {
         net.minecraft.world.entity.Avatar abstractClientPlayer = null;
+        if (ignored)
+            return;
         if (!((Object) this instanceof net.minecraft.client.model.PlayerCapeModel)
                 && playerRenderState instanceof EntityRenderStateExtender extender
                 && extender.getTransitionEntity() instanceof net.minecraft.world.entity.Avatar entity) {

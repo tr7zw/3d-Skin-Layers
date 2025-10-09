@@ -1,5 +1,7 @@
 package dev.tr7zw.skinlayers.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,7 +18,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
+//#if MC < 12109
+//$$import net.minecraft.client.renderer.MultiBufferSource;
+//$$import net.minecraft.world.entity.EquipmentSlot;
+//$$import net.minecraft.world.entity.player.PlayerModelPart;
+//$$import net.minecraft.world.item.ItemStack;
+//#endif
 //#if MC >= 12109
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 //#elseif MC >= 12102
@@ -39,9 +46,6 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 //$$import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 //#endif
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.PlayerModelPart;
-import net.minecraft.world.item.ItemStack;
 
 //#if MC >= 12109
 @Mixin(AvatarRenderer.class)
@@ -188,5 +192,15 @@ public abstract class PlayerRendererMixin
             }
         }
     }
+
+    //#if MC >= 12109
+    @WrapOperation(method = "method_72996", at = @At(value = "NEW", target = "(Lnet/minecraft/client/model/geom/ModelPart;Z)Lnet/minecraft/client/model/PlayerModel;"))
+    private static PlayerModel markArmorModelAsIgnored(ModelPart modelPart, boolean slim,
+            Operation<PlayerModel> original) {
+        PlayerModel call = original.call(modelPart, slim);
+        ((PlayerEntityModelAccessor) call).setIgnored(true);
+        return call;
+    }
+    //#endif
 
 }

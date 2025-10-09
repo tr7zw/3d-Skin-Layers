@@ -6,4 +6,6 @@ package dev.tr7zw.skinlayers.accessor;
  */
 public interface PlayerEntityModelAccessor {
     public boolean hasThinArms();
+
+    void setIgnored(boolean ignore);
 }
