@@ -17,7 +17,8 @@
         "ModelPartMixin",
         "EMFModelPartMixin",
         "NativeImageMixin",
-        "SkullModelStateMixin"
+        "SkullModelStateMixin",
+        "Deadmau5EarsLayerMixin"
     ],
     "injectors": {
         "defaultRequire": 1
