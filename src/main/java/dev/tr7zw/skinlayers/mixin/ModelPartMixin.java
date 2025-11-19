@@ -23,17 +23,19 @@ public class ModelPartMixin implements ModelPartInjector {
     @Shadow
     @Getter
     boolean visible;
-    //#if MC >= 11700
+    //? if >= 1.17.0 {
+
     @Shadow
     private Map<String, ModelPart> children;
-    //#endif
+    //? }
 
     @Getter
     private Mesh injectedMesh = null;
     @Getter
     private OffsetProvider offsetProvider = null;
 
-    //#if MC >= 12100
+    //? if >= 1.21.0 {
+
     @Inject(method = "Lnet/minecraft/client/model/geom/ModelPart;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V", at = @At(value = "HEAD"), cancellable = true)
     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, int color,
             CallbackInfo ci) {
@@ -46,34 +48,36 @@ public class ModelPartMixin implements ModelPartInjector {
             ci.cancel();
         }
     }
-    //#else
-    //$$ @Inject(method = "Lnet/minecraft/client/model/geom/ModelPart;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V", at = @At(value = "HEAD"), cancellable = true)
-    //$$ public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha,
-    //$$         CallbackInfo ci) {
-    //$$     if (visible && injectedMesh != null) {
-    //$$         poseStack.pushPose();
-    //$$         translateAndRotate(poseStack);
-    //$$         offsetProvider.applyOffset(poseStack, injectedMesh);
-    //$$         injectedMesh.render((ModelPart)(Object)this, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
-    //$$         poseStack.popPose();
-    //$$         ci.cancel();
-    //$$         return;
-    //$$     }
-    //#if MC >= 11700
-    //$$        if(visible && dev.tr7zw.skinlayers.util.SodiumWorkaround.IS_SODIUM_WORKAROUND_NEEDED && (children.containsKey("head") || children.containsKey("hat"))) {
-    //$$                poseStack.pushPose();
-    //$$                 translateAndRotate(poseStack);
-    //$$                 compile(poseStack.last(), vertexConsumer, light, overlay, red, green, blue, alpha);
-    //$$                 for(java.util.Map.Entry<String, ModelPart> child : this.children.entrySet()) {
-    //$$                        child.getValue().render(poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
-    //$$                 }       
-    //$$                 poseStack.popPose();
-    //$$                 ci.cancel();
-    //$$        }
-    //#endif
-    //$$ }
-    //$$ 
-    //#endif
+    //? } else {
+    /*
+     @Inject(method = "Lnet/minecraft/client/model/geom/ModelPart;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V", at = @At(value = "HEAD"), cancellable = true)
+     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha,
+             CallbackInfo ci) {
+         if (visible && injectedMesh != null) {
+             poseStack.pushPose();
+             translateAndRotate(poseStack);
+             offsetProvider.applyOffset(poseStack, injectedMesh);
+             injectedMesh.render((ModelPart)(Object)this, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+             poseStack.popPose();
+             ci.cancel();
+             return;
+         }
+     //? if >= 1.17.0 {
+    
+             if(visible && dev.tr7zw.skinlayers.util.SodiumWorkaround.IS_SODIUM_WORKAROUND_NEEDED && (children.containsKey("head") || children.containsKey("hat"))) {
+                     poseStack.pushPose();
+                      translateAndRotate(poseStack);
+                      compile(poseStack.last(), vertexConsumer, light, overlay, red, green, blue, alpha);
+                      for(java.util.Map.Entry<String, ModelPart> child : this.children.entrySet()) {
+                             child.getValue().render(poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+                      }       
+                      poseStack.popPose();
+                      ci.cancel();
+             }
+     //? }
+     }
+    
+    *///? }
 
     @Override
     public void setInjectedMesh(Mesh mesh, OffsetProvider offsetProvider) {
@@ -86,12 +90,13 @@ public class ModelPartMixin implements ModelPartInjector {
 
     }
 
-    //#if MC >= 11700 && MC < 12100
-    //$$ @Shadow
-    //$$ public void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
-    //$$        float red, float green, float blue, float alpha) {
-    //$$}
-    //#endif
+    //? if >= 1.17.0 && < 1.21.0 {
+    /*
+     @Shadow
+     public void compile(PoseStack.Pose pose, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
+            float red, float green, float blue, float alpha) {
+     }
+    *///? }
 
     @Override
     public void prepareTranslateAndRotate(PoseStack poseStack) {

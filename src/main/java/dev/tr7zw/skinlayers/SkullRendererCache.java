@@ -5,21 +5,25 @@ import java.util.WeakHashMap;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
 import net.minecraft.resources.ResourceLocation;
-//#if MC >= 12104
+//? if >= 1.21.4 {
+
 import com.mojang.authlib.GameProfile;
-//#else
-//$$import net.minecraft.world.item.ItemStack;
-//#endif
+//? } else {
+/*
+ import net.minecraft.world.item.ItemStack;
+*///? }
 
 public class SkullRendererCache {
 
     public static boolean renderNext = false;
     public static SkullSettings lastSkull = null;
-    //#if MC >= 12104
+    //? if >= 1.21.4 {
+
     public static WeakHashMap<GameProfile, SkullSettings> itemCache = new WeakHashMap<>();
-    //#else
-    //$$public static WeakHashMap<ItemStack, SkullSettings> itemCache = new WeakHashMap<>();
-    //#endif
+    //? } else {
+    /*
+     public static WeakHashMap<ItemStack, SkullSettings> itemCache = new WeakHashMap<>();
+    *///? }
 
     public static class ItemSettings implements SkullSettings {
 

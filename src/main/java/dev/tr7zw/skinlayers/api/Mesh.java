@@ -4,9 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.geom.ModelPart;
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 import net.minecraft.client.model.geom.PartPose;
-//#endif
+//? }
 
 public interface Mesh {
 
@@ -30,11 +31,13 @@ public interface Mesh {
         }
 
         @Override
-        //#if MC >= 11700
+        //? if >= 1.17.0 {
+
         public void loadPose(PartPose partPose) {
-            //#else
-            //$$ public void loadPose(ModelPart partPose) {
-            //#endif
+            //? } else {
+
+            // public void loadPose(ModelPart partPose) {
+            //? }
         }
 
         @Override
@@ -78,11 +81,13 @@ public interface Mesh {
 
     public void setRotation(float xRot, float yRot, float zRot);
 
-    //#if MC >= 11700
+    //? if >= 1.17.0 {
+
     public void loadPose(PartPose partPose);
-    //#else
-    //$$ public void loadPose(ModelPart partPose);
-    //#endif
+    //? } else {
+
+    // public void loadPose(ModelPart partPose);
+    //? }
 
     public void copyFrom(ModelPart modelPart);
 

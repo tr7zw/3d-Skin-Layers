@@ -112,16 +112,18 @@ public class ConfigScreenProvider {
             options = new ArrayList<>();
             options.add(getOnOffOption("text.skinlayers.fastrender.enable", () -> SkinLayersModBase.config.fastRender,
                     (b) -> SkinLayersModBase.config.fastRender = b));
-            //#if MC < 12102
-            //$$ options.add(getOnOffOption("text.skinlayers.compatibilityMode.enable",
-            //$$        () -> SkinLayersModBase.config.compatibilityMode,
-            //$$        (b) -> SkinLayersModBase.config.compatibilityMode = b));
-            //#endif
-            //#if MC >= 12000
+            //? if < 1.21.2 {
+            /*
+             options.add(getOnOffOption("text.skinlayers.compatibilityMode.enable",
+                    () -> SkinLayersModBase.config.compatibilityMode,
+                    (b) -> SkinLayersModBase.config.compatibilityMode = b));
+            *///? }
+               //? if >= 1.20.0 {
+
             options.add(getOnOffOption("text.skinlayers.irisCompatibilityMode.enable",
                     () -> SkinLayersModBase.config.irisCompatibilityMode,
                     (b) -> SkinLayersModBase.config.irisCompatibilityMode = b));
-            //#endif
+            //? }
             options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.3f, 0.001f,
                     () -> (double) SkinLayersModBase.config.firstPersonPixelScaling, (i) -> {
                         SkinLayersModBase.config.firstPersonPixelScaling = (float) i;

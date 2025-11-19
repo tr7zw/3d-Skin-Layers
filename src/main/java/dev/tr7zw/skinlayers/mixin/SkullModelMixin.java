@@ -14,36 +14,43 @@ import dev.tr7zw.skinlayers.api.OffsetProvider;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelPart;
 
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 @Mixin(SkullModel.class)
-//#else
-//$$ import net.minecraft.client.model.HumanoidHeadModel;
-//$$
-//$$ @Mixin(HumanoidHeadModel.class)
-//#endif
+//? } else {
+
+// import net.minecraft.client.model.HumanoidHeadModel;
+//
+// @Mixin(HumanoidHeadModel.class)
+//? }
 public class SkullModelMixin implements SkullModelAccessor {
 
     @Shadow
-    //#if MC >= 11700
+    //? if >= 1.17.0 {
+
     private ModelPart head;
-    //#else
-    //$$ private ModelPart hat;
-    //#endif
+    //? } else {
+
+    // private ModelPart hat;
+    //? }
 
     @Override
     public void injectHatMesh(Mesh mesh) {
-        //#if MC >= 11700
+        //? if >= 1.17.0 {
+
         head.getAllParts().forEach(part -> {
             if (part != head && (Object) part instanceof ModelPartInjector inj) { // is the hat, not the head
                 inj.setInjectedMesh(mesh, OffsetProvider.SKULL);
             }
         });
-        //#else
-        //$$ ((ModelPartInjector)(Object)hat).setInjectedMesh(mesh, OffsetProvider.SKULL);
-        //#endif
+        //? } else {
+
+        // ((ModelPartInjector)(Object)hat).setInjectedMesh(mesh, OffsetProvider.SKULL);
+        //? }
     }
 
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     @Inject(method = "setupAnim", at = @At("HEAD"))
     public void setupAnim(net.minecraft.client.model.SkullModelBase.State state, CallbackInfo ci) {
         if (state instanceof SkullModelStateAccessor accessor) {
@@ -55,6 +62,6 @@ public class SkullModelMixin implements SkullModelAccessor {
         // Otherwise clear it
         injectHatMesh(null);
     }
-    //#endif
+    //? }
 
 }

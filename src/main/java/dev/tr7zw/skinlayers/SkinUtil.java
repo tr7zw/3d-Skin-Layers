@@ -43,16 +43,18 @@ public class SkinUtil {
             return null;
         }
         try {
-            //#if MC >= 11900
+            //? if >= 1.19.0 {
+
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
             if (optionalRes.isPresent()) {
                 Resource resource = optionalRes.get();
                 NativeImage skin = NativeImage.read(resource.open());
-                //#else
-                //$$    if(Minecraft.getInstance().getResourceManager().hasResource(resourceLocation)) {
-                //$$        Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
-                //$$        NativeImage skin = NativeImage.read(resource.getInputStream());
-                //#endif 
+                //? } else {
+
+                //    if(Minecraft.getInstance().getResourceManager().hasResource(resourceLocation)) {
+                //        Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
+                //        NativeImage skin = NativeImage.read(resource.getInputStream());
+                //? }
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
@@ -112,11 +114,13 @@ public class SkinUtil {
     }
 
     public static boolean setup3dLayers(
-            //#if MC >= 12109
+            //? if >= 1.21.9 {
+
             net.minecraft.world.entity.Avatar abstractClientPlayerEntity,
-            //#else
-            //$$net.minecraft.client.player.AbstractClientPlayer abstractClientPlayerEntity,
-            //#endif
+            //? } else {
+            /*
+                     net.minecraft.client.player.AbstractClientPlayer abstractClientPlayerEntity,
+                    *///? }
             PlayerSettings settings, boolean thinArms) {
         ResourceLocation skinLocation = PlayerUtil.getPlayerSkin(abstractClientPlayerEntity);
         if (skinLocation == null) {

@@ -6,7 +6,8 @@ import dev.tr7zw.skinlayers.accessor.SkullModelStateAccessor;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import lombok.Getter;
 import lombok.Setter;
-//#if MC >= 12109
+//? if >= 1.21.9 {
+
 import net.minecraft.client.model.SkullModel;
 
 @Mixin(SkullModel.State.class)
@@ -17,7 +18,8 @@ public class SkullModelStateMixin implements SkullModelStateAccessor {
     private SkullSettings skullSettings = null;
 
 }
-//#else
-//$$ @Mixin(targets = "net.minecraft.client.Minecraft") // dummy for older versions
-//$$ public class SkullModelStateMixin {}
-//#endif
+//? } else {
+/*
+ @Mixin(targets = "net.minecraft.client.Minecraft") // dummy for older versions
+ public class SkullModelStateMixin {}
+*///? }

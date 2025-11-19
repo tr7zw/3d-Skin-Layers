@@ -17,11 +17,13 @@ import net.minecraft.world.level.Level;
  *
  */
 @Mixin(
-//#if MC >= 12109
+//? if >= 1.21.9 {
+
 net.minecraft.world.entity.Avatar.class
-//#else
-//$$net.minecraft.world.entity.player.Player.class
-//#endif
+//? } else {
+/*
+ net.minecraft.world.entity.player.Player.class
+*///? }
 )
 public abstract class PlayerMixin extends LivingEntity implements PlayerSettings {
 

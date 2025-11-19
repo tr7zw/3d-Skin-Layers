@@ -13,9 +13,10 @@ import dev.tr7zw.skinlayers.versionless.render.CustomizableCube;
 import dev.tr7zw.skinlayers.versionless.util.Direction;
 import dev.tr7zw.skinlayers.versionless.util.wrapper.ModelBuilder;
 import net.minecraft.client.model.geom.ModelPart.Cube;
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
-//#endif
+//? }
 
 public class CustomizableCubeListBuilder implements ModelBuilder {
 
@@ -64,7 +65,8 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
             this.cubes.add(new CustomizableCube(this.u, this.v, (mirror ? -1 : 1) * x, y, z, pixelSize, pixelSize,
                     pixelSize, 0, 0, 0, this.mirror, textureWidth, textureHeight, hide, corners));
         } else {
-            //#if MC >= 12000
+            //? if >= 1.20.0 {
+
             // Hacky workaround for Iris compatibility
             dir: for (Direction dir : Direction.values()) {
                 for (Direction hideDir : hide) {
@@ -120,10 +122,11 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
                         new HashSet<>(Arrays.asList(mcDir)));
                 this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureWidth, textureHeight));
             }
-            //#else
-            //$$ this.cubes.add(new CustomizableCube(this.u, this.v, (mirror ? -1 : 1) * x, y, z, pixelSize, pixelSize,
-            //$$        pixelSize, 0, 0, 0, this.mirror, textureWidth, textureHeight, hide, corners));
-            //#endif
+            //? } else {
+            /*
+             this.cubes.add(new CustomizableCube(this.u, this.v, (mirror ? -1 : 1) * x, y, z, pixelSize, pixelSize,
+                    pixelSize, 0, 0, 0, this.mirror, textureWidth, textureHeight, hide, corners));
+            *///? }
         }
         return this;
     }
@@ -133,14 +136,16 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
         if (mirror) {
             x = -1; // FIXME: Why
         }
-        //#if MC <= 11605
-        //$$         this.vanillaCubes.add(new Cube(u, v, x, y, z, width, height, depth, 0, 0, 0,
-        //$$              this.mirror, textureWidth, textureHeight));
-        //#else
+        //? if <= 1.16.5 {
+
+        //         this.vanillaCubes.add(new Cube(u, v, x, y, z, width, height, depth, 0, 0, 0,
+        //              this.mirror, textureWidth, textureHeight));
+        //? } else {
+
         CubeListBuilder cubeList = CubeListBuilder.create();
         cubeList.texOffs(u, v).mirror(mirror).addBox(x, y, z, width, height, depth);
         this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureWidth, textureHeight));
-        //#endif
+        //? }
         return this;
     }
 

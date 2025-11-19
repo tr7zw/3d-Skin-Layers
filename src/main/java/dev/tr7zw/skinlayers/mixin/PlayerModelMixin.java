@@ -25,15 +25,17 @@ import net.minecraft.world.item.ItemStack;
 @Mixin(PlayerModel.class)
 public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel implements PlayerEntityModelAccessor {
 
-    //#if MC >= 11700
+    //? if >= 1.17.0 {
+
     public PlayerModelMixin(ModelPart modelPart) {
         super(modelPart);
     }
-    //#else
-    //$$ public PlayerModelMixin(float f) {
-    //$$	super(f);
-    //$$ }
-    //#endif
+    //? } else {
+
+    // public PlayerModelMixin(float f) {
+    // super(f);
+    // }
+    //? }
 
     @Shadow
     public ModelPart leftSleeve;
@@ -56,9 +58,11 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
         return slim;
     }
 
-    //#if MC >= 12102
+    //? if >= 1.21.2 {
+
     @Inject(method = "setupAnim", at = @At("TAIL"), cancellable = true)
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     public void setupAnim(net.minecraft.client.renderer.entity.state.AvatarRenderState playerRenderState,
             CallbackInfo ci) {
         net.minecraft.world.entity.Avatar abstractClientPlayer = null;
@@ -71,17 +75,18 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
         } else {
             return;
         }
-        //#else
-        //$$public void setupAnim(
-        //$$net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState,
-        //$$CallbackInfo ci) {
-        //$$net.minecraft.client.player.AbstractClientPlayer abstractClientPlayer = null;
-        //$$if (playerRenderState instanceof EntityRenderStateExtender extender && extender.getTransitionEntity() instanceof net.minecraft.client.player.AbstractClientPlayer entity) {
-        //$$    abstractClientPlayer = entity;
-        //$$} else {
-        //$$     return;
-        //$$ }
-        //#endif
+        //? } else {
+        /*
+         public void setupAnim(
+         net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState,
+         CallbackInfo ci) {
+         net.minecraft.client.player.AbstractClientPlayer abstractClientPlayer = null;
+         if (playerRenderState instanceof EntityRenderStateExtender extender && extender.getTransitionEntity() instanceof net.minecraft.client.player.AbstractClientPlayer entity) {
+            abstractClientPlayer = entity;
+         } else {
+             return;
+         }
+        *///? }
 
         PlayerSettings settings = (PlayerSettings) abstractClientPlayer;
         // reset all injected layers
@@ -127,6 +132,6 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
                     OffsetProvider.RIGHT_LEG);
         }
     }
-    //#endif
+    //? }
 
 }

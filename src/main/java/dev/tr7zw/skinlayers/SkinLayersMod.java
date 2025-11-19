@@ -1,6 +1,7 @@
 package dev.tr7zw.skinlayers;
 
-//#if FABRIC
+//? if fabric {
+
 import net.fabricmc.api.ClientModInitializer;
 
 public class SkinLayersMod extends SkinLayersModBase implements ClientModInitializer {
@@ -10,12 +11,13 @@ public class SkinLayersMod extends SkinLayersModBase implements ClientModInitial
         this.onInitialize();
     }
 
-    //#else
-    //$$ import dev.tr7zw.transition.loader.ModLoaderUtil;
-    //$$ public class SkinLayersMod extends SkinLayersModBase {
-    //$$ public SkinLayersMod() {
-    //$$ 	ModLoaderUtil.registerClientSetupListener(this::onInitialize);
-    //$$ }
-    //#endif
+    //? } else {
+    /*
+     import dev.tr7zw.transition.loader.ModLoaderUtil;
+     public class SkinLayersMod extends SkinLayersModBase {
+     public SkinLayersMod() {
+     	ModLoaderUtil.registerClientSetupListener(this::onInitialize);
+     }
+    *///? }
 
 }

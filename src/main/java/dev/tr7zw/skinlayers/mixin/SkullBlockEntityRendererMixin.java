@@ -38,21 +38,24 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.phys.Vec3;
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 import net.minecraft.client.model.SkullModelBase;
-//#else
-//$$ import net.minecraft.world.level.block.SkullBlock;
-//$$ import net.minecraft.client.model.SkullModel;
-//$$ import org.spongepowered.asm.mixin.Shadow;
-//$$ import java.util.Map;
-//#endif
+//? } else {
+
+// import net.minecraft.world.level.block.SkullBlock;
+// import net.minecraft.client.model.SkullModel;
+// import org.spongepowered.asm.mixin.Shadow;
+// import java.util.Map;
+//? }
 
 @Mixin(SkullBlockRenderer.class)
 public class SkullBlockEntityRendererMixin {
 
     private static final String LAYER_HOLDER = "3d_SKIN_LAYERS_HOLDER";
 
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     @Inject(method = "extractRenderState", at = @At("HEAD"))
     private void extractRenderState(SkullBlockEntity skullBlockEntity,
             net.minecraft.client.renderer.blockentity.state.SkullBlockRenderState skullBlockRenderState, float f,
@@ -108,64 +111,62 @@ public class SkullBlockEntityRendererMixin {
         }
         return state;
     }
-    //#endif
+    //? }
 
-    //#if MC <= 11605
-    //$$ @Shadow
-    //$$ private static Map<net.minecraft.world.level.block.SkullBlock.Type, SkullModel> MODEL_BY_TYPE;
-    //$$ @Shadow
-    //$$ 	private static RenderType getRenderType(net.minecraft.world.level.block.SkullBlock.Type type,
-    //$$  GameProfile gameProfile) {return null;}
-    //#endif
+    //? if <= 1.16.5 {
 
-    //#if MC < 12109    
-    //$$    @SuppressWarnings("resource")
-    //$$    @Inject(method = "render", at = @At("HEAD"))
-    //$$    public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
-    //$$            MultiBufferSource multiBufferSource, int i, int j,
-    //$$            //#if MC >= 12105
-    //$$            Vec3 vec3,
-    //$$            //#endif
-    //$$            CallbackInfo info) {
-    //$$        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-    //$$        if (!SkinLayersModBase.config.enableSkulls)
-    //$$            return;
-    //$$        if (internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int) camera.x(), (int) camera.y(),
-    //$$                (int) camera.z()) < SkinLayersModBase.config.renderDistanceLOD
-    //$$                        * SkinLayersModBase.config.renderDistanceLOD) {
-    //$$            lastSkull = (SkullSettings) skullBlockEntity;
-    //$$            GameProfile gameProfile = null;
-    //$$            //#if MC <= 12004
-    //$$            //$$ gameProfile = skullBlockEntity.getOwnerProfile();
-    //$$            //#else
-    //$$            //$$if (skullBlockEntity.getOwnerProfile() != null) {
-    //$$            //$$    gameProfile = skullBlockEntity.getOwnerProfile().gameProfile();
-    //$$            //$$}
-    //$$            //#else
-    //$$            if (skullBlockEntity.getOwnerProfile() != null) {
-    //$$                gameProfile = PlayerUtil.getProfile(skullBlockEntity.getOwnerProfile());
-    //$$            }
-    //$$            //#endif
-    //$$            if (gameProfile == null)
-    //$$                return;
-    //$$            ResourceLocation textureLocation = PlayerUtil.getPlayerSkin(gameProfile);
-    //$$            if (textureLocation != lastSkull.getLastTexture()) {
-    //$$                lastSkull.setInitialized(false);
-    //$$            }
-    //$$            if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
-    //$$                lastSkull.setInitialized(true); // do this first, so if anything goes horribly wrong, it doesn't happen
-    //$$                                                // next
-    //$$                                                // frame again
-    //$$                lastSkull.setLastTexture(textureLocation);
-    //$$                SkinUtil.setup3dLayers(gameProfile, lastSkull);
-    //$$            }
-    //$$            renderNext = lastSkull.getHeadLayers() != null;
-    //$$        } else {
-    //$$            renderNext = false;
-    //$$            lastSkull = null;
-    //$$        }
-    //$$    }
-    //#endif    
+    // @Shadow
+    // private static Map<net.minecraft.world.level.block.SkullBlock.Type, SkullModel> MODEL_BY_TYPE;
+    // @Shadow
+    // 	private static RenderType getRenderType(net.minecraft.world.level.block.SkullBlock.Type type,
+    //  GameProfile gameProfile) {return null;}
+    //? }
+
+    //? if < 1.21.9 {
+    /*
+        @SuppressWarnings("resource")
+        @Inject(method = "render", at = @At("HEAD"))
+        public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
+                MultiBufferSource multiBufferSource, int i, int j,
+                //#if MC >= 12105
+                Vec3 vec3,
+                //#endif
+                CallbackInfo info) {
+            Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+            if (!SkinLayersModBase.config.enableSkulls)
+                return;
+            if (internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int) camera.x(), (int) camera.y(),
+                    (int) camera.z()) < SkinLayersModBase.config.renderDistanceLOD
+                            * SkinLayersModBase.config.renderDistanceLOD) {
+                lastSkull = (SkullSettings) skullBlockEntity;
+                GameProfile gameProfile = null;
+                //?if <= 1.20.4 {
+                 /^gameProfile = skullBlockEntity.getOwnerProfile();
+                ^///? } else {
+                if (skullBlockEntity.getOwnerProfile() != null) {
+                    gameProfile = PlayerUtil.getProfile(skullBlockEntity.getOwnerProfile());
+                }
+                //? }
+                if (gameProfile == null)
+                    return;
+                ResourceLocation textureLocation = PlayerUtil.getPlayerSkin(gameProfile);
+                if (textureLocation != lastSkull.getLastTexture()) {
+                    lastSkull.setInitialized(false);
+                }
+                if (!lastSkull.initialized() && lastSkull.getHeadLayers() == null) {
+                    lastSkull.setInitialized(true); // do this first, so if anything goes horribly wrong, it doesn't happen
+                                                    // next
+                                                    // frame again
+                    lastSkull.setLastTexture(textureLocation);
+                    SkinUtil.setup3dLayers(gameProfile, lastSkull);
+                }
+                renderNext = lastSkull.getHeadLayers() != null;
+            } else {
+                renderNext = false;
+                lastSkull = null;
+            }
+        }
+    *///? }
 
     private double internalDistToCenterSqr(BlockPos pos, double d, double e, double f) {
         double g = pos.getX() + 0.5D - d;
@@ -174,35 +175,38 @@ public class SkullBlockEntityRendererMixin {
         return g * g + h * h + i * i;
     }
 
-    //#if MC < 12109
-    //$$    @Inject(method = "renderSkull", at = @At("HEAD"))
-    //#if MC >= 11700
-    //$$    private static void renderSkull(Direction direction, float f, float g, PoseStack poseStack,
-    //$$            MultiBufferSource multiBufferSource, int i, SkullModelBase skullModelBase, RenderType renderType,
-    //$$            CallbackInfo ci) {
-    //#else
-    //$$ private static void renderSkull(Direction direction, float f,
-    //$$ net.minecraft.world.level.block.SkullBlock.Type type, GameProfile gameProfile, float g,
-    //$$ PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-    //$$ SkullModel skullModelBase = (SkullModel) MODEL_BY_TYPE.get(type);
-    //#endif
-    //$$        if (skullModelBase instanceof SkullModelAccessor accessor) {
-    //$$            if (!renderNext || lastSkull == null) {
-    //$$                accessor.injectHatMesh(null);
-    //$$                lastSkull = null;
-    //$$                return;
-    //$$            }
-    //$$            Mesh mesh = lastSkull.getHeadLayers();
-    //$$            if (mesh == null) {
-    //$$                accessor.injectHatMesh(null);
-    //$$                lastSkull = null;
-    //$$                return;
-    //$$            }
-    //$$            accessor.injectHatMesh(mesh);
-    //$$            renderNext = false;
-    //$$            lastSkull = null;
-    //$$        }
-    //$$    }
-    //#endif
+    //? if < 1.21.9 {
+    /*
+        @Inject(method = "renderSkull", at = @At("HEAD"))
+     //? if >= 1.17.0 {
+    
+         private static void renderSkull(Direction direction, float f, float g, PoseStack poseStack,
+                 MultiBufferSource multiBufferSource, int i, SkullModelBase skullModelBase, RenderType renderType,
+                 CallbackInfo ci) {
+     //? } else {
+    
+     // private static void renderSkull(Direction direction, float f,
+     // net.minecraft.world.level.block.SkullBlock.Type type, GameProfile gameProfile, float g,
+     // PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+     // SkullModel skullModelBase = (SkullModel) MODEL_BY_TYPE.get(type);
+     //? }
+            if (skullModelBase instanceof SkullModelAccessor accessor) {
+                if (!renderNext || lastSkull == null) {
+                    accessor.injectHatMesh(null);
+                    lastSkull = null;
+                    return;
+                }
+                Mesh mesh = lastSkull.getHeadLayers();
+                if (mesh == null) {
+                    accessor.injectHatMesh(null);
+                    lastSkull = null;
+                    return;
+                }
+                accessor.injectHatMesh(mesh);
+                renderNext = false;
+                lastSkull = null;
+            }
+        }
+    *///? }
 
 }

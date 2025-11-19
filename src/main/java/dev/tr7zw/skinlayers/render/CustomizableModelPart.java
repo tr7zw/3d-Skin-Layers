@@ -14,21 +14,24 @@ import dev.tr7zw.skinlayers.versionless.render.CustomizableCube;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.ModelPart.Cube;
 
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 import net.minecraft.client.model.geom.PartPose;
-//#endif
-//#if MC >= 11903
+//? }
+//? if >= 1.19.3 {
+
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-//#else
-//$$ import com.mojang.math.Vector3f;
-//$$ import com.mojang.math.Vector4f;
-//$$ import com.mojang.math.Matrix3f;
-//$$ import com.mojang.math.Matrix4f;
-//#endif
+//? } else {
+
+// import com.mojang.math.Vector3f;
+// import com.mojang.math.Vector4f;
+// import com.mojang.math.Matrix3f;
+// import com.mojang.math.Matrix4f;
+//? }
 
 /**
  * Cut down copy of the Vanilla ModelPart to bypass Optifine/Sodium screwing
@@ -46,7 +49,8 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         this.children = map;
     }
 
-    //#if MC >= 12102
+    //? if >= 1.21.2 {
+
     public void loadPose(PartPose partPose) {
         this.x = partPose.x();
         this.y = partPose.y();
@@ -55,18 +59,20 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         this.yRot = partPose.yRot();
         this.zRot = partPose.zRot();
     }
-    //#elseif MC >= 11700
-    //$$  public void loadPose(PartPose partPose) {
-    //$$        this.x = partPose.x;
-    //$$        this.y = partPose.y;
-    //$$        this.z = partPose.z;
-    //$$        this.xRot = partPose.xRot;
-    //$$        this.yRot = partPose.yRot;
-    //$$        this.zRot = partPose.zRot;
-    //$$    }
-    //#else
-    //$$ public void loadPose(ModelPart partPose){copyFrom(partPose);}
-    //#endif
+    //? } else if >= 1.17.0 {
+    /*
+      public void loadPose(PartPose partPose) {
+            this.x = partPose.x;
+            this.y = partPose.y;
+            this.z = partPose.z;
+            this.xRot = partPose.xRot;
+            this.yRot = partPose.yRot;
+            this.zRot = partPose.zRot;
+        }
+    *///? } else {
+
+    // public void loadPose(ModelPart partPose){copyFrom(partPose);}
+    //? }
 
     public void copyFrom(ModelPart modelPart) {
         this.xRot = modelPart.xRot;
@@ -108,20 +114,23 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         translateAndRotate(poseStack);
         compile(vanillaModel, poseStack.last(), vertexConsumer, light, overlay, color);
 
-        //#if MC < 12100
-        //$$ float r,g,b,a;
-        //$$ a = ((color >> 24) & 0xFF) / 255F;
-        //$$ r = ((color >> 16) & 0xFF) / 255F;
-        //$$ g = ((color >> 8) & 0xFF) / 255F;
-        //$$ b = (color & 0xFF) / 255F;
-        //#endif
+        //? if < 1.21.0 {
+        /*
+         float r,g,b,a;
+         a = ((color >> 24) & 0xFF) / 255F;
+         r = ((color >> 16) & 0xFF) / 255F;
+         g = ((color >> 8) & 0xFF) / 255F;
+         b = (color & 0xFF) / 255F;
+        *///? }
 
         for (ModelPart modelPart : this.children.values()) {
-            //#if MC >= 12100
+            //? if >= 1.21.0 {
+
             modelPart.render(poseStack, vertexConsumer, light, overlay, color);
-            //#else
-            //$$ modelPart.render(poseStack, vertexConsumer, light, overlay, r, g, b, a);
-            //#endif
+            //? } else {
+            /*
+             modelPart.render(poseStack, vertexConsumer, light, overlay, r, g, b, a);
+            *///? }
         }
         poseStack.popPose();
     }
@@ -129,17 +138,19 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
     public void translateAndRotate(PoseStack poseStack) {
         if (x != 0 || y != 0 || z != 0)
             poseStack.translate(this.x / 16.0F, this.y / 16.0F, this.z / 16.0F);
-        //#if MC >= 11903
+        //? if >= 1.19.3 {
+
         if (this.xRot != 0.0F || this.yRot != 0.0F || this.zRot != 0.0F)
             poseStack.mulPose((new Quaternionf()).rotationZYX(this.zRot, this.yRot, this.xRot));
-        //#else
-        //$$ if (this.zRot != 0.0F)
-        //$$     poseStack.mulPose(Vector3f.ZP.rotation(this.zRot));
-        //$$  if (this.yRot != 0.0F)
-        //$$       poseStack.mulPose(Vector3f.YP.rotation(this.yRot));
-        //$$   if (this.xRot != 0.0F)
-        //$$      poseStack.mulPose(Vector3f.XP.rotation(this.xRot));
-        //#endif
+        //? } else {
+
+        // if (this.zRot != 0.0F)
+        //     poseStack.mulPose(Vector3f.ZP.rotation(this.zRot));
+        //  if (this.yRot != 0.0F)
+        //       poseStack.mulPose(Vector3f.YP.rotation(this.yRot));
+        //   if (this.xRot != 0.0F)
+        //      poseStack.mulPose(Vector3f.XP.rotation(this.xRot));
+        //? }
         //spotless:on
     }
 
@@ -153,13 +164,14 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
         Matrix4f matrix4f = pose.pose();
         Matrix3f matrix3f = pose.normal();
 
-        //#if MC < 12100
-        //$$ float red,green,blue,alpha;
-        //$$ alpha = ((color >> 24) & 0xFF) / 255F;
-        //$$ red = ((color >> 16) & 0xFF) / 255F;
-        //$$ green = ((color >> 8) & 0xFF) / 255F;
-        //$$ blue = (color & 0xFF) / 255F;
-        //#endif
+        //? if < 1.21.0 {
+        /*
+         float red,green,blue,alpha;
+         alpha = ((color >> 24) & 0xFF) / 255F;
+         red = ((color >> 16) & 0xFF) / 255F;
+         green = ((color >> 8) & 0xFF) / 255F;
+         blue = (color & 0xFF) / 255F;
+        *///? }
 
         for (int id = 0; id < polygonData.length; id += polyDataSize) {
             Vector3f vector3f = new Vector3f(polygonData[id + 0], polygonData[id + 1], polygonData[id + 2]);
@@ -170,59 +182,66 @@ public class CustomizableModelPart extends CustomModelPart implements Mesh {
             // optional transformations for bending layers
             transformer.transform(vector3f, vector4f);
 
-            //#if MC >= 11903
+            //? if >= 1.19.3 {
+
             vector3f = matrix3f.transform(vector3f);
             for (int o = 0; o < 4; o++) {
                 matrix4f.transform(vector4f[o]);
-                //#else
-                //$$    vector3f.transform(matrix3f);
-                //$$   for (int o = 0; o < 4; o++) {
-                //$$      vector4f[o].transform(matrix4f);
-                //#endif
-                //#if MC >= 12100
+                //? } else {
+
+                //    vector3f.transform(matrix3f);
+                //   for (int o = 0; o < 4; o++) {
+                //      vector4f[o].transform(matrix4f);
+                //? }
+                //? if >= 1.21.0 {
+
                 vertexConsumer.addVertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z());
                 vertexConsumer.setColor(color);
                 vertexConsumer.setUv(polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4]);
                 vertexConsumer.setOverlay(overlay);
                 vertexConsumer.setLight(light);
                 vertexConsumer.setNormal(vector3f.x(), vector3f.y(), vector3f.z());
-                //#else
-                //$$ vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(),
-                //$$ red, green, blue, alpha,
-                //$$ polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4],
-                //$$ overlay, light,
-                //$$ vector3f.x(), vector3f.y(), vector3f.z());
-                //#endif
+                //? } else {
+                /*
+                 vertexConsumer.vertex(vector4f[o].x(), vector4f[o].y(), vector4f[o].z(),
+                 red, green, blue, alpha,
+                 polygonData[id + 3 + (o * 5) + 3], polygonData[id + 3 + (o * 5) + 4],
+                 overlay, light,
+                 vector3f.x(), vector3f.y(), vector3f.z());
+                *///? }
             }
         }
 
         // other cubes
         for (Cube cube : this.cubes) {
             transformer.transform(cube);
-            //#if MC >= 12100
+            //? if >= 1.21.0 {
+
             cube.compile(pose, vertexConsumer, light, overlay, color);
-            //#elseif MC >= 11700
-            //$$ cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
-            //#else
-            //$$ for (ModelPart.Polygon polygon : cube.polygons) {
-            //$$ 	Vector3f vector3f = polygon.normal.copy();
-            //$$ 	vector3f.transform(matrix3f);
-            //$$ 	float l = vector3f.x();
-            //$$ 	float m = vector3f.y();
-            //$$ 	float n = vector3f.z();
-            //$$ 
-            //$$ 	for (int o = 0; o < 4; ++o) {
-            //$$ 		ModelPart.Vertex vertex = polygon.vertices[o];
-            //$$ 		float p = vertex.pos.x() / 16.0F;
-            //$$ 		float q = vertex.pos.y() / 16.0F;
-            //$$ 		float r = vertex.pos.z() / 16.0F;
-            //$$ 		Vector4f vector4f = new Vector4f(p, q, r, 1.0F);
-            //$$ 		vector4f.transform(matrix4f);
-            //$$		vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u, vertex.v, overlay,
-            //$$	       light, l, m, n);
-            //$$ 	}
-            //$$ }
-            //#endif
+            //? } else if >= 1.17.0 {
+            /*
+             cube.compile(pose, vertexConsumer, light, overlay, red, green, blue, alpha);
+            *///? } else {
+
+            // for (ModelPart.Polygon polygon : cube.polygons) {
+            // 	Vector3f vector3f = polygon.normal.copy();
+            // 	vector3f.transform(matrix3f);
+            // 	float l = vector3f.x();
+            // 	float m = vector3f.y();
+            // 	float n = vector3f.z();
+            //
+            // 	for (int o = 0; o < 4; ++o) {
+            // 		ModelPart.Vertex vertex = polygon.vertices[o];
+            // 		float p = vertex.pos.x() / 16.0F;
+            // 		float q = vertex.pos.y() / 16.0F;
+            // 		float r = vertex.pos.z() / 16.0F;
+            // 		Vector4f vector4f = new Vector4f(p, q, r, 1.0F);
+            // 		vector4f.transform(matrix4f);
+            // 	vertexConsumer.vertex(vector4f.x(), vector4f.y(), vector4f.z(), red, green, blue, alpha, vertex.u, vertex.v, overlay,
+            //        light, l, m, n);
+            // 	}
+            // }
+            //? }
 
         }
     }
