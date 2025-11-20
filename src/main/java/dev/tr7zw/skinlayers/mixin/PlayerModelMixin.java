@@ -15,8 +15,11 @@ import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.api.OffsetProvider;
 import dev.tr7zw.transition.mc.entitywrapper.EntityRenderStateExtender;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? }
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -68,7 +71,7 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
         net.minecraft.world.entity.Avatar abstractClientPlayer = null;
         if (ignored)
             return;
-        if (!((Object) this instanceof net.minecraft.client.model.PlayerCapeModel)
+        if (!((Object) this instanceof PlayerCapeModel)
                 && playerRenderState instanceof EntityRenderStateExtender extender
                 && extender.getTransitionEntity() instanceof net.minecraft.world.entity.Avatar entity) {
             abstractClientPlayer = entity;
@@ -96,10 +99,10 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
         ((ModelPartInjector) (Object) rightSleeve).setInjectedMesh(null, null);
         ((ModelPartInjector) (Object) leftPants).setInjectedMesh(null, null);
         ((ModelPartInjector) (Object) rightPants).setInjectedMesh(null, null);
-        if (Minecraft.getInstance().player == null
-                || abstractClientPlayer.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera()
-                        .getPosition()) > SkinLayersModBase.config.renderDistanceLOD
-                                * SkinLayersModBase.config.renderDistanceLOD) {
+        if (Minecraft.getInstance().player == null || abstractClientPlayer.distanceToSqr(Minecraft
+                .getInstance().gameRenderer.getMainCamera()
+                /*? >= 1.21.11 {*/ .position() /*?} else {*//* .getPosition() *//*?}*/) > SkinLayersModBase.config.renderDistanceLOD
+                        * SkinLayersModBase.config.renderDistanceLOD) {
             return;
         }
         if (!SkinUtil.setup3dLayers(abstractClientPlayer, settings, slim)) {

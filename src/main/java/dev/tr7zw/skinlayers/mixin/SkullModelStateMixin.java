@@ -8,7 +8,11 @@ import lombok.Getter;
 import lombok.Setter;
 //? if >= 1.21.9 {
 
-import net.minecraft.client.model.SkullModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.object.skull.*;
+//? }
+import net.minecraft.client.model.*;
 
 @Mixin(SkullModel.State.class)
 public class SkullModelStateMixin implements SkullModelStateAccessor {

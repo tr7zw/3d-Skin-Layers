@@ -11,8 +11,16 @@ import dev.tr7zw.skinlayers.accessor.SkullModelAccessor;
 import dev.tr7zw.skinlayers.accessor.SkullModelStateAccessor;
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.OffsetProvider;
-import net.minecraft.client.model.SkullModel;
+
 import net.minecraft.client.model.geom.ModelPart;
+
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.object.skull.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 
 //? if >= 1.17.0 {
 
@@ -52,7 +60,7 @@ public class SkullModelMixin implements SkullModelAccessor {
     //? if >= 1.21.9 {
 
     @Inject(method = "setupAnim", at = @At("HEAD"))
-    public void setupAnim(net.minecraft.client.model.SkullModelBase.State state, CallbackInfo ci) {
+    public void setupAnim(SkullModelBase.State state, CallbackInfo ci) {
         if (state instanceof SkullModelStateAccessor accessor) {
             if (accessor.getSkullSettings() != null) {
                 injectHatMesh(accessor.getSkullSettings().getMesh());

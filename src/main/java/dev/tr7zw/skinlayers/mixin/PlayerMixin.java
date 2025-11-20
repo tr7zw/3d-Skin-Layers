@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -37,7 +37,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
     private Mesh rightArmMesh;
     private Mesh leftLegMesh;
     private Mesh rightLegMesh;
-    private ResourceLocation currentSkin = null;
+    private /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ currentSkin = null;
     private boolean thinarms = false;
 
     @Override
@@ -101,12 +101,12 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
     }
 
     @Override
-    public ResourceLocation getCurrentSkin() {
+    public /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ getCurrentSkin() {
         return currentSkin;
     }
 
     @Override
-    public void setCurrentSkin(ResourceLocation skin) {
+    public void setCurrentSkin(/*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ skin) {
         this.currentSkin = skin;
     }
 

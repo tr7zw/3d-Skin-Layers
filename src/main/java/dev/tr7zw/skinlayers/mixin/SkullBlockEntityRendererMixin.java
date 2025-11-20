@@ -30,17 +30,22 @@ import dev.tr7zw.transition.mc.PlayerUtil;
 import dev.tr7zw.transition.mc.extending.ExtensionHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.phys.Vec3;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.object.skull.*;
+//? }
+
 //? if >= 1.17.0 {
 
-import net.minecraft.client.model.SkullModelBase;
+import net.minecraft.client.model.*;
 //? } else {
 
 // import net.minecraft.world.level.block.SkullBlock;
@@ -61,7 +66,8 @@ public class SkullBlockEntityRendererMixin {
             net.minecraft.client.renderer.blockentity.state.SkullBlockRenderState skullBlockRenderState, float f,
             Vec3 vec3, net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay crumblingOverlay,
             CallbackInfo ci) {
-        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera()
+                /*? >= 1.21.11 {*/ .position() /*?} else {*//* .getPosition() *//*?}*/;
         if (!SkinLayersModBase.config.enableSkulls)
             return;
         if (internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int) camera.x(), (int) camera.y(),
@@ -71,7 +77,7 @@ public class SkullBlockEntityRendererMixin {
             GameProfile gameProfile = PlayerUtil.getProfile(skullBlockEntity.getOwnerProfile());
             if (gameProfile == null)
                 return;
-            ResourceLocation textureLocation = PlayerUtil.getPlayerSkin(gameProfile);
+            var textureLocation = PlayerUtil.getPlayerSkin(gameProfile);
             if (textureLocation != lastSkull.getLastTexture()) {
                 lastSkull.setInitialized(false);
             }

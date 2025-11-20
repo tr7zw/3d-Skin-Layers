@@ -9,10 +9,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.*;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.*;
+
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? }
 
 @Mixin(Deadmau5EarsLayer.class)
 public class Deadmau5EarsLayerMixin {

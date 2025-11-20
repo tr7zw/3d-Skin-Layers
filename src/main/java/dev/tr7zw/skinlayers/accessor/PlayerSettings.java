@@ -2,7 +2,7 @@ package dev.tr7zw.skinlayers.accessor;
 
 import dev.tr7zw.skinlayers.api.Mesh;
 import dev.tr7zw.skinlayers.api.PlayerData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 
 public interface PlayerSettings extends PlayerData {
 
@@ -18,9 +18,9 @@ public interface PlayerSettings extends PlayerData {
 
     public void setRightLegMesh(Mesh box);
 
-    public ResourceLocation getCurrentSkin();
+    public /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ getCurrentSkin();
 
-    public void setCurrentSkin(ResourceLocation skin);
+    public void setCurrentSkin(/*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ skin);
 
     public boolean hasThinArms();
 

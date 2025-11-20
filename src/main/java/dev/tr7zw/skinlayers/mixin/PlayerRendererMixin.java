@@ -15,7 +15,13 @@ import dev.tr7zw.skinlayers.accessor.PlayerEntityModelAccessor;
 import dev.tr7zw.skinlayers.accessor.PlayerSettings;
 import dev.tr7zw.skinlayers.api.OffsetProvider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 //? if < 1.21.9 {
@@ -53,7 +59,7 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 /*
  import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 *///? }
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 
 //? if >= 1.21.9 {
 
@@ -179,7 +185,8 @@ public abstract class PlayerRendererMixin
             /*
                      MultiBufferSource multiBufferSource,
                     *///? }
-            int i, ResourceLocation resourceLocation, ModelPart arm, boolean bl, CallbackInfo info) {
+            int i, /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ resourceLocation,
+            ModelPart arm, boolean bl, CallbackInfo info) {
         // TODO
         AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;// hacky, but 1.21.2 happened
         ModelPart sleeve;
@@ -216,7 +223,7 @@ public abstract class PlayerRendererMixin
 
     //? if >= 1.21.9 {
 
-    @WrapOperation(method = "method_72996", at = @At(value = "NEW", target = "(Lnet/minecraft/client/model/geom/ModelPart;Z)Lnet/minecraft/client/model/PlayerModel;"))
+    @WrapOperation(method = "method_72996", at = @At(value = "NEW", target = /*? >= 1.21.11 {*/ "(Lnet/minecraft/client/model/geom/ModelPart;Z)Lnet/minecraft/client/model/player/PlayerModel;" /*?} else {*//* "(Lnet/minecraft/client/model/geom/ModelPart;Z)Lnet/minecraft/client/model/PlayerModel;" *//*?}*/))
     private static PlayerModel markArmorModelAsIgnored(ModelPart modelPart, boolean slim,
             Operation<PlayerModel> original) {
         PlayerModel call = original.call(modelPart, slim);

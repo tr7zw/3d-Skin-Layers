@@ -22,9 +22,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.world.entity.LivingEntity;
+
+//? if >= 1.21.11 {
+
+import net.minecraft.client.renderer.rendertype.*;
+//? }
 
 //? if < 1.21.4 {
 /*
@@ -48,7 +53,8 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
     private void resolveSkullRenderType(
             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
             net.minecraft.world.level.block.SkullBlock.Type type, CallbackInfoReturnable<RenderType> ci) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().gameRenderer.getMainCamera()
+                /*? >= 1.21.11 {*/ .position() /*?} else {*//* .getPosition() *//*?}*/
                 .distanceToSqr(livingEntityRenderState.x, livingEntityRenderState.y,
                         livingEntityRenderState.z) > SkinLayersModBase.config.renderDistanceLOD
                                 * SkinLayersModBase.config.renderDistanceLOD) {

@@ -4,7 +4,7 @@ import java.util.WeakHashMap;
 
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
 import dev.tr7zw.skinlayers.api.Mesh;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 //? if >= 1.21.4 {
 
 import com.mojang.authlib.GameProfile;
@@ -51,13 +51,13 @@ public class SkullRendererCache {
         }
 
         @Override
-        public void setLastTexture(ResourceLocation texture) {
+        public void setLastTexture(/*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ texture) {
             // TODO Auto-generated method stub
 
         }
 
         @Override
-        public ResourceLocation getLastTexture() {
+        public /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ getLastTexture() {
             // TODO Auto-generated method stub
             return null;
         }

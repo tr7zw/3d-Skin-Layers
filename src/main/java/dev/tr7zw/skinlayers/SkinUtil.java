@@ -19,7 +19,7 @@ import dev.tr7zw.transition.mc.PlayerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.*;
 import net.minecraft.server.packs.resources.Resource;
 
 public class SkinUtil {
@@ -38,7 +38,9 @@ public class SkinUtil {
                 }
             }).build();
 
-    public static NativeImage getTexture(ResourceLocation resourceLocation, SkullSettings settings) {
+    public static NativeImage getTexture(
+            /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ resourceLocation,
+            SkullSettings settings) {
         if (resourceLocation == null) {
             return null;
         }
@@ -122,7 +124,7 @@ public class SkinUtil {
                      net.minecraft.client.player.AbstractClientPlayer abstractClientPlayerEntity,
                     *///? }
             PlayerSettings settings, boolean thinArms) {
-        ResourceLocation skinLocation = PlayerUtil.getPlayerSkin(abstractClientPlayerEntity);
+        var skinLocation = PlayerUtil.getPlayerSkin(abstractClientPlayerEntity);
         if (skinLocation == null) {
             return false;// this *should* never happen, but just to be sure
         }
@@ -163,7 +165,7 @@ public class SkinUtil {
         if (gameprofile == null) {
             return false; // no gameprofile
         }
-        ResourceLocation playerSkin = PlayerUtil.getPlayerSkin(gameprofile);
+        var playerSkin = PlayerUtil.getPlayerSkin(gameprofile);
         if (playerSkin == null) {
             return false; // no skin
         }
@@ -176,7 +178,9 @@ public class SkinUtil {
         return true;
     }
 
-    public static boolean setup3dLayers(ResourceLocation playerSkin, SkullSettings settings) {
+    public static boolean setup3dLayers(
+            /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ playerSkin,
+            SkullSettings settings) {
         if (playerSkin == null) {
             return false; // no skin
         }
