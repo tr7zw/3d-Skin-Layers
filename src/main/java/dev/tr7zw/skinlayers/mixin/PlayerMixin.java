@@ -37,7 +37,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
     private Mesh rightArmMesh;
     private Mesh leftLegMesh;
     private Mesh rightLegMesh;
-    private /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ currentSkin = null;
+    private /*? >= 1.21.11 {*/ Identifier /*?} else {*/ /*ResourceLocation *//*?}*/ currentSkin = null;
     private boolean thinarms = false;
 
     @Override
@@ -101,12 +101,12 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerSettings
     }
 
     @Override
-    public /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ getCurrentSkin() {
+    public /*? >= 1.21.11 {*/ Identifier /*?} else {*/ /*ResourceLocation *//*?}*/ getCurrentSkin() {
         return currentSkin;
     }
 
     @Override
-    public void setCurrentSkin(/*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ skin) {
+    public void setCurrentSkin(/*? >= 1.21.11 {*/ Identifier /*?} else {*/ /*ResourceLocation *//*?}*/ skin) {
         this.currentSkin = skin;
     }
 

@@ -18,9 +18,9 @@ public interface PlayerSettings extends PlayerData {
 
     public void setRightLegMesh(Mesh box);
 
-    public /*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ getCurrentSkin();
+    public /*? >= 1.21.11 {*/ Identifier /*?} else {*/ /*ResourceLocation *//*?}*/ getCurrentSkin();
 
-    public void setCurrentSkin(/*? >= 1.21.11 {*/ Identifier /*?} else {*//* ResourceLocation *//*?}*/ skin);
+    public void setCurrentSkin(/*? >= 1.21.11 {*/ Identifier /*?} else {*/ /*ResourceLocation *//*?}*/ skin);
 
     public boolean hasThinArms();
 

@@ -67,7 +67,7 @@ public class SkullBlockEntityRendererMixin {
             Vec3 vec3, net.minecraft.client.renderer.feature.ModelFeatureRenderer.CrumblingOverlay crumblingOverlay,
             CallbackInfo ci) {
         Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera()
-                /*? >= 1.21.11 {*/ .position() /*?} else {*//* .getPosition() *//*?}*/;
+                /*? >= 1.21.11 {*/ .position() /*?} else {*/ /*.getPosition() *//*?}*/;
         if (!SkinLayersModBase.config.enableSkulls)
             return;
         if (internalDistToCenterSqr(skullBlockEntity.getBlockPos(), (int) camera.x(), (int) camera.y(),

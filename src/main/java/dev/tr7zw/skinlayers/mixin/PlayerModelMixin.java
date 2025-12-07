@@ -101,7 +101,7 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel impl
         ((ModelPartInjector) (Object) rightPants).setInjectedMesh(null, null);
         if (Minecraft.getInstance().player == null || abstractClientPlayer.distanceToSqr(Minecraft
                 .getInstance().gameRenderer.getMainCamera()
-                /*? >= 1.21.11 {*/ .position() /*?} else {*//* .getPosition() *//*?}*/) > SkinLayersModBase.config.renderDistanceLOD
+                /*? >= 1.21.11 {*/ .position() /*?} else {*/ /*.getPosition() *//*?}*/) > SkinLayersModBase.config.renderDistanceLOD
                         * SkinLayersModBase.config.renderDistanceLOD) {
             return;
         }

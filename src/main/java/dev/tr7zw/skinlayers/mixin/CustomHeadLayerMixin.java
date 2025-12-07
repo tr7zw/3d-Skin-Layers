@@ -54,7 +54,7 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
             net.minecraft.world.level.block.SkullBlock.Type type, CallbackInfoReturnable<RenderType> ci) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().gameRenderer.getMainCamera()
-                /*? >= 1.21.11 {*/ .position() /*?} else {*//* .getPosition() *//*?}*/
+                /*? >= 1.21.11 {*/ .position() /*?} else {*/ /*.getPosition() *//*?}*/
                 .distanceToSqr(livingEntityRenderState.x, livingEntityRenderState.y,
                         livingEntityRenderState.z) > SkinLayersModBase.config.renderDistanceLOD
                                 * SkinLayersModBase.config.renderDistanceLOD) {
