@@ -1,9 +1,11 @@
 package dev.tr7zw.skinlayers.util;
 
+import dev.tr7zw.skinlayers.*;
+
 public class SodiumWorkaround {
 
     public static final boolean IS_SODIUM_WORKAROUND_NEEDED = isSodiumWorkaroundNeeded(); // This is a workaround to ensure the ModelPartData is loaded
-    public static final boolean IS_SODIUM_LOADED = isSodiumLoaded();
+    private static final boolean IS_SODIUM_LOADED = isSodiumLoaded();
 
     private static boolean isSodiumWorkaroundNeeded() {
         try {
@@ -21,6 +23,10 @@ public class SodiumWorkaround {
         } catch (ClassNotFoundException e) {
             return false;
         }
+    }
+
+    public static boolean applySodiumWorkaround() {
+        return IS_SODIUM_LOADED && SkinLayersMod.config.applySodiumWorkaround;
     }
 
 }

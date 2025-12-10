@@ -40,5 +40,7 @@
     "text.skinlayers.compatibilityMode.enable": "Compatibility Mode",
     "text.skinlayers.compatibilityMode.enable.tooltip": "Alternative way to render the layers, might fix some compatibility issues with other mods",
     "text.skinlayers.irisCompatibilityMode.enable": "Iris Compatibility Mode",
-    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Alternative way to render the layers, fixes weird shadows/colors when using Iris shaders. Only turn this setting on when needed. Will break the corner connections."
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Alternative way to render the layers, fixes weird shadows/colors when using Iris shaders. Only turn this setting on when needed. Will break the corner connections.",
+    "text.skinlayers.applySodiumWorkaround.enable": "Sodium Workaround",
+    "text.skinlayers.applySodiumWorkaround.enable.tooltip": "Workaround for Sodium having flipped Cube sides in some versions(?). Only enable this if you are using Sodium and notice visual issues with the skin layers sides missing."
 }

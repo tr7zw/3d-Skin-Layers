@@ -123,6 +123,9 @@ public class ConfigScreenProvider {
             options.add(getOnOffOption("text.skinlayers.irisCompatibilityMode.enable",
                     () -> SkinLayersModBase.config.irisCompatibilityMode,
                     (b) -> SkinLayersModBase.config.irisCompatibilityMode = b));
+            options.add(getOnOffOption("text.skinlayers.applySodiumWorkaround.enable",
+                    () -> SkinLayersModBase.config.applySodiumWorkaround,
+                    (b) -> SkinLayersModBase.config.applySodiumWorkaround = b));
             //? }
             options.add(getDoubleOption("text.skinlayers.firstperson.voxelsize", 1.02f, 1.3f, 0.001f,
                     () -> (double) SkinLayersModBase.config.firstPersonPixelScaling, (i) -> {

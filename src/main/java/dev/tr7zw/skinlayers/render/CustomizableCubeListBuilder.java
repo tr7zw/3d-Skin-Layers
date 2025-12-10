@@ -111,10 +111,10 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
                 case NORTH:
                     yield net.minecraft.core.Direction.NORTH;
                 case EAST:
-                    yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.WEST
+                    yield SodiumWorkaround.applySodiumWorkaround() ? net.minecraft.core.Direction.WEST
                             : net.minecraft.core.Direction.EAST;
                 case WEST:
-                    yield SodiumWorkaround.IS_SODIUM_LOADED ? net.minecraft.core.Direction.EAST
+                    yield SodiumWorkaround.applySodiumWorkaround() ? net.minecraft.core.Direction.EAST
                             : net.minecraft.core.Direction.WEST;
                 case SOUTH:
                     yield net.minecraft.core.Direction.SOUTH;

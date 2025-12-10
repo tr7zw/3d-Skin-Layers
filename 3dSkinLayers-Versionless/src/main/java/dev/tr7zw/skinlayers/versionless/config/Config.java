@@ -23,6 +23,7 @@ public class Config {
     public boolean fastRender = true;
     public boolean compatibilityMode = true;
     public boolean irisCompatibilityMode = false;
+    public boolean applySodiumWorkaround = false;
 
     public float firstPersonPixelScaling = 1.1f;
 
