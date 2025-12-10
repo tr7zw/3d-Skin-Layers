@@ -8,24 +8,23 @@ import dev.tr7zw.skinlayers.render.CustomizableCubeListBuilder;
 import dev.tr7zw.skinlayers.render.CustomizableModelPart;
 import dev.tr7zw.skinlayers.util.NMSWrapper.WrappedNativeImage;
 import dev.tr7zw.skinlayers.versionless.util.wrapper.SolidPixelWrapper;
+import lombok.*;
+import lombok.experimental.*;
 import net.minecraft.client.player.AbstractClientPlayer;
 
+@UtilityClass
 public class SkinLayersAPI {
 
+    @Getter
     private static final MeshHelper meshHelper = new MeshHelperImplementation();
+    @Getter
     private static final MeshProvider meshProvider = new MeshProviderImplementation();
     private static MeshTransformerProvider meshTransformerProvider = MeshTransformerProvider.EMPTY_PROVIDER;
+    @Getter
+    private static BoxBuilder boxBuilder = BoxBuilder.DEFAULT;
 
-    private SkinLayersAPI() {
-        // private
-    }
-
-    public static MeshHelper getMeshHelper() {
-        return meshHelper;
-    }
-
-    public static MeshProvider getMeshProvider() {
-        return meshProvider;
+    public static void setupBoxBuilder(BoxBuilder builder) {
+        SkinLayersAPI.boxBuilder = builder;
     }
 
     public static void setupMeshTransformerProvider(MeshTransformerProvider provider) {

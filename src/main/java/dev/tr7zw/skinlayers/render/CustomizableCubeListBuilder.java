@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 
 import dev.tr7zw.skinlayers.SkinLayersModBase;
+import dev.tr7zw.skinlayers.api.*;
 import dev.tr7zw.skinlayers.util.*;
 import dev.tr7zw.skinlayers.versionless.render.CustomizableCube;
 import dev.tr7zw.skinlayers.versionless.util.Direction;
@@ -136,16 +137,8 @@ public class CustomizableCubeListBuilder implements ModelBuilder {
         if (mirror) {
             x = -1; // FIXME: Why
         }
-        //? if <= 1.16.5 {
-
-        //         this.vanillaCubes.add(new Cube(u, v, x, y, z, width, height, depth, 0, 0, 0,
-        //              this.mirror, textureWidth, textureHeight));
-        //? } else {
-
-        CubeListBuilder cubeList = CubeListBuilder.create();
-        cubeList.texOffs(u, v).mirror(mirror).addBox(x, y, z, width, height, depth);
-        this.vanillaCubes.add(cubeList.getCubes().get(0).bake(textureWidth, textureHeight));
-        //? }
+        this.vanillaCubes.add(SkinLayersAPI.getBoxBuilder().build(new BoxBuilder.BoxDefinition(u, v, mirror, x, y, z,
+                width, height, depth, textureWidth, textureHeight)));
         return this;
     }
 
