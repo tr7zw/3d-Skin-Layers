@@ -134,9 +134,9 @@ public class SkullBlockEntityRendererMixin {
         @Inject(method = "render", at = @At("HEAD"))
         public void render(SkullBlockEntity skullBlockEntity, float f, PoseStack poseStack,
                 MultiBufferSource multiBufferSource, int i, int j,
-                //#if MC >= 12105
+                //?if >= 1.21.5 {
                 Vec3 vec3,
-                //#endif
+                //? }
                 CallbackInfo info) {
             Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
             if (!SkinLayersModBase.config.enableSkulls)

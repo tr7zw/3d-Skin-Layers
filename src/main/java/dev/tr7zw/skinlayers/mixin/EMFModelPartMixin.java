@@ -34,21 +34,21 @@ public abstract class EMFModelPartMixin implements ModelPartInjector {
         }
     }
     //? } else {
-
-    // @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V", at = @At(value = "HEAD"), cancellable = true)
-    // public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha,
-    //         CallbackInfo ci) {
-    //     if (isVisible() && getInjectedMesh() != null) {
-    //         poseStack.pushPose();
-    //         prepareTranslateAndRotate(poseStack);
-    //         getOffsetProvider().applyOffset(poseStack, getInjectedMesh());
-    //         getInjectedMesh().render((ModelPart)(Object)this, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
-    //         poseStack.popPose();
-    //         ci.cancel();
-    //     }
-    // }
-    //
-    //? }
+    /*
+     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V", at = @At(value = "HEAD"), cancellable = true)
+     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha,
+             CallbackInfo ci) {
+         if (isVisible() && getInjectedMesh() != null) {
+             poseStack.pushPose();
+             prepareTranslateAndRotate(poseStack);
+             getOffsetProvider().applyOffset(poseStack, getInjectedMesh());
+             getInjectedMesh().render((ModelPart)(Object)this, poseStack, vertexConsumer, light, overlay, red, green, blue, alpha);
+             poseStack.popPose();
+             ci.cancel();
+         }
+     }
+    
+    *///? }
 
 }
 //? } else {
