@@ -40,5 +40,7 @@
     "text.skinlayers.compatibilityMode.enable": "Modo de Compatibilidad",
     "text.skinlayers.compatibilityMode.enable.tooltip": "Método alternativo para renderizar las capas, puede solucionar problemas de compatibilidad con otros mods",
     "text.skinlayers.irisCompatibilityMode.enable": "Modo de compatibilidad con Iris",
-    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Método alternativo para renderizar las capas. Corrige sombras o colores extraños al usar shaders Iris. Activá esta opción solo si es necesario. Puede romper las conexiones en las esquinas."
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Método alternativo para renderizar las capas. Corrige sombras o colores extraños al usar shaders Iris. Activá esta opción solo si es necesario. Puede romper las conexiones en las esquinas.",
+    "text.skinlayers.applySodiumWorkaround.enable": "Solución para Sodium",
+    "text.skinlayers.applySodiumWorkaround.enable.tooltip": "Solución para versiones de Sodium que invierten los lados del cubo. Activá esto solo si usás Sodium y notás problemas visuales con los lados de las capas de la skin faltando."
 }
