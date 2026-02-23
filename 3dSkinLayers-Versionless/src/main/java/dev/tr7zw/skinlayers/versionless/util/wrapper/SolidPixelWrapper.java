@@ -49,8 +49,7 @@ public class SolidPixelWrapper {
             return null;
         }
 
-        // if cubes is empty, there are no pixels. Don't add an empty box.
-        if (ModBase.config.fastRender && !builder.isEmpty()) {
+        if (ModBase.config.fastRender) {
             builder.uv(textureU, textureV).addVanillaBox(staticXOffset, staticYOffset, staticZOffset, width, height,
                     depth);
         }
