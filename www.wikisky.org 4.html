@@ -1,0 +1,789 @@
+
+ 
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>SKY-MAP.ORG - Interactive Sky Map</title>
+<link type="text/css" CHARSET="UTF-8" rel="stylesheet" href="homepage1.css"/>
+<link type="text/css" CHARSET="UTF-8" rel="stylesheet" href="coolbar.css"/>
+<link type="text/css" CHARSET="UTF-8" rel="stylesheet" href="menu_n.css" />
+<link type="text/css" CHARSET="UTF-8" rel="stylesheet" href="tabcontent.css" />
+<link rel="stylesheet" type="text/css" href="dhtml-menu.css" />
+<script type='text/javascript' src='/jsc/dhtml-menu%7Cutils%7Cdate_format%7Ctabcontent%7Cmenu_n%7Cslider%7CrightPanel'></script>
+<script type="text/javascript">
+    
+    function sdss_label(){
+        ddrivetip('<table style="width:150px;border:1px solid green;"><tr><td>Sloan Digital Sky Survey (SDSS) view<br><img src=images/galaxy2.jpg style="width:150px;border:0px solid black;"></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function science_label(){
+        ddrivetip('<table style="height:155px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/scientific.jpg" valign="top"><font color=red size=-1><b>Scientific Mode</b></font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function dss2_label(){
+        ddrivetip('<table style="height:125px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/DSS2.jpg" valign="top"><font size=-1>Palomar and AAO Digitized Sky Survey II (DSS2)</font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function iras_label(){
+        ddrivetip('<table style="height:125px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/IRAS.jpg" valign="top"><font size=-1>Infrared Astronomical Satellite(IRAS) Sky Survey</font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function halpha_label(){
+        ddrivetip('<table style="height:125px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/HALPHA.jpg" valign="top"><font size=-1>H-Alpha All Sky Survey</font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function rass_label(){
+        ddrivetip('<table style="height:125px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/RASS.jpg" valign="top"><font size=-1>X-Ray All Sky Survey (RASS)</font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function galex_label(){
+        ddrivetip('<table style="height:125px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/GALEX.jpg" valign="top"><font size=-1>Ultraviolet Sky Survey (GALEX)</font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function photosurvey_label(){
+        ddrivetip('<table style="height:125px;width:150px;border:1px solid green;"><tr><td BACKGROUND="images/photosurvey2.jpg" valign="top"><font size=-1>Astro Photo Survey</font></td></tr></table>', 'BLACK', 150, 50);
+    }
+
+    function gift_label(){
+        ddrivetip('<table style="width:172px;border:1px solid gray;background-color:black;color:white;font-family:verdana;"><tr><td><img src="images/gift.jpg" border=0 style="float:left;position:relative;top:-1;left:0;"></td></tr></table>', 'BLACK', 100, 25);
+    }
+
+var menu7=new Array();
+menu7[0]='<a href="javascript:changeUsgr(-1);" ONMOUSEOVER="ddrivetip(\'<table style={background-color:yellow}><tr><td nowrap><font color=black>All stars from all categories</font></td></tr></table>\', \'\', 1, 1);" ONMOUSEOUT="hideddrivetip();"><font color=white>Show all</font></a>';
+menu7[1]='<a href="javascript:changeUsgr(1);" ONMOUSEOVER="ddrivetip(\'<table style={background-color:yellow}><tr><td nowrap><font color=black>Personal stars</font></td></tr></table>\', \'\', 1, 1);" ONMOUSEOUT="hideddrivetip();"><font color=white>Personal</font></a>';
+menu7[2]='<a href="javascript:changeUsgr(2);" ONMOUSEOVER="ddrivetip(\'<table style={background-color:yellow}><tr><td nowrap><font color=black>The collaboration of the professional and popular Science and Space news</font></td></tr></table>\', \'\', 1, 1);" ONMOUSEOUT="hideddrivetip();"><font color=white>Science&Space News</font></a>';
+menu7[3]='<a href="javascript:changeUsgr(3);" ONMOUSEOVER="ddrivetip(\'<table style={background-color:yellow}><tr><td nowrap><font color=black>Blogs on stars</font></td></tr></table>\', \'\', 1, 1);" ONMOUSEOUT="hideddrivetip();"><font color=white>Blogs</font></a>';
+menu7[4]='<a href="javascript:changeUsgr(4);" ONMOUSEOVER="ddrivetip(\'<table style={background-color:yellow}><tr><td nowrap><font color=black>Web-based resources related to various subjects and organizations</font></td></tr></table>\', \'\', 1, 1);" ONMOUSEOUT="hideddrivetip();"><font color=white>WWW-Stars</font></a>';
+menu7[5]='<a href="javascript:changeUsgr(5);" ONMOUSEOVER="ddrivetip(\'<table style={background-color:yellow}><tr><td nowrap><font color=black>The latest world news.</font></td></tr></table>\', \'\', 1, 1);" ONMOUSEOUT="hideddrivetip();"><font color=white>World News</font></a>';
+
+    
+</script>
+<meta name="keywords" content="sky map skymap celestial astrophoto virtual telescope interactive online stars galaxy galaxies nebula constellation"/>
+<meta name="description" content="Interactive online sky map"/>
+</head>
+<body id="body" bgcolor="BLACK" background="images/bg.jpg" style="margin: 0" onload="" class="snap_noshots" >
+
+
+
+
+
+
+<script type="text/javascript">
+    function become_top_sponsor(){
+      ddrivetip('<table style="width:408px;border:1px solid gray;background-color:black;color:DodgerBlue;font-family:verdana;font-size:8pt;"><tr><td>The &#34;Inhabited Sky&#34; program awards you the status of &#34;Supernova&#34; if you &#34;inhabit&#34; a star and your donation related to this star is the largest of all those made to date (by anyone). Once you have acquired the status of &#34;Supernova&#34;, the star that you are &#34;inhabiting&#34; will fall into a special category - &#34;All Supernovas Sky&#34;. From that point on the &#34;Supernova&#34; status will be yours forever. Note: if you &#34;inhabit&#34; more than one star, the total amount of donations does not determine the &#34;Supernova&#34;, the status of &#34;Supernova&#34; refers to the donation related to only one star. There is no limit to the number of times that you can become the &#34;Supernova&#34;. <font color="#00ffff">Simply click here to become a Supernova!</font></td></tr></table>', 'BLACK', 150, 25);
+    }
+    function why_to_sponsor(){
+      ddrivetip('<table style="width:408px;border:1px solid gray;background-color:black;color:DodgerBlue;font-family:verdana;font-size:8pt;"><tr><td>By &#34;inhabiting a star&#34; you bond your name forever both with your chosen star and SKY-MAP.ORG. You will receive a web page linked to your star on &#34;INHABITED SKY&#34; which becomes from now on, your own personal page, where you can place any business or personal information. <br><font style="FONT-SIZE:3px;">&nbsp;</font><br><img src="images/SuperNova.jpg" border=0 width=404 height=288></td></tr></table>', 'BLACK', 150, 25);
+    }
+    function why_to_sponsor1(){
+      ddrivetip('<table style="width:408px;border:1px solid gray;background-color:black;color:DodgerBlue;font-family:verdana;font-size:8pt;"><tr><td>By &#34;inhabiting a star&#34; you bond your name forever both with your chosen star and SKY-MAP.ORG. You will receive a web page linked to your star on &#34;INHABITED SKY&#34; which becomes from now on, your own personal page, where you can place any business or personal information. <br><font style="FONT-SIZE:3px;">&nbsp;</font><br>The authors imagine SKY-MAP.ORG as a bridge linking the incredibly beautiful, and unimaginably complex world of modern science to the world of your everyday person as well as to the world of children. The authors hope that their site will make it possible to intrigue all layers of society to the grandeur of the outer space. The dream of the authors is to awaken the general public&#8217;s interest in the outer space – for us all to recognize the consequences behind Stephen Hawking&#8217;s opinion, that humanity does not have a future, if it would not feel at home in the Universe.<br>You may sponsor SKY-MAP.ORG through joining &#34;Inhabit a Star&#34; program.</td></tr></table>', 'BLACK', 150, 25);
+    }
+    function show_message(message){
+      ddrivetip('<table style="width:208px;border:1px solid gray;background-color:black;color:white;font-family:verdana;font-size:10pt;"><tr><td>'+message+'</td></tr></table>', 'BLACK', 150, 25);
+    }
+    
+    function become_latest_sponsor(){
+      ddrivetip('<table style="width:408px;border:1px solid gray;background-color:black;color:DodgerBlue;font-family:verdana;font-size:8pt;"><tr><td>With the &#34;Inhabited Sky&#34; program you can acquire &#34;Nova&#34; status as soon as you &#34;inhabit&#34; a star and you will retain this status until somebody else &#34;inhabits&#34; another star. If you subsequently &#34;inhabit&#34; another star, you will obtain &#34;Nova&#34; status again, meaning that there is no limit to the number of times that you can become the &#34;Nova&#34;.</td></tr></table>', 'BLACK', 150, 25);
+    }
+
+    var submenu_top20 = { "-"                                : "javascript:alert('Product 2');",
+                                                                        "Chich" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;2431'+'</b></font><br><font color=DodgerBlue size=-2>'+'This star belongs to the Girls and Woohoo.</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=2431",
+                                                "BRAD SCOTT" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;6306'+'</b></font><br><font color=DodgerBlue size=-2>'+'WOW..I&amp;#39;m humbled by the glorious magnitude of this project and grate full to be a contributor...<br>to the many children of the world...<br>&amp;quot;Wish high,Wish far ,Wish hard. Wish upon a STAR&amp;quot;<br>ALOHA</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=6306",
+                                                "Jaekyu Eo" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;689612'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=689612",
+                                                "estrela" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;690409'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://astronote.org",
+                                                "Anna Blake" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;813006981'+'</b></font><br><font color=DodgerBlue size=-2>'+'Happy birthday Matthew, I hope you’ll like it!</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=813006981"
+};
+
+    var submenu_products = { "&nbsp;&nbsp;&nbsp;Open Supernova&#8217;s Website"    : "event:target:_blank:event:class:snap_noshots:href:http://my.sky-map.org?zoom=12&show_box=1&star_id=2431",
+                             "&nbsp;&nbsp;&nbsp;20 LATEST SUPERNOVAS &gt;&gt;" : submenu_top20,
+                             "&nbsp;&nbsp;&nbsp;The Sky of All Supernovas" : "event:class:snap_noshots:href:http://my.sky-map.org/?",
+                             "&nbsp;&nbsp;&nbsp;How to Become Supernova?" : "event:onmouseover:become_top_sponsor():event:onmouseout:hideddrivetip():href:http:/adopt_services.jsp?top_price=250.00",
+                             "&nbsp;&nbsp;&nbsp;Supernovas on SKY-MAP"    : "event:onmouseover:why_to_sponsor1():event:onmouseout:hideddrivetip():href:/adopt_services.jsp?top_price=250.00",
+                             "&nbsp;&nbsp;&nbsp;Inhabit a Star!"    : "event:target:_blank:href:http:/adopt_services.jsp?top_price=250.00" };
+
+
+    var submenu_top20latest = { "-"                                : "javascript:alert('Product 2');",
+                                                                        "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1984252'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1984252",
+                                                "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;77816'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=77816",
+                                                "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;279782'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=279782",
+                                                "Carla Criner" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1109643'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1109643",
+                                                "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1003956'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1003956",
+                                                "Timothy Carter" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;624028832'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=624028832",
+                                                "Misty Bell" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;412735'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=412735",
+                                                "AMOL PANCHAL" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1577647'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1577647",
+                                                "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;819833'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=819833",
+                                                "ANQI BAO" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;2390241'+'</b></font><br><font color=DodgerBlue size=-2>'+'A start for Leo-- the American Scholar</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=2390241",
+                                                "Aleksandr Karmanov" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;872581'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=872581",
+                                                "Ayrton84" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;364778'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=364778",
+                                                "Kim Huybrechts" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1972251'+'</b></font><br><font color=DodgerBlue size=-2>'+'Star light, Star bright...<br>My love will shine on you, <br>every day &amp;amp; every night!!<br>HAPPY BIRTHDAY MAMA</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1972251",
+                                                "Andy Marcus" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1535755'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1535755",
+                                                "Lisa Palandri" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1127042'+'</b></font><br><font color=DodgerBlue size=-2>'+'Because I love him so much. A star can&amp;#39;t belongs to a human but he will be the star of my life forever.</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1127042",
+                                                "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;1437618'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1437618",
+                                                "Aleksandr Karmanov" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;72428'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=72428",
+                                                "Aleksandr Karmanov" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;316599'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=316599",
+                                                "Aleksandr Karmanov" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;314169'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=314169",
+                                                "Anonymous" : "event:target:_blank:event:onmouseover:show_message('<font size=-2><b>Star ID&#58;&nbsp;757760636'+'</b></font><br><font color=DodgerBlue size=-2>'+'</font>'):event:onmouseout:hideddrivetip():href:http://my.sky-map.org?zoom=12&show_box=1&star_id=757760636"
+};
+                                                    
+    var submenu_latest_sponsors = { "&nbsp;&nbsp;&nbsp;Open Nova&#8217;s Website"    : "event:target:_blank:href:http://my.sky-map.org?zoom=12&show_box=1&star_id=1984252",
+                             "&nbsp;&nbsp;&nbsp;20 LATEST NOVAS &gt;&gt;" : submenu_top20latest,
+                             "&nbsp;&nbsp;&nbsp;The Sky of All Novas" : "event:class:snap_noshots:href:http://my.sky-map.org/?",
+                             "&nbsp;&nbsp;&nbsp;How to Become Nova?" : "event:onmouseover:become_latest_sponsor():event:onmouseout:hideddrivetip():href:http:/adopt_services.jsp?top_price=250.00",
+                             "&nbsp;&nbsp;&nbsp;Novas on SKY-MAP"    : "event:onmouseover:why_to_sponsor1():event:onmouseout:hideddrivetip():href:http:/adopt_services.jsp?top_price=250.00",
+                             "&nbsp;&nbsp;&nbsp;Inhabit a Star!"    : "event:target:_blank:href:http:/adopt_services.jsp?top_price=250.00" };
+
+    var menuTS = { "top_sponsors_menu" : submenu_products };
+    var menuSP = { "latest_sponsors_menu" : submenu_latest_sponsors };
+</script>
+<table style="border-style: solid; border-color:yellow; border-width:0px; border-collapse: collapse; Z-INDEX:101; POSITION:absolute; LEFT:10px; TOP:1px;"> 
+    <tr style="border-style: solid; border-color:yellow; border-width:0px;">
+        <td nowrap style="border-style: solid; border-color:yellow; border-width:0px;" align="left" valign="top" rowspan="2">
+            <DIV id="d_top_logo" style="FONT-SIZE: 20px; Z-INDEX: 100; CURSOR: default">SKY-MAP.<FONT color=red>ORG</FONT></DIV>
+        </td>
+        <td rowspan="2" style="FONT-SIZE: 12px;border-style: solid; border-color:yellow; border-width:0px;padding-top:0px;padding-bottom:0px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+
+        
+            <td rowspan="2" style="FONT-SIZE: 12px;height:13px;padding-top:0px;padding-bottom:0px;" align="left" nowrap>
+            <!--span style="border: 1px red solid; padding: 3px">
+                <a href="http://blog.wikisky.org/message-from-sky-map-creators" target="_blank" ONMOUSEOVER="fundraiser_label();" ONMOUSEOUT="hideddrivetip();">
+                    <b><font color="red" size="+1">Message from SKY-MAP/WIKISKY creators</font></b>
+                </a>
+            </span-->
+            </td>
+        
+        <td colspan="3" style="FONT-SIZE: 12px;height:13px;padding-top:0px;padding-bottom:0px;" align="left" nowrap>
+            <!--a href="http://my.sky-map.org/adopt_services.jsp?top_price=250.00" target="_blank" onmouseover="why_to_sponsor()" onmouseout="hideddrivetip()" style="color:yellow;font-style:italic;font-size:10pt; ">
+                Stars That Shine Forever&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a-->
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" style="border-style: solid; border-color:yellow; border-width:0px;padding-top:0px;padding-bottom:0px;" nowrap>
+            <!--table border=0>
+              <tr><td style="FONT-SIZE: 12px;padding-top:0px;padding-bottom:0px;" align="right" nowrap valign="top" >
+                    Supernova:
+              </td>
+              <td style="padding-top:0px;padding-bottom:0px;" valign="top" nowrap>
+                    <div class="sample1">
+                        <div class="horz_menu" style="border-style: solid; border-color:red; border-width:0px;">
+                            <a id="top_sponsors_menu"  href="http://my.sky-map.org?zoom=12&show_box=1&star_id=2431" target="_blank" style="color:yellow;font-style:italic;font-size:10pt;white-space:nowrap">Chich</a>
+                        </div>
+                        <script type="text/javascript">dhtmlmenu_build(menuTS);</script>
+                    </div>
+                </td>
+              </tr>
+            </table-->
+        </td>
+        <td style="FONT-SIZE: 12px;padding-top:0px;padding-bottom:0px;" valign="top"></td>
+        <td  align="left" style="padding-top:0px;padding-bottom:0px;" valign="top">
+            <!--table border=0>
+              <tr>
+                <td style="FONT-SIZE: 12px;padding-top:0px;padding-bottom:0px;" align="right" nowrap valign="top">
+                  Nova:
+                </td>
+                <td style="padding-top:0px;padding-bottom:0px;" valign="top"  align="left">
+                    <div class="sample1">
+                        <div class="horz_menu">
+                            <a id="latest_sponsors_menu"  href="http://my.sky-map.org?zoom=12&show_box=1&star_id=1984252" target="_blank" style="color:yellow;font-style:italic;font-size:10pt;white-space:nowrap"> </a>
+                        </div>
+                        <script type="text/javascript">dhtmlmenu_build(menuSP);</script>
+                    </div>
+                </td>
+              </tr>
+            </table-->
+        </td>
+    </tr>
+</table>   
+
+
+<FORM METHOD='POST' ACTION='?object=Messier+78'>
+<DIV id="d_top_language_links" style="FONT-SIZE: 7pt; Z-INDEX: 100; POSITION: absolute; LEFT: 0px; TOP: -15px; WIDTH: 100%; TEXT-ALIGN: right; CURSOR: default">
+<a href='?object=Messier+78&amp;locale=DE'>DE</a> 
+<a href='?object=Messier+78&amp;locale=RU'>RU</a> 
+<a href='?object=Messier+78&amp;locale=SV'>SV</a> 
+<a href='?object=Messier+78&amp;locale=KO'>KO</a> 
+<a href='?object=Messier+78&amp;locale=PT'>PT</a> 
+<a href='?object=Messier+78&amp;locale=EL'>EL</a> 
+<a href='?object=Messier+78&amp;locale=EN'>EN</a> 
+<a href='?object=Messier+78&amp;locale=IT'>IT</a> 
+<a href='?object=Messier+78&amp;locale=FR'>FR</a> 
+<a href='?object=Messier+78&amp;locale=HU'>HU</a> 
+<a href='?object=Messier+78&amp;locale=ES'>ES</a> 
+<a href='?object=Messier+78&amp;locale=ZH'>ZH</a> 
+<a href='?object=Messier+78&amp;locale=JA'>JA</a> 
+<a href='?object=Messier+78&amp;locale=PL'>PL</a> 
+<a href='?object=Messier+78&amp;locale=HE'>HE</a> 
+<a href='?object=Messier+78&amp;locale=CA'>CA</a> 
+<a href='?object=Messier+78&amp;locale=NL'>NL</a> 
+<a href='?object=Messier+78&amp;locale=TR'>TR</a> 
+<a href='?object=Messier+78&amp;locale=SR'>SR</a> 
+
+</DIV>
+<DIV id="d_top_language" style="FONT-SIZE: 12px; Z-INDEX: 100; POSITION: absolute; LEFT: 0px; TOP: 6px; WIDTH: 100%; TEXT-ALIGN: right; CURSOR: default">
+  <span style="position: relative; top:0px; right: 16px">
+    <a href="https://twitter.com/SkyMapLaunch" class="twitter-follow-button" data-show-screen-name="true" data-show-count="false" style="height:15px">Follow @SkyMapLaunch</a>
+    <script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </span>
+  <span style="position: relative; top:-5px; right: 6px">
+<SELECT name='select_locale' class='TextField' ONCHANGE='this.form.submit();' ><OPTION value='DE'>Deutsch<OPTION value='RU'>&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;<OPTION value='SV'>Svenska<OPTION value='KO'>Korean<OPTION value='PT'>Português<OPTION value='EL'>&#917;&#955;&#955;&#951;&#957;&#953;&#954;&#940;<OPTION value='EN' SELECTED>English<OPTION value='IT'>Italiano<OPTION value='FR'>Français<OPTION value='HU'>Magyar<OPTION value='ES'>Español<OPTION value='ZH'>Chinese<OPTION value='JA'>&#26085;&#26412;&#35486;<OPTION value='PL'>Polski<OPTION value='HE'>&#1506;&#1460;&#1489;&#1456;&#1512;&#1460;&#1497;&#1514;<OPTION value='CA'>Català<OPTION value='NL'>Nederlands<OPTION value='TR'>Turkish<OPTION value='SR'>Srpski</SELECT>
+</span>
+</DIV>
+</FORM>
+<script type="text/javascript">
+var currentLogo="Default";
+var topLogos={Default:"SKY-MAP.<FONT color=red>ORG</FONT>",INHABITED:"<img src='images/star_b1_sm.gif' border=0 width=35 height=35 style='float:left;position:relative;top:-7;left:-2;'><font color=red>INHABITED</font>&nbsp;SKY",BLOGS:"<img src='images/star_b1_sm.gif' border=0 width=35 height=35 style='float:left;position:relative;top:-7;left:-2;'>BLOGS<font color=red>@</font>SKY",NEWS:"<img src='images/star_b1_sm.gif' border=0 width=35 height=35 style='float:left;position:relative;top:-7;left:-2;'>NEWS<font color=red>@</font>SKY",ET:"<FONT color=red>ET</FONT>.SKY-MAP"};
+
+function fundraiser_label(){
+  ddrivetip('<table style="width:500px;border:1px solid gray;background-color:black;color:white;font-family:verdana;font-size:10pt"><tr><td><p>When we just started SKY-MAP five years ago, we thought only about the fun it would create for our own kids and hoped to open a wide window to the Universe for them. During the first three weeks of January 2011, SKY-MAP received over 1.5 million visitors from 190 countries.</p><p>The constant increase in traffic has made our servers slow and unstable and our environment has become insufficient. With such servers, it is almost impossible to upgrade the system with the new sets of astronomical data and we don’t have enough power to process all the Internet requests.</p><p>We urgently need to replace our two 6-years old servers. According to our calculations, $14,000US would be sufficient for us to purchase two new dual 6-core CPU servers. This hardware would be able to serve you perfectly and would give us enough space and flexibility for at least the immediate future.</p><p>We need your support in order for SKY-MAP (WIKISKY) to remain stable, fast, and advertisement-free.</p><p>We need your support to continue and intensify the development, enriching SKY-MAP with new data and functions.</p><br/><p align=center><em>Server upgrade fundraiser progress meter</em><br/><div style="width:467px;height:14px;position:relative;top:0px;left:15px;font-size:1px;cursor:pointer;border:1px #404040 solid"><img src="/img/servers_bar.png" style="position:absolute;left:0;top:0;width:467px;height:14px"><div style="position:absolute;left:0;top:0;height:14px;font-size:1px;width:68px;background-color:green;opacity:0.75;filter:alpha(opacity=75)"></div><div style="position:absolute;top:-1;left:9px;color:yellow;font-size:10pt;font-weight:bold">14.71%</p></div></p></td></tr></table>', 'BLACK', 150, 25);
+}
+
+function survive_label(){
+  ddrivetip('<table style="width:300px;border:1px solid gray;background-color:black;color:white;font-family:verdana;"><tr><td><font size=-1><i>"I don\'t think the human race will survive the next thousand years, unless we spread into space. There are too many accidents that can befall life on a single planet."</i><br><p align="right">Stephen Hawking</p></font></td></tr></table>', 'BLACK', 150, 25);
+}
+
+
+
+function service_label(){
+  ddrivetip('<table style="width:208px;border:1px solid gray;background-color:black;color:white;font-family:verdana;"><tr><td><img src="images/gift.jpg" border=0 style="float:left;position:relative;top:-1;left:0;"></td></tr></table>', 'BLACK', 150, 25);
+}
+function news_label(){
+  ddrivetip('<table style="width:300px;border:1px solid gray;background-color:black;color:white;font-family:verdana;font-size:8pt"><tr><td>The NEWS<font color=red>@</font>SKY (Space&amp;Science) is a unique opportunity to browse hundreds of scientific and popular science Internet sites without a single mouse click!</td></tr></table>', 'BLACK', 150, 25);
+}
+
+function gift_label(){
+    ddrivetip('<table style="width:172px;border:1px solid gray;background-color:black;color:white;font-family:verdana;"><tr><td><img src="images/gift.jpg" border=0 style="float:left;position:relative;top:-1;left:0;"></td></tr></table>', 'BLACK', 100, 25);
+}
+
+function service_label15(){
+    ddrivetip('<table style="width:352px;border:1px solid gray;background-color:black;color:white;font-family:verdana;"><tr><td><font size=-2>NEWS@SKY is a unique system, which brings together a large number of the Internet based information portals.All presented on NEWS@SKY media are part of the NEWS@SKY community. Under certain circumstances, any Internet information portal can become a member of this community.</font><br><img src="images/astar.jpg" border=0 style="float:left;position:relative;top:-1;left:0;"></td></tr></table>', 'BLACK', 100, 25);
+}
+
+function service_label8(){
+    ddrivetip('<table style="width:208px;border:1px solid gray;background-color:black;color:white;font-family:verdana;"><tr><td><img src="images/simpson5.jpg" border=0 style="float:left;position:relative;top:-1;left:0;"></td></tr></table>', 'BLACK', 100, 25);
+}
+
+function updateLogo(logoId, subLogo){
+    currentLogo=logoId;
+    var newLogo=topLogos[logoId];
+    if (subLogo) newLogo+="&nbsp;<font style='font-size:16px'>("+subLogo+")</font>";
+    document.getElementById("d_top_logo").innerHTML=newLogo;
+}
+
+var menuPress=['<a href="http://sky-map.org/wiki/Press_Releases" target="_blank"><font color=white>Press Releases</font></a>',
+'<a href="http://sky-map.org/wiki/Publications" target="_blank"><font color=white><nobr>SKY-MAP in World Media</nobr></font></a>'];
+
+</script>
+<TABLE id="d_menu" width="100%" cellpadding="0" cellspacing="0" border="0" style="FONT-FAMILY: Arial; FONT-SIZE: 12px; FONT-WEIGHT: normal; font-variant: small-caps; MARGIN: 0px; COLOR: white; POSITION: absolute; LEFT: 0px; TOP: 38px; WIDTH: 100%; HEIGHT: 28px;">
+<TR valign="middle">
+
+<TD WIDTH="10">&nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="/?locale=EN" style='white-space:nowrap'>Home</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="get_started?locale=EN" style='white-space:nowrap'>Getting&nbsp;Started</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="survive.jsp?locale=EN" style='white-space:nowrap' ONMOUSEOVER="survive_label();" ONMOUSEOUT="hideddrivetip();">To Survive in the Universe</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap>
+    <!--A href="http://my.sky-map.org/?locale=EN" style='white-space:nowrap' target=_blank target=_blank onmousemove="img181.src='images/alien_11r.gif';" onmouseout="img181.src='images/alien_1.gif';"-->
+        <table border=0 cellpadding=0 cellspacing=0 style='FONT-FAMILY: Arial; FONT-SIZE: 12px; FONT-WEIGHT: normal; font-variant: small-caps; MARGIN: 0px; COLOR: white;'>
+            <tr>
+                <td nowrap>
+                    <A href="http://my.sky-map.org/?locale=EN" style='white-space:nowrap' target=_blank">
+                        <img name=img181 src='images/stary2.gif' border=0 width=30 height=30 style='float:left;position:relative;top:-1;left:0;'>
+                    </a>
+                </td>
+                <td nowrap>
+                    <A href="http://my.sky-map.org/?locale=EN" style='white-space:nowrap' target=_blank ONMOUSEOVER="service_label();" ONMOUSEOUT="hideddrivetip();">
+                        Inhabited&nbsp;Sky
+                    </a>
+                </td>
+            </tr>
+        </table>
+    <!--/A-->
+</TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="http://news.sky-map.org" target=_blank style='white-space:nowrap' ONMOUSEOVER="news_label();" ONMOUSEOUT="hideddrivetip();">News<font color=red>@</font>Sky</A></TD>
+
+
+
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="astrophoto?locale=EN" style='white-space:nowrap'>Astro&nbsp;Photo</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="ui_index.jsp?locale=EN" style='white-space:nowrap'>The&nbsp;Collection</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="http://forum.sky-map.org" target="_blank" style='white-space:nowrap'>Forum</A></TD>
+
+
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="http://blog.sky-map.org" target="_blank" style='white-space:nowrap'>Blog&nbsp;<font color=red size=-1><sup><b>New!</b></sup></font></A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="faq?locale=EN" style='white-space:nowrap'>FAQ</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="http://sky-map.org/wiki/Publications" style='white-space:nowrap' target="_blank" onMouseover="dropdownmenu(this, event, menuPress, '150px');" onMouseout="delayhidemenu();">Press</A></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD WIDTH="1" nowrap><A href="https://secure.sky-map.org/user?locale=EN" target="_top" style='white-space:nowrap'>Login</A></TD>
+
+<TD WIDTH="10">&nbsp;</TD>
+</TR>
+</TABLE>
+
+<FORM id="from_search" action="#" onsubmit='var v=document.getElementById("search").value;if (v=="Find Object" || v=="") alert("Please enter object name, catalogId or equatorial coordinates in text field (i.e. \"Sirius\", \"M 100\", \"HD 12345\", \"alpha cen\", \"02 31 48.70 +89 15 51.0\" ...)"); else simpleSearch(v);return false;'>
+<input id="sliderValue6v" name="sliderValue" type="hidden"/>
+<TABLE id="d_menu2" cellpadding="0" cellspacing="0" border="0" style="POSITION: absolute; LEFT: 45px; TOP: 85px; MARGIN: 0px; Z-INDEX: 25;">
+<TR valign="middle">
+<TD id="d_mouse" VALIGN="top">
+    <IMG id="img_button_view2" style="CURSOR: pointer"  width=33 height=25 src="images/mouse_transparent.gif" alt="" title="" onclick="openSkyWindow2Page();" ONMOUSEOVER="ddrivetip('BETA: Sky Browser Ver.2', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"/>
+</TD>
+
+<!--TD id="d_button_SDSS"><IMG id="img_button_SDSS" style="CURSOR: pointer"  width=33 height=25 src="images/buttonSDSS.gif" alt="" onclick="toggleSDSS();" ONMOUSEOVER="sdss_label();" ONMOUSEOUT="hideddrivetip();"/></TD-->
+<TD WIDTH="15">&nbsp;</TD>
+<TD id="d_button_DSS"><IMG id="img_button_DSS" style="CURSOR: pointer"  width=33 height=25 src="images/buttonDSS.gif" alt="" onClick="return clickreturnvalue()" ONMOUSEOVER="dropdownmenu(this, event, menu1, '200px');" onMouseout="delayhidemenu()"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD id="d_button_const"><IMG id="img_button_const" style="CURSOR: pointer" width=33 height=25 src="images/buttonConstellation.gif" alt="" onclick="toggleConstellations();" ONMOUSEOVER="ddrivetip('Toggle Constellations ON/OFF', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD id="d_button_grid"><IMG id="img_button_grid" style="CURSOR: pointer"  width=33 height=25 src="images/buttonNet.gif" alt="" onclick="toggleGrid();" ONMOUSEOVER="ddrivetip('Toggle Grid ON/OFF', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD id="d_button_link"><IMG id="img_button_link" style="CURSOR: pointer"  width=33 height=25 src="images/buttonLink.gif" alt="" title="" onclick="getLinkToThisPage();" ONMOUSEOVER="ddrivetip('Generate permanent link to this view', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD id="d_button_link"><IMG id="img_button_snapshot" style="CURSOR: pointer"  width=33 height=25 src="images/buttonSnapshot.gif" alt="" title="" onclick="openSnapshotPage();" ONMOUSEOVER="ddrivetip('Take snapshot of this view', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+
+<TD id="d_button_skyabove"><IMG id="img_button_skyabove" style="CURSOR: pointer"  width=33 height=25 src="images/buttonBlank.gif" alt="" title="" onclick="showSkyAboveDialog();" ONMOUSEOVER="ddrivetip('Show stars above you now', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD><input id="search" type="text" name="search" class="TextField" maxLength="64" size="24" style="WIDTH: 180px; HEIGHT: 23px" value="Find Object" onclick="if (this.value=='Find Object') this.value='';" onblur="if (this.value=='') this.value='Find Object';"/></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD><input id="searchButton" type="image" src="images/find.gif" title="Find Object"/></TD>
+</TR>
+</TABLE>
+</FORM>
+<DIV id='skyAboveTimer' style='POSITION: absolute; LEFT: 200px; TOP: 90px; WIDTH: 26px; HEIGHT: 12px; FONT-FAMILY: Sans-Serif; FONT-SIZE: 10px; COLOR: white; visibility:hidden; Z-INDEX: 26; CURSOR: pointer' onclick="showSkyAboveDialog();" ONMOUSEOVER="ddrivetip('Show stars above you now', 'YELLOW', 0, 0,{maxWidth:300,nowrap:1,padding:2,color:'black',fontSize:'9pt'});" ONMOUSEOUT="hideddrivetip();"></DIV>
+<DIV id="skyAboveDialog" style="POSITION: absolute; LEFT: 150px; TOP: 120px; WIDTH: 460px; HEIGHT: 60px; COLOR: BLACK; Z-INDEX: 26; FONT-WEIGHT: bold; CURSOR: default; FONT-FAMILY: Sans-Serif; white-space: nowrap; visibility:hidden;">
+<DIV id="skyAboveDialogBG" style="Z-INDEX: 0; POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 460px; HEIGHT: 60px; CURSOR: default; BACKGROUND-COLOR: GRAY; opacity:0.8; filter: alpha (opacity=80); -moz-opacity:0.8; -khtml-opacity:.8;">
+</DIV>    
+<FORM id="from_skyAbove" action="#" ONSUBMIT="return false;">
+<table border=0 style="Z-INDEX: 1; POSITION: absolute; LEFT: 0px; TOP: 0px;">
+<tr id='d_skyAbove_location'><td align=right nowrap>Your&nbsp;location:&nbsp;</td><td nowrap><input id='skyAbove_location' name='skyAbove_location' type=text size=45 maxlength=100>&nbsp;<input type=submit onclick='skyAboveGetCoord();return false;' value='Find'></td></tr>
+<tr id='d_skyAbove_cancel'><td align=right nowrap>&nbsp;</td><td nowrap><input id='skyAbove_location' type=submit value='Cancel' onclick='document.getElementById("skyAboveDialog").style.visibility="hidden"; return false;'></td></tr>
+<tr id='d_skyAbove_pos' style='visibility:hidden'><td align=right nowrap>Latitude:&nbsp;</td><td nowrap><input id='skyAbove_lat' name='skyAbove_lat' type=text size=10>&nbsp;&nbsp;&nbsp;Longitude:&nbsp;<input id='skyAbove_lon' name='skyAbove_lon' type=text size=10></td></tr>
+<tr id='d_skyAbove_time' style='visibility:hidden'><td align=right nowrap>Local&nbsp;Time:&nbsp;</td><td nowrap><input id='skyAbove_time' name='skyAbove_time' type=text size=35 maxlength=40 disabled>&nbsp;&nbsp;<input id='skyAbove_timeNow' name='skyAbove_timeNow' type=checkbox CHECKED><label for="skyAbove_timeNow"><small>Present&nbsp;Time</small></label></td></tr>
+<tr id='d_skyAbove_timeZone' style='visibility:hidden'><td align=right nowrap>Time&nbsp;Zone:&nbsp;</td><td nowrap><select id='skyAbove_timeZone' name='skyAbove_timeZone'>
+<option value=-12>UTC &minus; 12</option>
+<option value=-11>UTC &minus; 11</option>
+<option value=-10>UTC &minus; 10</option>
+<option value=-9.5>UTC &minus; 9:30</option>
+<option value=-9>UTC &minus; 9</option>
+<option value=-8>UTC &minus; 8</option>
+<option value=-7>UTC &minus; 7</option>
+<option value=-6>UTC &minus; 6</option>
+<option value=-5>UTC &minus; 5</option>
+<option value=-4>UTC &minus; 4</option>
+<option value=-3.5>UTC &minus; 3:30</option>
+<option value=-3>UTC &minus; 3</option>
+<option value=-2>UTC &minus; 2</option>
+<option value=-1>UTC &minus; 1</option>
+<option value=0>UTC</option>
+<option value=1>UTC + 1</option>
+<option value=2>UTC + 2</option>
+<option value=3>UTC + 3</option>
+<option value=3.5>UTC + 3:30</option>
+<option value=4>UTC + 4</option>
+<option value=4.5>UTC + 4:30</option>
+<option value=5>UTC + 5</option>
+<option value=5.5>UTC + 5:30</option>
+<option value=5.75>UTC + 5:45</option>
+<option value=6>UTC + 6</option>
+<option value=6.5>UTC + 6:30</option>
+<option value=7>UTC + 7</option>
+<option value=8>UTC + 8</option>
+<option value=8.75>UTC + 8:45</option>
+<option value=9>UTC + 9</option>
+<option value=9.5>UTC + 9:30</option>
+<option value=10>UTC + 10</option>
+<option value=10.5>UTC + 10:30</option>
+<option value=11>UTC + 11</option>
+<option value=11.5>UTC + 11:30</option>
+<option value=12>UTC + 12</option>
+<option value=12.75>UTC + 12:45</option>
+<option value=13>UTC + 13</option>
+<option value=14>UTC + 14</option>
+</select></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr id='d_skyAbove_buttons' style='visibility:hidden'><td align=right nowrap>&nbsp;</td><td nowrap><input id='skyAbove_go' type=submit value='GO' onclick='locateSkyAbove(); return false;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id='skyAbove_cancel' type=submit value='Cancel' onclick='document.getElementById("skyAboveDialog").style.visibility="hidden"; return false;'></td></tr>
+</table>
+</FORM>
+</DIV>
+<DIV id="dpos" style="POSITION: absolute; LEFT: 700px; TOP: 78px; WIDTH: 200px; Z-INDEX: 24; FONT-WEIGHT: bold; CURSOR: default; FONT-FAMILY: Sans-Serif; TEXT-ALIGN: right; white-space: nowrap;"></DIV>
+
+
+
+
+<DIV id="d_main_ext" style="POSITION: absolute; LEFT: 1px; TOP: 69px; WIDTH: 910px; HEIGHT: 460px; Z-INDEX:2; PADDING: 0px; BORDER: 0px; BACKGROUND-COLOR: #404040; VISIBILITY: hidden">
+    <DIV id="d_main_ext_2" style="POSITION: absolute; LEFT: 5px; TOP: 5px; WIDTH: 900px; HEIGHT: 450px; Z-INDEX:5; PADDING: 0px; BORDER: 0px; BACKGROUND-COLOR: black">
+    </DIV>
+</DIV>
+<DIV id="d_main" style="POSITION: absolute; LEFT: 6px; TOP: 74; WIDTH: 900px; HEIGHT: 450px; Z-INDEX:6; PADDING: 0px; MARGIN: 0px; MARGIN-RIGHT: 20px; BORDER:0px solid pink; overflow: hidden;">
+
+<img id=init_image name=init_image src='images/sky-map-grid-const.gif' alt='' style='position:absolute; left:61px; top: 63px; width:900px; height:450px; visibility:hidden; border:0; Z-INDEX: 0;'/>
+    <DIV id="d_loading"   style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 140px; HEIGHT: 20px; Z-INDEX:20; TEXT-ALIGN:right; white-space: nowrap; overflow: hidden; CURSOR: crosshair; BACKGROUND-COLOR: #404040; VISIBILITY:hidden">&nbsp; Loading...</DIV>
+    <DIV id="point_box_left"   style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 1px; HEIGHT: 50px; CURSOR: crosshair; BORDER-LEFT: 1px solid white; Z-INDEX:15; FONT-SIZE: 0px; VISIBILITY:hidden"></DIV>
+    <DIV id="point_box_right"  style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 1px; HEIGHT: 50px; CURSOR: crosshair; BORDER-LEFT: 1px solid white; Z-INDEX:15; FONT-SIZE: 0px; VISIBILITY:hidden"></DIV>
+    <DIV id="point_box_top"    style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 50px; HEIGHT: 1px;  CURSOR: crosshair; BORDER-TOP: 1px solid white; Z-INDEX:15; FONT-SIZE: 0px; VISIBILITY:hidden"></DIV>
+    <DIV id="point_box_bottom" style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 50px; HEIGHT: 1px;  CURSOR: crosshair; BORDER-TOP: 1px solid white; Z-INDEX:15; FONT-SIZE: 0px; VISIBILITY:hidden"></DIV>
+    <img id="point_box_close" src='img/close3.gif' alt='Turn off' title='Turn off' width=11 height=11 border=0 style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 11px; HEIGHT: 11px;  CURSOR: crosshair; Z-INDEX:15; CURSOR: pointer; VISIBILITY:hidden" onclick="show_box=false;hidePointBox();"></DIV>
+</DIV>
+
+<DIV id="d_bottom_menu" style="POSITION: absolute; LEFT: 0px; TOP: 650px; WIDTH: 100%; HEIGHT: 35px; PADDING: 0px; MARGIN: 0px;">
+<DIV id="d_bottom_menu_bg" style="POSITION: absolute; LEFT: 0px; TOP: 0px; WIDTH: 100%; HEIGHT: 25px; PADDING: 0px; MARGIN: 0px; BACKGROUND-COLOR: white; opacity:0.2; filter: alpha (opacity=20); -moz-opacity:0.2; -khtml-opacity:.2;"></div>
+<TABLE id="d_bottom_menu_text" width="100%" cellpadding="0" cellspacing="0" border="0" style="POSITION: absolute; LEFT: 0px; TOP: 5px; WIDTH: 100%; PADDING: 0px; MARGIN: 0px; COLOR: white; FONT-SIZE: 10pt; FONT-FAMILY: Sans-Serif;">
+<TR valign="middle">
+<!--TD WIDTH="10">&nbsp;</TD>
+<TD WIDTH="150" style="FONT-SIZE: 8pt; CURSOR: default; white-space: nowrap;" id="d_copyright"><a href="http://www.wikisky.org" style='white-space:nowrap'>&#169;&nbsp;2006-2007&nbsp;SKY-MAP.<font color=red>ORG</font></a></TD-->
+
+<!--TD WIDTH="15">&nbsp;</TD>
+<TD WIDTH="1" style="FONT-SIZE: 8pt; CURSOR: default; white-space: nowrap" id="d_sdss_logo"><a href='http://www.sdss.org' style='white-space:nowrap'><img src='http://www.wikisky.org/images/SDSS_text2.gif' border=0 alt='SDSS' title='Sloan Digital Sky Survey'/></a></TD-->
+
+<TD WIDTH="15">&nbsp;</TD>
+<TD>&nbsp;</TD>
+
+<TD WIDTH="1" id="d_contrib" style="white-space: nowrap"><A href="http://www.wikisky.org/wiki/WikiSky:Contribution" style='white-space:nowrap'>Contribution</A></TD>
+<TD WIDTH="15">&nbsp;</TD>
+
+<TD WIDTH="1" id="d_api" style="white-space: nowrap"><A href="api?locale=EN" style='white-space:nowrap'>API</A></TD>
+<TD WIDTH="15">&nbsp;</TD>
+
+<TD WIDTH="1" id="d_groups" style="white-space: nowrap"><A href="groups?locale=EN" style='white-space:nowrap'>Groups</A></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD WIDTH="1" id="d_privacy" style="white-space: nowrap"><A href="policy.jsp?locale=EN" style='white-space:nowrap'>Privacy&nbsp;Policy</A></TD>
+<TD WIDTH="15">&nbsp;</TD>
+
+<TD WIDTH="1" id="d_about_project" style="white-space: nowrap"><A href="about_project.jsp?locale=EN" style='white-space:nowrap'>About&nbsp;Project</A></TD>
+<TD WIDTH="15">&nbsp;</TD>
+<TD WIDTH="1" id="d_contact_us" style="white-space: nowrap"><A href="contact_us.jsp?locale=EN" style='white-space:nowrap'>Contact&nbsp;Us</A></TD>
+<TD WIDTH="10">&nbsp;</TD>
+</TR></TABLE>
+</DIV>
+
+<div id='d_slider' style="POSITION: absolute; TOP: 80px; LEFT: 5px; WIDTH: 17px; HEIGHT: 149px; Z-INDEX:25; ">
+<script type="text/javascript" charset="UTF-8">
+var i_max_value=18;
+var i_min_value=1;
+var cur_value=9;
+var A_TPL6v = {
+'b_vertical' : true,
+'b_watch': true,
+'n_controlWidth': 37, //17,
+'n_controlHeight': 280, //149,
+'n_sliderWidth': 17,
+'n_sliderHeight': 9,
+'n_pathLeft' : 12, //1,
+'n_pathTop' : 36, //2,
+'n_pathLength' : 170, //136,
+'s_imgControl': 'images/slider.gif', //'img/sldr5v_bg.gif',
+'s_imgSlider': 'img/sldr5v_sl.gif',
+'n_zIndex': 3
+}
+var A_INIT6v = {
+'s_form' : 0,
+'s_name': 'sliderValue6v',
+'n_minValue' : i_min_value,
+'n_maxValue' : i_max_value,
+'n_value' : cur_value,
+'n_step' : 1
+}
+var vslider = new slider(A_INIT6v, A_TPL6v);
+</script>
+</div>
+
+<script type="text/javascript" charset="UTF-8">
+var language_id='EN';
+var main_url='http://www.www.wikisky.org/';
+var unknown_label='unknown';
+var img_base_url='';
+var area_base_url='';
+var ns=(document.layers)?1:0;
+var ns6=(document.getElementById&&!document.all)?1:0;
+var ie=(document.all);
+var i_down_x=0;
+var i_down_y=0;
+var pos_down_x=0;
+var pos_down_y=0;
+var is_moving=0;
+var once=0;
+var az_shift_x=0;
+var az_shift_y=0;
+var imgMouseDownPosX=-999;
+var imgMouseDownPosY=-999;
+
+var img_width=256;
+var img_height=256;
+var n_imgs_x = 0;
+var n_imgs_y = 0;
+var mag_mult=1.2;
+var zoom_mult=1.1;
+var dontmove=0;
+
+var init_angle=40.0;
+var init_grid_de_step=30.0;
+var init_grid_ra_step=2.0;
+var init_vmag=7.0;
+var init_zoom=1.0;
+var initRA=5.77833333333333;
+var initDE=0.05;
+
+var show_box=false;
+var boxRA=5.77833333333333;
+var boxDE=0.05;
+var box_width=50;
+var box_height=50;
+var box_var_size=false;
+var show_users=0;
+var show_na=0;
+var usgr=-1;
+var na_list;
+
+var vmag=init_vmag;
+var inMove=0;
+var zoom=init_zoom+(i_max_value-cur_value);
+var grid_ra_step;
+var grid_de_step;
+var show_grid=1;
+var show_const_lines=1;
+var show_const_boundaries=1;
+var show_borders=0;
+var sImgBorders='';
+var img_borders=2;
+var show_const_names=0;
+var show_galaxies=1;
+var show_planets=1;
+var img_source='';
+var img_id='all';
+var activeServers=['http://server1.wikisky.org','http://server2.wikisky.org','http://server3.wikisky.org','http://server4.wikisky.org','http://server5.wikisky.org','http://server6.wikisky.org','http://server7.wikisky.org','http://server8.wikisky.org','http://server9.wikisky.org'];
+var activeImgServers=['http://server1.wikisky.org','http://server2.wikisky.org','http://server3.wikisky.org','http://server4.wikisky.org','http://server5.wikisky.org','http://server6.wikisky.org','http://server7.wikisky.org','http://server8.wikisky.org','http://server9.wikisky.org'];
+
+
+var g_btn_grid = document.getElementById("img_button_grid");
+if (g_btn_grid) {
+    g_btn_grid.label_on='Show grid';
+    g_btn_grid.label_off='Hide grid';
+    //g_btn_grid.title = g_btn_grid.alt = show_grid==0 ? g_btn_grid.label_on : g_btn_grid.label_off;
+}
+
+var g_btn_const = document.getElementById("img_button_const");
+if (g_btn_const) {
+    g_btn_const.label_on='Show constellations';
+    g_btn_const.label_off='Hide constellations';
+    //g_btn_const.title = g_btn_const.alt = show_const_lines==0 ? g_btn_const.label_on : g_btn_const.label_off;
+}
+
+var g_btn_sdss = document.getElementById("img_button_SDSS");
+if (g_btn_sdss) {
+    g_btn_sdss.label_on='Switch to Sloan Digital Sky Survey';
+    g_btn_sdss.label_off='Switch to Generated Images';
+    //g_btn_sdss.title = g_btn_sdss.alt = img_source!="SDSS" ? g_btn_sdss.label_on : g_btn_sdss.label_off;
+}
+
+var g_d1 = document.getElementById("d_main");
+var d_main_ext = document.getElementById("d_main_ext");
+
+var init_a=new Array(), init_g=new Array(), init_n=new Array(), init_m=new Array(), init_u=new Array(), init_na=new Array();
+
+var m_rightPanel = new rightPanel(document.body);
+//m_rightPanel.style.backgroundColor='#000080';
+m_rightPanel.style.visibility='visible';
+m_rightPanel.top=110;
+m_rightPanel.width = 250;
+m_rightPanel.minWidth = 0;
+m_rightPanel.style.zIndex=50;
+
+var rightPanelImages = m_rightPanel.addItem('Images');
+rightPanelImages.expand();
+m_rightPanel.show(true);
+
+</script>
+
+
+<div id=debug style='position:absolute; left:20; top:20; font-size:7pt; color:white; z-index:100'></div>
+
+
+
+<script type='text/javascript' src='/jsc/coolbar%7Castro_math%7Castro_labels%7CplanetPos%7CDWR_engine%7CDWR_ChatService%7CDWR_CoolPlaces%7CDWR_TopUsers%7CDWR_RSS%7CDWR_Search%7CDWR_Login%7Crgb_color%7Crounded_corners%7Cdialogs%7Clogin%7CchatDWR%7CRSS_panel%7Ccool_places_panel%7Chomepage'></script>
+
+
+
+<script type="text/javascript" charset="UTF-8">
+setAngle(init_angle);
+setCenter(initRA, initDE);
+
+onWindowResize();
+
+var preload_image1 = new Image();
+preload_image1.src = 'img/Loading.gif';
+var init_image= document.getElementById("init_image");
+init_image.GALLERYIMG='no';
+//alert('initImgClick='+initImgClick);
+var par_names=['name','w','h','ra','de','angle','mag','grid_ra_step','grid_de_step','x_shift','y_shift','show_grid','show_const_lines','show_const_boundaries','zoom'];
+var params_header='(';
+for(i=0;i<par_names.length;i++){
+    params_header+=(par_names[i]+(i==par_names.length-1 ? ')' : ','));
+}
+
+//Disable Drag-n-Drop - IE only
+document.ondragstart = function(e) {
+    return false;
+}
+
+//Disable Drag-n-Drop - Mozilla/Firefox
+g_d1.onmousedown = function(e) {
+    if (e && e.preventDefault) {
+        var t = e.target;
+        if (t) {
+            var nName = t.nodeName.toLowerCase();
+            if (nName == "img") {
+                e.preventDefault();
+                return false;
+            }
+            while (t) {
+                if (t.nodeName == "a") {
+                    e.preventDefault();
+                    return false;
+                }
+                t = t.parentNode;
+            }
+        }
+    }
+    return false;
+}
+
+
+var templateA=
+'<table id=t_label class=templateA>'+
+'<tr><td class=templateA_label>Id (Name):<\/td><td class=templateA_data><<p0>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Constellation:<\/td><td class=templateA_data><<p1>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Right ascension:<\/td><td class=templateA_data><<p2>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Declination:<\/td><td class=templateA_data><<p3>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Distance (parsec):<\/td><td class=templateA_data><<p4>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Apparent magnitude:<\/td><td class=templateA_data><<p5>><\/td><\/tr>'+
+'<\/table>';
+
+var templateG=
+'<table id=t_label class=templateA>'+
+'<tr><td class=templateA_label>Id (Name):<\/td><td class=templateA_data><<p0>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Constellation:<\/td><td class=templateA_data><<p1>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Right ascension:<\/td><td class=templateA_data><<p2>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Declination:<\/td><td class=templateA_data><<p3>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Distance (parsec):<\/td><td class=templateA_data><<p4>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Apparent magnitude:<\/td><td class=templateA_data><<p5>><\/td><\/tr>'+
+'<tr><td class=templateA_label>Aparent dimensions:<\/td><td class=templateA_data><<p6>>&nbsp;&times;&nbsp;<<p7>><\/td><\/tr>'+
+'<\/table>';
+
+var templateU=
+'<table id=t_label class=templateU><tr>'+
+'<td align=left width=200><img src="http://images.sky-map.org/user_image/<<p2>>" width=200 height=300><\/td>'+
+'<td align=left valign=top width=200>'+
+'<table><tr>'+
+'<td align=left><font class=templateU_label>ID:<\/font><font class=templateU_data><<p0>><\/font><\/td>'+
+'<\/tr><tr>'+
+'<td align=left><font class=templateU_label>Type:<\/font><font class=templateU_data>Star<\/font><\/td>'+
+'<\/tr><tr>'+
+
+'<td align=left class=templateU_text><<p3>><\/td>'+
+'<\/tr><\/table>'+
+'<\/td>'+
+'<\/tr><\/table>';
+
+var templateUM=
+'<table id=t_label_um class=templateU><tr><td>'+
+'<img style="float:left;border:1px solid black;margin-right:5px;" src="http://images.sky-map.org/user_image/<<p2>>">'+
+'<span style="white-space:nowrap"><font class=templateU_label>Object:<\/font><font class=templateU_data id=t_label_object><<p0>><\/font></span>'+
+'<br><font class=templateU_text><<p3>><\/font>'+
+'<h4 style="font-weight:bold;margin:0;padding-top:.5em;padding-bottom:.17em;border-bottom:1px solid #aaa;vertical-align:bottom;font-size:100%;white-space:nowrap">Latest&nbsp;News</h4>'+
+
+'<font class=templateU_text id=t_label_um_<<p1>>><<RSS>><\/font>'+
+'</td></tr></table>';
+
+
+var constel=['Andromeda','Antlia','Apus','Aquila','Aquarius','Ara','Aries','Auriga','Bootes','Caelum','Camelopardalis','Capricornus','Carina','Cassiopeia','Centaurus','Cepheus','Cetus','Chamaleon','Circinus','Canis Major','Canis Minor','Cancer','Columba','Coma Berenices','Corona Australis','Corona Borealis','Crater','Crux','Corvus','Canes Venatici','Cygnus','Delphinus','Dorado','Draco','Equuleus','Eridanus','Fornax','Gemini','Grus','Hercules','Horologium','Hydra','Hydrus','Indus','Lacerta','Leo','Lepus','Libra','Leo Minor','Lupus','Lynx','Lyra','Mensa','Microscopium','Monoceros','Musca','Norma','Octans','Ophiucus','Orion','Pavo','Pegasus','Perseus','Phoenix','Pictor','Pisces Austrinus','Pisces','Puppis','Pyxis','Reticulum','Sculptor','Scorpius','Scutum','Serpens','Sextans','Sagitta','Sagittarius','Taurus','Telescopium','Triangulum Australe','Triangulum','Tucana','Ursa Major','Ursa Minor','Vela','Virgo','Volans','Vulpecula'];
+var mode='';
+function setInitMode(){
+    mode='personal';
+    //setMode(mode);
+}
+
+var ii;  //images array
+checkInitImageArray(n_imgs_x, n_imgs_y);
+var readyToDraw=true;
+onWindowResize();
+window.onresize = onWindowResize;
+
+loadAreasXMLDoc("areas","type=FULL&users=0&na=0&locale="+language_id);
+
+var timeZone = new Date().getTimezoneOffset()/60.0;
+document.getElementById('skyAbove_timeZone').value=timeZone;
+document.getElementById('skyAbove_time').value = new Date().toLocaleString();
+var skyAboveTimer = document.getElementById('skyAboveTimer');
+if (skyAboveTimer) {
+    var img_button_skyabove = document.getElementById('img_button_skyabove');
+    if (img_button_skyabove) {
+        var imgLeft = img_button_skyabove.offsetLeft + img_button_skyabove.offsetParent.offsetLeft + img_button_skyabove.offsetParent.offsetParent.offsetLeft;
+        var imgTop  = img_button_skyabove.offsetTop  + img_button_skyabove.offsetParent.offsetTop  + img_button_skyabove.offsetParent.offsetParent.offsetTop;
+        //alert('left='+imgLeft+', top='+imgTop);
+        skyAboveTimer.style.left = (imgLeft+4)+'px';
+        skyAboveTimer.style.top = (imgTop+5)+'px';
+        skyAboveTimer.style.visibility='';
+        skyAboveTimer_show();
+    }
+}
+
+
+
+
+window.onload=function(){
+    init_image.onmousemove=initImgMouseMove;
+    init_image.onclick=initImgClick;
+    
+    var t_coolPlaces = new CoolPlacesPanel(m_rightPanel, g_d1);
+    t_coolPlaces.init();
+    if (readCookie("cool_places_panel_expanded")!='0')
+        t_coolPlaces.panelItem.expand();
+    else
+        t_coolPlaces.panelItem.collapse();
+    t_coolPlaces.panelItem.show(true);
+
+
+
+
+}
+</script>
+
+
+
+
+
+
+<div id="chat_star_user_wnd" style="position:absolute; top:0px; left:0px; width:400px; height:45px; padding:0px; margin:0px; Z-INDEX:102; background-color:black; border:1px solid white; visibility:hidden; ">
+    <img src='img/icon_close.gif' border=0 width=16 height=16 style='position:absolute;left:383px;top:1px;cursor:pointer;' onclick="document.getElementById('chat_star_user_wnd').style.visibility='hidden';">
+    <span id="chat_star_user_title" style="position:absolute; top:2px; left:10px; font-size:10pt;"></span>
+    <form onsubmit="chatSendStarUserMessage(this.chat_star_user_to.value,this.chat_star_user_input_text.value);this.chat_star_user_input_text.value='';document.getElementById('chat_star_user_wnd').style.visibility='hidden';return false;">
+    <input type=hidden id="chat_star_user_to" name="chat_star_user_to" value="">
+    <input type=text id="chat_star_user_input_text" name="chat_star_user_input_text" maxlength=150 style="position:absolute;left:5px;top:20px;width:305px;height:19px;">
+    <input type=image src='img/btn_chat_send.gif' border=0 style="position:absolute;left:315px;top:20px;width:72px;height:19px;">
+    </form>
+</div>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PRTQ3JHKT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3PRTQ3JHKT');
+</script>
+
+</body>
+</html>
+
