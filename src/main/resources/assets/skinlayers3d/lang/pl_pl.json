@@ -1,6 +1,9 @@
 {
     "modmenu.descriptionTranslation.skinlayers3d": "Renderuje warstwę skórki gracza w 3D",
     "text.skinlayers.title": "Ustawienia 3D Skin Layer",
+    "text.skinlayers.tab.player": "Gracze",
+    "text.skinlayers.tab.heads": "Głowy graczy",
+    "text.skinlayers.tab.other": "Inne ustawienia",
     "text.skinlayers.enable.hat": "Nakrycie głowy 3D",
     "text.skinlayers.enable.hat.tooltip": "Renderuj warstwę nakrycia głowy gracza jako model 3D",
     "text.skinlayers.enable.jacket": "Kurtka 3D",
@@ -35,5 +38,9 @@
     "text.skinlayers.firstperson.voxelsize": "Rozmiar wokseli w widoku pierwszoosobowym",
     "text.skinlayers.firstperson.voxelsize.tooltip": "Rozmiar wokseli na ręce gracza w widoku pierwszoosobowym",
     "text.skinlayers.compatibilityMode.enable": "Tryb kompatybilności",
-    "text.skinlayers.compatibilityMode.enable.tooltip": "Alternatywny sposób renderowania warstw, może poprawić kompatybilność z niektórymi modami"
+    "text.skinlayers.compatibilityMode.enable.tooltip": "Alternatywny sposób renderowania warstw, może poprawić kompatybilność z niektórymi modami",
+    "text.skinlayers.irisCompatibilityMode.enable": "Tryb kompatybilności z Iris",
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Alternatywny sposób renderowania warstw, naprawia dziwne cienie/kolory podczas używania shaderów Iris. Włącz tą opcję tylko, gdy jest to konieczne. Psuje to połączenia na krańcach.",
+    "text.skinlayers.applySodiumWorkaround.enable": "Obejście Sodium",
+    "text.skinlayers.applySodiumWorkaround.enable.tooltip": "Obejście błędu w niektórych wersjach Sodium przez które ściany sześcianów są odwrócone(?). Włącz tą opcję tylko, jeśli używasz Sodium i widzisz brakujące boki warstw skórki."
 }
