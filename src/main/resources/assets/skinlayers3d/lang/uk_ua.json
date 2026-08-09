@@ -34,13 +34,13 @@
     "text.skinlayers.skulls.voxelsize.tooltip": "Розмір вокселів, які використовуються для голів гравців (блок/предмет)",
     "text.skinlayers.reset": "За замовчуванням",
     "text.skinlayers.fastrender.enable": "Швидкий рендер",
-    "text.skinlayers.fastrender.enable.tooltip": "Рендерити 3D-моделі якомога швидше, це може спричинити деякі графічні баги з прозорістю",
+    "text.skinlayers.fastrender.enable.tooltip": "Рендерити 3D-моделі якомога швидше. Це може спричинити деякі графічні баги з прозорістю",
     "text.skinlayers.firstperson.voxelsize": "Розмір вокселя в режимі від першої особи",
     "text.skinlayers.firstperson.voxelsize.tooltip": "Розмір вокселів, які використовуються для руки гравця в режимі від першої особи",
     "text.skinlayers.compatibilityMode.enable": "Режим сумісності",
-    "text.skinlayers.compatibilityMode.enable.tooltip": "Альтернативний спосіб рендеру шарів, може виправити деякі проблеми сумісності з іншими модами",
+    "text.skinlayers.compatibilityMode.enable.tooltip": "Альтернативний спосіб рендеру шарів. Може виправити деякі проблеми сумісності з іншими модами",
     "text.skinlayers.irisCompatibilityMode.enable": "Режим сумісності з Iris",
-    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Альтернативний спосіб рендеру шарів, виправляє дивні тіні/кольори при використанні шейдерів Iris. Вмикайте це налаштування лише за потреби. Це порушить кутові з'єднання.",
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Альтернативний спосіб рендеру шарів. Виправляє дивні тіні/кольори при використанні шейдерів Iris. Вмикайте це налаштування лише за потреби. Це порушить кутові з'єднання.",
     "text.skinlayers.applySodiumWorkaround.enable": "Обхід проблеми з Sodium",
-    "text.skinlayers.applySodiumWorkaround.enable.tooltip": "Обхідний шлях для Sodium, який у деяких версіях має перевернуті грані куба (?). Вмикайте це, лише якщо ви використовуєте Sodium і помітили візуальні проблеми з відсутністю граней на шарах скіна."
+    "text.skinlayers.applySodiumWorkaround.enable.tooltip": "Обхідний шлях для Sodium, який у деяких версіях має перевернуті грані куба. Вмикайте це, лише якщо ви використовуєте Sodium і помітили візуальні проблеми з відсутністю граней на шарах скіна."
 }
