@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.skinlayers3d": "Отображает слои скина игрока в 3D",
     "text.skinlayers.title": "Настройки 3D Skin Layers",
     "text.skinlayers.tab.player": "Игроки",
     "text.skinlayers.tab.heads": "Головы игроков",
@@ -38,6 +39,9 @@
     "text.skinlayers.firstperson.voxelsize.tooltip": "Размер вокселей для рук в режиме от первого лица",
     "text.skinlayers.compatibilityMode.enable": "Режим совместимости",
     "text.skinlayers.compatibilityMode.enable.tooltip": "Альтернативный метод отрисовки (может решить проблемы совместимости)",
-    "modmenu.descriptionTranslation.skinlayers3d": "Отображает слои скина игрока в 3D",
+    "text.skinlayers.irisCompatibilityMode.enable": "Режим совместимости с Iris",
+    "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Альтернативный способ отрисовки слоев, исправляющий ошибки с тенями и цветами при использовании шейдеров Iris. Включайте эту настройку только при необходимости. Это приведет к нарушению соединений на углах модели.",
+    "text.skinlayers.applySodiumWorkaround.enable": "Обходной путь для Sodium",
+    "text.skinlayers.applySodiumWorkaround.enable.tooltip": "Обходное решение для проблемы перевернутых сторон куба в некоторых версиях Sodium. Включайте эту настройку только в том случае, если вы используете Sodium и заметили визуальные дефекты, связанные с отсутствием сторон на слоях скина.",
     "modmenu.descriptionTranslation.skinlayers": "Замена плоским вторым слоям скинов игроков в виде их трёхмерных аналогов. Модель автоматически будет возвращаться к стандартному двухмерному виду на расстоянии для повышения производительности."
 }
