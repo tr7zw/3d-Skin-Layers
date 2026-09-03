@@ -57,8 +57,7 @@ public class HeadLayerFeatureRenderer implements LayerRenderer<AbstractClientPla
 		if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
 			return false; // default skin
 		}
-		SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null);
-		return true;
+		return SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null);
 	}
 
 	public void renderCustomHelmet(PlayerSettings settings, AbstractClientPlayer abstractClientPlayer, float deltaTick) {

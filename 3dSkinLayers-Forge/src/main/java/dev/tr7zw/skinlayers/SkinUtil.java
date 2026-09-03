@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class SkinUtil {
 
@@ -27,11 +28,22 @@ public class SkinUtil {
     }
     
     private static NativeImage getTexture(ResourceLocation resource) {
-        NativeImage skin = new NativeImage(64, 64, false);
         TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
         ITextureObject abstractTexture = textureManager.getTexture(resource);
         if(abstractTexture == null)return null; // fail save
         GlStateManager.bindTexture(abstractTexture.getGlTextureId());
+        // glGetTexImage writes the whole level, whatever its size, and LWJGL cannot
+        // check that against the buffer. A texture that is not the 64x64 skin layout
+        // (an HD skin, or a resource pack's HD steve.png standing in while the real
+        // skin downloads) would overflow the buffer and corrupt the native heap, which
+        // shows up later as a crash in an unrelated thread. Ask for the size first and
+        // skip anything else, the same way the modern versions skip HD skins.
+        int width = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
+        int height = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
+        if(width != 64 || height != 64) {
+            return null; // not a 64x64 skin, hd skins won't work
+        }
+        NativeImage skin = new NativeImage(width, height, false);
         skin.downloadTexture(0, false);
         return skin;
     }
