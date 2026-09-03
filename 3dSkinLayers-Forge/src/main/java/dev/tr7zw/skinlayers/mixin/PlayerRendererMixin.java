@@ -117,8 +117,7 @@ public abstract class PlayerRendererMixin extends RendererLivingEntity<AbstractC
         if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
             return false; // default skin
         }
-        SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, smallArms, null);
-        return true;
+        return SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, smallArms, null);
     }
     
 //    @Inject(method = "renderHand", at = @At("RETURN"))

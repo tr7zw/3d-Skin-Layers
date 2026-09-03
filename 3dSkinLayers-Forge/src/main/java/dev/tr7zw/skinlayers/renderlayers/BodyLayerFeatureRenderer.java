@@ -61,8 +61,7 @@ implements LayerRenderer<AbstractClientPlayer> {
         if(!SkinUtil.hasCustomSkin(abstractClientPlayerEntity)) {
             return false; // default skin
         }
-        SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null);
-        return true;
+        return SkinUtil.setup3dLayers(abstractClientPlayerEntity, settings, thinArms, null);
     }
     
     private final List<Layer> bodyLayers = new ArrayList<>();
