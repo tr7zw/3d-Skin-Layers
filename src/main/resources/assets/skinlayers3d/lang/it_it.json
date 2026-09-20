@@ -35,7 +35,7 @@
     "text.skinlayers.reset": "Predefinito",
     "text.skinlayers.fastrender.enable": "Render Veloce",
     "text.skinlayers.fastrender.enable.tooltip": "Renderizza il modello 3D il più velocemente possibile, potrebbe causare alcuni glitch grafici con la trasparenza",
-    "text.skinlayers.firstperson.voxelsize": "Dimenisione dei Voxel in prima persona"
+    "text.skinlayers.firstperson.voxelsize": "Dimensione dei Voxel in prima persona"
     "text.skinlayers.firstperson.voxelsize.tooltip": "La dimensione dei voxel usati per la mano del giocatore in prima persona",
     "text.skinlayers.compatibilityMode.enable": "Modalità Compatibilità",
     "text.skinlayers.compatibilityMode.enable.tooltip": "Modo Alternativo di renderizare gli strati, potrebbe sistemare alcuni problemi di compatibilità con altre mod"
