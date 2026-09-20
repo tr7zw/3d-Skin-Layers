@@ -23,7 +23,7 @@
     "text.skinlayers.headvoxelsize": "Dimensione dei Voxel della testa",
     "text.skinlayers.headvoxelsize.tooltip": "La grandezza dei voxel usati per la testa del giocatore",
     "text.skinlayers.bodyvoxelheightsize": "Altezza dei Voxel del Corpo",
-    "text.skinlayers.bodyvoxelheightsize.tooltip": "La altezza dei voxel usati per il corpo del giocatore(usato per evitare il clipping dentro la testa/sporgenti dalle braccia)",
+    "text.skinlayers.bodyvoxelheightsize.tooltip": "L'altezza dei voxel usati per il corpo del giocatore(usato per evitare il clipping dentro la testa/sporgenti dalle braccia)",
     "text.skinlayers.bodyvoxelwidthsize": "Lunghezza dei Voxel del Torso",
     "text.skinlayers.bodyvoxelwidthsize.tooltip": "La lunghezza dei voxel usati per il torso del giocatore(usato per evitare clipping dentro le braccia)",
     "text.skinlayers.skulls.enable": "Teschi 3D",
@@ -38,7 +38,7 @@
     "text.skinlayers.firstperson.voxelsize": "Dimensione dei Voxel in prima persona"
     "text.skinlayers.firstperson.voxelsize.tooltip": "La dimensione dei voxel usati per la mano del giocatore in prima persona",
     "text.skinlayers.compatibilityMode.enable": "Modalità Compatibilità",
-    "text.skinlayers.compatibilityMode.enable.tooltip": "Modo Alternativo di renderizare gli strati, potrebbe sistemare alcuni problemi di compatibilità con altre mod"
+    "text.skinlayers.compatibilityMode.enable.tooltip": "Modo Alternativo di renderizzare gli strati, potrebbe sistemare alcuni problemi di compatibilità con altre mod"
     "text.skinlayers.irisCompatibilityMode.enable": "Modalità Compatibilità per Iris",
     "text.skinlayers.irisCompatibilityMode.enable.tooltip": "Modo alternativo di renderizzare gli strati, sistema strane ombre/colori quando si usa Iris shaders. Attiva questa impostazione solo quando necessario. Romperà le connessioni degli angoli.",
     "text.skinlayers.applySodiumWorkaround.enable": "Soluzione Alternativa per Sodium",
