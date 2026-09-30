@@ -1,0 +1,3 @@
+dependencies {
+    modImplementation "maven.modrinth:entity-model-features:3.3.8-forge-1.21.4"
+}
