@@ -25,8 +25,7 @@ import net.minecraft.server.packs.resources.Resource;
 public class SkinUtil {
 
     private static final Cache<Identifier, NativeImage> CACHE = CacheBuilder.newBuilder()
-            .expireAfterAccess(60L, TimeUnit.SECONDS)
-            .removalListener(new RemovalListener<Identifier, NativeImage>() {
+            .expireAfterAccess(60L, TimeUnit.SECONDS).removalListener(new RemovalListener<Identifier, NativeImage>() {
 
                 @Override
                 public void onRemoval(RemovalNotification<Identifier, NativeImage> notification) {
