@@ -24,12 +24,12 @@ import net.minecraft.server.packs.resources.Resource;
 
 public class SkinUtil {
 
-    private static Cache<AbstractTexture, NativeImage> cache = CacheBuilder.newBuilder()
+    private static final Cache<Identifier, NativeImage> CACHE = CacheBuilder.newBuilder()
             .expireAfterAccess(60L, TimeUnit.SECONDS)
-            .removalListener(new RemovalListener<AbstractTexture, NativeImage>() {
+            .removalListener(new RemovalListener<Identifier, NativeImage>() {
 
                 @Override
-                public void onRemoval(RemovalNotification<AbstractTexture, NativeImage> notification) {
+                public void onRemoval(RemovalNotification<Identifier, NativeImage> notification) {
                     try {
                         notification.getValue().close();
                     } catch (Exception ex) {
@@ -43,6 +43,15 @@ public class SkinUtil {
             return null;
         }
         try {
+
+            NativeImage cachedImage = CACHE.getIfPresent(resourceLocation);
+            if (cachedImage != null && (Object) cachedImage instanceof NativeImageAccessor ac
+                    && ac.skinlayers$isAllocated()) {
+                return cachedImage;
+            } else {
+                // got invalidated, remove from cache
+                CACHE.invalidate(resourceLocation);
+            }
             //? if >= 1.19.0 {
 
             Optional<Resource> optionalRes = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
@@ -55,26 +64,20 @@ public class SkinUtil {
                 //        Resource resource = Minecraft.getInstance().getResourceManager().getResource(resourceLocation);
                 //        NativeImage skin = NativeImage.read(resource.getInputStream());
                 //? }
+                CACHE.put(resourceLocation, skin);
                 return skin;
             }
             AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(resourceLocation);
             if (texture == null) {
                 return null;
             }
-            NativeImage cachedImage = cache.getIfPresent(texture);
-            if (cachedImage != null && (Object) cachedImage instanceof NativeImageAccessor ac
-                    && ac.skinlayers$isAllocated()) {
-                return cachedImage;
-            } else {
-                // got invalidated, remove from cache
-                cache.invalidate(texture);
-            }
+
             if (texture instanceof HttpTextureAccessor) {
                 HttpTextureAccessor httpTexture = (HttpTextureAccessor) texture;
                 try {
                     NativeImage img = httpTexture.getImage();
                     if (img != null && (Object) img instanceof NativeImageAccessor ac && ac.skinlayers$isAllocated()) {
-                        cache.put(texture, img);
+                        CACHE.put(resourceLocation, img);
                         return img;
                     }
                 } catch (Exception ex) {
